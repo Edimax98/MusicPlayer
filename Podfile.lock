@@ -1,16 +1,16 @@
 PODS:
-  - UPCarouselFlowLayout (1.1.1)
+  - TagCellLayout (1.0)
 
 DEPENDENCIES:
-  - UPCarouselFlowLayout
+  - TagCellLayout
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - UPCarouselFlowLayout
+    - TagCellLayout
 
 SPEC CHECKSUMS:
-  UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
+  TagCellLayout: e138f3f59ba3993b332bb1a4ff84f9b624ed1af2
 
-PODFILE CHECKSUM: f3e576aff3d572aeaac2d00ed88f024b1623d71c
+PODFILE CHECKSUM: 1c13f8d3663425bc7a7f5bb0380ecc73ff862360
 
 COCOAPODS: 1.5.2

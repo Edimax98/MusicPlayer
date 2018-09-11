@@ -1,3 +1,5 @@
+project 'Music Player.xcodeproj'
+
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -6,7 +8,8 @@ target 'Music Player' do
   use_frameworks!
 
   target 'Music PlayerTests' do
-    pod "UPCarouselFlowLayout"
+  
+   pod 'TagCellLayout'
+ 
   end
-
 end

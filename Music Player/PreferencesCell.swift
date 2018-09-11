@@ -13,6 +13,17 @@ class PreferencesCell: UITableViewCell {
     static var identifier: String {
         return "PreferencesCell"
     }
+    
+    var oneLineHeight: CGFloat {
+        return 54.0
+    }
+    
+    var longString = "Rock'n'Roll"
+    
+    var longTagIndex: Int {
+        return 1
+    }
+    
     fileprivate let cellHeight: CGFloat = 37
     fileprivate let inset: CGFloat = 10
     fileprivate let minimumInteritemSpacing: CGFloat = 10
@@ -27,6 +38,9 @@ class PreferencesCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        let tagCellLayout = TagCellLayout(alignment: .center, delegate: self)
+        tagCellLayout.delegate = self
+        preferencesCollectionView.collectionViewLayout = tagCellLayout
         preferencesCollectionView.delegate = self
         preferencesCollectionView.register(UINib(nibName: "PreferedGenreCell", bundle: nil), forCellWithReuseIdentifier: "PreferedGenreCell")
         preferencesCollectionView.dataSource = self
@@ -56,6 +70,24 @@ extension PreferencesCell: UICollectionViewDelegateFlowLayout {
         let marginsAndInsets = inset * 2.0 + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
         let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
         return CGSize(width: itemWidth, height: cellHeight)
+    }
+}
+
+extension PreferencesCell: TagCellLayoutDelegate {
+    
+    func tagCellLayoutTagSize(layout: TagCellLayout, atIndex index: Int) -> CGSize {
+        
+        if index == longTagIndex || index == (longTagIndex + 3) {
+            var s = NSString(string: longString).boundingRect(with: CGSize(width: 75.0, height: Double.greatestFiniteMagnitude),
+                                                              options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                                                                  attributes: [NSFontAttributeName: self],
+                                                                  context: nil).size
+            s.height += 8.0
+            return s
+        } else {
+            let width = CGFloat(index % 2 == 0 ? 80 : 120)
+            return CGSize(width: width, height: oneLineHeight)
+        }
     }
 }
 

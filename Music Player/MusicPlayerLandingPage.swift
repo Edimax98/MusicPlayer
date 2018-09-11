@@ -42,7 +42,7 @@ class MusicPlayerLandingPage: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "musicWasSelected" {
-            
+            ///
 //            guard let destinationNav =  segue.destination as? UINavigationController else {
 //                print("Could not cast or its nil")
 //                return
