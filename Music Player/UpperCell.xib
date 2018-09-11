@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UpperCell" rowHeight="103" id="KGk-i7-Jjw" customClass="UpperCell" customModule="Music_Player" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="102.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerLine" translatesAutoresizingMaskIntoConstraints="NO" id="esp-wv-tY4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_headphone" translatesAutoresizingMaskIntoConstraints="NO" id="Y0e-VR-FI8">
+                        <rect key="frame" x="131" y="2" width="58" height="53"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some text here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCp-xb-V2j">
+                        <rect key="frame" x="16" y="84" width="288" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.99586588144302368" green="1" blue="0.9999271035194397" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5p-M1-XKp">
+                        <rect key="frame" x="16" y="60" width="288" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.99586588144302368" green="1" blue="0.9999271035194397" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="esp-wv-tY4" secondAttribute="bottom" constant="47.5" id="1Pt-Ft-Mfh"/>
+                    <constraint firstItem="Y0e-VR-FI8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="2uq-mR-Das"/>
+                    <constraint firstAttribute="trailing" secondItem="esp-wv-tY4" secondAttribute="trailing" id="5dA-pb-ocX"/>
+                    <constraint firstItem="esp-wv-tY4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="B9j-5Z-NSO"/>
+                    <constraint firstAttribute="bottom" secondItem="nCp-xb-V2j" secondAttribute="bottom" constant="2.5" id="FSg-Ai-6RU"/>
+                    <constraint firstItem="nCp-xb-V2j" firstAttribute="top" secondItem="b5p-M1-XKp" secondAttribute="bottom" constant="4" id="Tfp-vf-H9I"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="Y0e-VR-FI8" secondAttribute="bottom" constant="5" id="XA2-9L-THR"/>
+                    <constraint firstItem="nCp-xb-V2j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="g3Z-zk-c6D"/>
+                    <constraint firstItem="Y0e-VR-FI8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="131" id="lAC-bq-CX0"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="mLu-ry-qNZ"/>
+                    <constraint firstAttribute="trailing" secondItem="nCp-xb-V2j" secondAttribute="trailing" constant="16" id="mfx-jq-5SH"/>
+                    <constraint firstAttribute="trailing" secondItem="Y0e-VR-FI8" secondAttribute="trailing" constant="131" id="rEp-JH-OGy"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="esp-wv-tY4" secondAttribute="bottom" constant="5" id="uoZ-BS-GVp"/>
+                    <constraint firstItem="esp-wv-tY4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="wYN-xG-eCf"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="x5P-2F-iqe"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="backgroundImage" destination="esp-wv-tY4" id="deC-Tq-tlQ"/>
+                <outlet property="headphoneImage" destination="Y0e-VR-FI8" id="STj-9v-lIR"/>
+                <outlet property="subTitleLabel" destination="nCp-xb-V2j" id="BpL-Sl-nyY"/>
+                <outlet property="titleLabel" destination="b5p-M1-XKp" id="tvq-lI-s72"/>
+            </connections>
+            <point key="canvasLocation" x="-43" y="2.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="headerLine" width="360" height="101"/>
+        <image name="header_headphone" width="86" height="82"/>
+    </resources>
+</document>
