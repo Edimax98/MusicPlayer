@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uEt-xg-ypl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qHK-8T-lUi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -339,121 +339,61 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1190" y="384"/>
+            <point key="canvasLocation" x="2128.8000000000002" y="383.65817091454278"/>
         </scene>
         <!--Music Player Landing Page-->
-        <scene sceneID="asf-9y-D2S">
+        <scene sceneID="BTe-Ph-W1h">
             <objects>
-                <tableViewController id="ehT-Ui-tDr" customClass="MusicPlayerLandingPage" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="4dA-Gf-5Uh">
+                <viewController id="FNU-cT-jE0" customClass="MusicPlayerLandingPage" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="osA-ds-3dU"/>
+                        <viewControllerLayoutGuide type="bottom" id="xnw-dZ-1TN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b43-Du-HF3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <sections>
-                            <tableViewSection headerTitle="Section-1" id="BqS-fJ-DLk">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UpperCell" id="F3i-f4-otS" customClass="UpperCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="F3i-f4-otS" id="lpL-tt-Y3e">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-2" id="LpJ-br-rzc">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreferencesCell" rowHeight="143" id="mHs-Zx-G4X" customClass="NewReleasesCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="155.5" width="375" height="143"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mHs-Zx-G4X" id="JDj-eb-TTZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="142.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-5" id="Xhn-6b-Cpc" userLabel="Section-5">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewReleasesCell" rowHeight="150" id="OHl-ug-HEb" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="354.5" width="375" height="150"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OHl-ug-HEb" id="emR-6e-62x">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-3" id="s3w-hw-Cgu">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="249" id="oVk-W5-s71" customClass="NewReleasesCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="560.5" width="375" height="249"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oVk-W5-s71" id="x4z-Vv-dZS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="248.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-4" id="rOE-0i-OU4">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewClipsCell" rowHeight="215" id="ws6-G4-04Q" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="865.5" width="375" height="215"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ws6-G4-04Q" id="QiJ-Uj-fvY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="214.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-4" id="vPO-sy-JXa" userLabel="Section-6">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopularSongsCell" rowHeight="176" id="6Fi-aF-iPf" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1136.5" width="375" height="176"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Fi-aF-iPf" id="2LP-vS-ZUe">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="175.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="ehT-Ui-tDr" id="RS9-le-KU5"/>
-                            <outlet property="delegate" destination="ehT-Ui-tDr" id="PlF-Zb-mGb"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="MFH-DL-PvP"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bED-Nd-gb6">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bED-Nd-gb6" secondAttribute="trailing" id="0Hc-ex-Z8o"/>
+                            <constraint firstItem="bED-Nd-gb6" firstAttribute="top" secondItem="b43-Du-HF3" secondAttribute="top" id="1hZ-kK-9Ch"/>
+                            <constraint firstItem="xnw-dZ-1TN" firstAttribute="top" secondItem="bED-Nd-gb6" secondAttribute="bottom" id="D5A-Hh-M6n"/>
+                            <constraint firstItem="bED-Nd-gb6" firstAttribute="leading" secondItem="b43-Du-HF3" secondAttribute="leading" id="Mtv-ws-CUB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="LgO-Ei-atN"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="show" identifier="musicWasSelected" id="dpJ-d3-vZ6"/>
+                        <outlet property="tableView" destination="bED-Nd-gb6" id="ET2-RV-4pX"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="musicWasSelected" id="s7b-AA-gvc"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NM3-mZ-uHr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oR4-zS-aZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="199.19999999999999" y="383.65817091454278"/>
+            <point key="canvasLocation" x="1146" y="384"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Cby-7d-oF1">
+        <scene sceneID="DE9-3Y-HK2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uEt-xg-ypl" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qHK-8T-lUi" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0KQ-ux-9Kg">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="f3m-P6-pM9">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ehT-Ui-tDr" kind="relationship" relationship="rootViewController" id="g7g-sD-Rb9"/>
+                        <segue destination="FNU-cT-jE0" kind="relationship" relationship="rootViewController" id="S3Y-mS-mbV"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LdL-rw-mIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NbD-st-jto" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-740" y="383.65817091454278"/>
+            <point key="canvasLocation" x="160.80000000000001" y="383.65817091454278"/>
         </scene>
     </scenes>
     <resources>

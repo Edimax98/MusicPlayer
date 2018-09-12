@@ -15,10 +15,27 @@ struct HeaderData {
     var dividerColor: UIColor
 }
 
-class MusicPlayerLandingPage: UITableViewController {
+extension UIView {
+    func applyGradient(colours: [UIColor]) -> Void {
+        self.applyGradient(colours: colours, locations: nil)
+    }
     
-    private let countOfRowsInSection = 1
-    private let countOfSection = 6
+    func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> Void {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = colours.map { $0.cgColor }
+        gradient.locations = locations
+        gradient.startPoint = CGPoint(x: 0.0,y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0,y: 0.5)
+        self.layer.insertSublayer(gradient, at: 1)
+    }
+}
+
+class MusicPlayerLandingPage: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    fileprivate let countOfRowsInSection = 1
+    fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
     fileprivate var selectedSongCover = ""
     fileprivate let headerSize: CGFloat = 60
@@ -37,6 +54,37 @@ class MusicPlayerLandingPage: UITableViewController {
         tableView.register(UINib(nibName: "NewClipsCell", bundle: nil), forCellReuseIdentifier: NewClipsCell.identifier)
         tableView.register(UINib(nibName: "PopularSongsCell", bundle: nil), forCellReuseIdentifier: PopularSongsCell.identifier)
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
+        configureFloatButtonView()
+    }
+    
+    private func configureFloatButtonView() {
+        
+        let startColorForButton = UIColor(red: 255 / 255, green: 124 / 255 , blue: 7 / 255, alpha: 1)
+        let endColorForButton = UIColor(red: 220 / 255, green: 13 / 255 , blue: 49 / 255, alpha: 1)
+        let viewForButton = UIView(frame: CGRect(x: 0, y: self.view.frame.height - 100, width: self.view.frame.width, height: 100))
+        let btn = UIButton(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: 5, width: 290, height: 60))
+        btn.backgroundColor = .red
+        btn.layer.masksToBounds = true
+        btn.setTitleColor(.white, for: .normal)
+        btn.setAttributedTitle(NSAttributedString(string: "Start free trial", attributes: [NSAttributedStringKey.font : UIFont(name: "Roboto-Bold", size: 27) ?? .boldSystemFont(ofSize: 27), NSAttributedStringKey.foregroundColor : UIColor.white]), for: .normal)
+        btn.applyGradient(colours: [startColorForButton, endColorForButton])
+        btn.layer.cornerRadius = 30
+        btn.addTarget(self, action: #selector(startTrialButtonPressed), for: .touchUpInside)
+        
+        let lableWithAdditionalInfo = UILabel(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: btn.frame.height, width: btn.frame.width, height: 60))
+        lableWithAdditionalInfo.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore "
+        lableWithAdditionalInfo.font = UIFont.systemFont(ofSize: 12)
+        lableWithAdditionalInfo.numberOfLines = 0
+        lableWithAdditionalInfo.textColor = UIColor(red: 74/255, green: 74 / 255, blue: 74 / 255, alpha: 1)
+        
+        viewForButton.addSubview(btn)
+        viewForButton.addSubview(lableWithAdditionalInfo)
+        viewForButton.backgroundColor = UIColor(red: 23/255.0, green: 21/255.0, blue: 29/255.0, alpha: 1)
+        self.view.addSubview(viewForButton)
+    }
+    
+    @objc func startTrialButtonPressed() {
+        performSegue(withIdentifier: "musicWasSelected", sender: self)
     }
     
     private func fillDataSource() {
@@ -53,16 +101,19 @@ class MusicPlayerLandingPage: UITableViewController {
         dataSource.append(HeaderData(icon: "section4", title: "New Video clips", dividerColor: lightOrange))
         dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: brightPink))
     }
+}
+
+extension MusicPlayerLandingPage: UITableViewDataSource {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return countOfSection
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countOfRowsInSection
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
         case 0:
@@ -104,26 +155,43 @@ class MusicPlayerLandingPage: UITableViewController {
         }
         return UITableViewCell()
     }
+}
+
+extension MusicPlayerLandingPage: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        switch indexPath.section {
+        case 3:
+            return 300
+        case 4:
+            return 200
+        case 5:
+            return 350
+        default:
+            return 150
+        }
+    }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 1.0
         }
         return headerSize
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1.0
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 1))
         footerView.backgroundColor = .black
         return footerView
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 1))
         headerView.backgroundColor = .black
@@ -143,6 +211,7 @@ class MusicPlayerLandingPage: UITableViewController {
         return header
     }
 }
+
 
 extension  MusicPlayerLandingPage: ActionHandler {
     
