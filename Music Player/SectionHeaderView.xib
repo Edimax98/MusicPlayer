@@ -4,8 +4,8 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,39 +20,35 @@
                     <rect key="frame" x="0.0" y="0.0" width="453" height="62"/>
                     <subviews>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="fzB-Kq-b2t">
-                            <rect key="frame" x="0.0" y="59" width="453" height="3"/>
+                            <rect key="frame" x="25" y="59" width="403" height="3"/>
                             <color key="backgroundColor" red="0.031446518729999998" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="fzB-Kq-b2t" secondAttribute="height" multiplier="151:1" id="INi-NL-7e8"/>
-                            </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" image="section1" translatesAutoresizingMaskIntoConstraints="NO" id="BnA-hs-ftq">
-                            <rect key="frame" x="5" y="24" width="30" height="30"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section title here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OV-l5-gbl">
+                            <rect key="frame" x="63" y="38" width="382" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" image="section1" translatesAutoresizingMaskIntoConstraints="NO" id="BnA-hs-ftq">
+                            <rect key="frame" x="25" y="35" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="FcO-r6-Rnu"/>
                                 <constraint firstAttribute="width" constant="30" id="Nfa-pr-jm3"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section title here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OV-l5-gbl">
-                            <rect key="frame" x="43" y="29" width="402" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="7OV-l5-gbl" firstAttribute="leading" secondItem="BnA-hs-ftq" secondAttribute="trailing" constant="8" id="2gn-xY-Tkt"/>
-                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="top" secondItem="BnA-hs-ftq" secondAttribute="bottom" constant="5" id="EeM-8N-dOf"/>
-                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="top" secondItem="7OV-l5-gbl" secondAttribute="bottom" constant="9" id="IDh-ka-o8f"/>
-                        <constraint firstItem="BnA-hs-ftq" firstAttribute="leading" secondItem="S8G-oC-Bu2" secondAttribute="leading" constant="5" id="MjJ-B4-FKh"/>
-                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="leading" secondItem="S8G-oC-Bu2" secondAttribute="leading" id="Wn0-ND-qXp"/>
+                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="leading" secondItem="S8G-oC-Bu2" secondAttribute="leading" constant="25" id="63o-51-nRb"/>
+                        <constraint firstItem="BnA-hs-ftq" firstAttribute="leading" secondItem="S8G-oC-Bu2" secondAttribute="leading" constant="25" id="8ha-8o-14g"/>
+                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="top" secondItem="7OV-l5-gbl" secondAttribute="bottom" id="IDh-ka-o8f"/>
+                        <constraint firstAttribute="trailing" secondItem="fzB-Kq-b2t" secondAttribute="trailing" constant="25" id="Uvs-Sn-0Ji"/>
                         <constraint firstAttribute="bottom" secondItem="fzB-Kq-b2t" secondAttribute="bottom" id="drH-T2-Zus"/>
-                        <constraint firstItem="7OV-l5-gbl" firstAttribute="top" secondItem="S8G-oC-Bu2" secondAttribute="top" constant="29" id="ewJ-aK-Gon"/>
+                        <constraint firstItem="7OV-l5-gbl" firstAttribute="top" secondItem="S8G-oC-Bu2" secondAttribute="top" constant="38" id="ewJ-aK-Gon"/>
                         <constraint firstAttribute="trailing" secondItem="7OV-l5-gbl" secondAttribute="trailing" constant="8" id="lvO-PD-eKB"/>
-                        <constraint firstAttribute="trailing" secondItem="fzB-Kq-b2t" secondAttribute="trailing" id="q8E-44-izD"/>
-                        <constraint firstItem="BnA-hs-ftq" firstAttribute="top" secondItem="S8G-oC-Bu2" secondAttribute="top" constant="24" id="tV4-b7-WiH"/>
-                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="top" secondItem="BnA-hs-ftq" secondAttribute="bottom" constant="5" id="vp9-At-2tw"/>
+                        <constraint firstItem="BnA-hs-ftq" firstAttribute="top" secondItem="S8G-oC-Bu2" secondAttribute="top" constant="35" id="tV4-b7-WiH"/>
+                        <constraint firstItem="fzB-Kq-b2t" firstAttribute="top" secondItem="BnA-hs-ftq" secondAttribute="bottom" constant="-6" id="vp9-At-2tw"/>
                         <constraint firstItem="7OV-l5-gbl" firstAttribute="leading" secondItem="BnA-hs-ftq" secondAttribute="trailing" constant="8" id="wbu-Jg-1KA"/>
                     </constraints>
                 </view>

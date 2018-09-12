@@ -11,7 +11,8 @@ import UIKit
 class TodaysPlaylistCell: UITableViewCell {
     
     fileprivate let playlistsCoverNames = ["playlist1","playlist2","playlist3","playlist4"]
-    fileprivate let offset: CGFloat = 75
+    fileprivate let cellWidth: CGFloat = 144
+    fileprivate let cellHeight: CGFloat = 140
     static var identifier = "TodaysPlaylistCell"
     @IBOutlet weak var todaysPlaylistCollectionView: UICollectionView!
     
@@ -44,7 +45,7 @@ extension TodaysPlaylistCell: UICollectionViewDataSource {
 extension TodaysPlaylistCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.frame.width - offset, height: self.frame.height - 10)
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

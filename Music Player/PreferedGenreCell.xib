@@ -19,7 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="90" height="45"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qx-Jx-6Ii">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Tv-Km-d0m">
+                        <rect key="frame" x="0.0" y="0.0" width="90" height="45"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fd-ek-1zw">
                         <rect key="frame" x="3" y="10" width="85" height="25"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,15 +32,20 @@
             </view>
             <color key="backgroundColor" red="0.09004492312669754" green="0.23163309693336487" blue="0.45032626390457153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="1qx-Jx-6Ii" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="1Jd-8w-XE5"/>
-                <constraint firstAttribute="trailing" secondItem="1qx-Jx-6Ii" secondAttribute="trailing" constant="2" id="as3-WC-ucJ"/>
-                <constraint firstAttribute="bottom" secondItem="1qx-Jx-6Ii" secondAttribute="bottom" constant="10" id="lmb-J0-oi7"/>
-                <constraint firstItem="1qx-Jx-6Ii" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="rUg-ff-MSg"/>
+                <constraint firstItem="2fd-ek-1zw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="5Zc-EO-ygb"/>
+                <constraint firstAttribute="trailing" secondItem="2fd-ek-1zw" secondAttribute="trailing" constant="2" id="9S6-fh-rpT"/>
+                <constraint firstItem="5Tv-Km-d0m" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="KwK-0L-N66"/>
+                <constraint firstAttribute="trailing" secondItem="5Tv-Km-d0m" secondAttribute="trailing" id="Qgi-mN-OZG"/>
+                <constraint firstAttribute="bottom" secondItem="2fd-ek-1zw" secondAttribute="bottom" constant="10" id="boq-4z-5En"/>
+                <constraint firstAttribute="bottom" secondItem="5Tv-Km-d0m" secondAttribute="bottom" id="gHS-2B-Cdj"/>
+                <constraint firstItem="2fd-ek-1zw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="gHl-Eo-Q5o"/>
+                <constraint firstItem="5Tv-Km-d0m" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="zlP-bG-ZMp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="90" height="50"/>
             <connections>
-                <outlet property="preferedGenreLabel" destination="1qx-Jx-6Ii" id="rOB-YV-lmI"/>
+                <outlet property="preferedGenreImageView" destination="5Tv-Km-d0m" id="Uhr-5B-d3q"/>
+                <outlet property="preferedGenreLabel" destination="2fd-ek-1zw" id="N9v-Cp-nK5"/>
             </connections>
             <point key="canvasLocation" x="30" y="55.5"/>
         </collectionViewCell>

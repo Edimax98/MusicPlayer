@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -375,11 +376,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Section-5" id="Xhn-6b-Cpc" userLabel="Section-5">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewReleasesCell" rowHeight="240" id="OHl-ug-HEb" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="354.5" width="375" height="240"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewReleasesCell" rowHeight="150" id="OHl-ug-HEb" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="354.5" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OHl-ug-HEb" id="emR-6e-62x">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="239.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -387,11 +388,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Section-3" id="s3w-hw-Cgu">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="281" id="oVk-W5-s71" customClass="NewReleasesCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="650.5" width="375" height="281"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="249" id="oVk-W5-s71" customClass="NewReleasesCell" customModule="Music_Player" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="560.5" width="375" height="249"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oVk-W5-s71" id="x4z-Vv-dZS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="280.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="248.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -400,7 +401,7 @@
                             <tableViewSection headerTitle="Section-4" id="rOE-0i-OU4">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewClipsCell" rowHeight="215" id="ws6-G4-04Q" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="987.5" width="375" height="215"/>
+                                        <rect key="frame" x="0.0" y="865.5" width="375" height="215"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ws6-G4-04Q" id="QiJ-Uj-fvY">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="214.5"/>
@@ -412,7 +413,7 @@
                             <tableViewSection headerTitle="Section-4" id="vPO-sy-JXa" userLabel="Section-6">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PopularSongsCell" rowHeight="176" id="6Fi-aF-iPf" customClass="NewClipsCell" customModule="Music_Player" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1258.5" width="375" height="176"/>
+                                        <rect key="frame" x="0.0" y="1136.5" width="375" height="176"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Fi-aF-iPf" id="2LP-vS-ZUe">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="175.5"/>

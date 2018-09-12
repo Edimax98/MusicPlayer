@@ -23,43 +23,46 @@ class PreferencesCell: UITableViewCell {
     var longTagIndex: Int {
         return 1
     }
-    
+        
     fileprivate let cellHeight: CGFloat = 37
     fileprivate let inset: CGFloat = 10
     fileprivate let minimumInteritemSpacing: CGFloat = 10
     fileprivate let cellsPerRow = 3
     fileprivate let countOfItemsInSection = 2
-    fileprivate let preferedGenres = ["Indie Rock", "Deep House","Hip-Hop", "Trance",
-                                      "EDM","Trap","Lounge","Rock'n'Roll",
-                                      "Classical","House","Minimal","Psy Trance",
-                                      "Alternative","Jazz","Country","Disco"]
+    fileprivate let preferedGenres = [["Indie Rock", "Deep House","Hip-Hop"],
+                                      ["Trance","EDM","Trap"],
+                                      ["Lounge","Rock'n'Roll","Classical"],
+                                      ["House","Minimal","Psy Trance"],
+                                      ["Alternative","Jazz","Country","Disco"]]
     
     @IBOutlet weak var preferencesCollectionView: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let tagCellLayout = TagCellLayout(alignment: .center, delegate: self)
-        tagCellLayout.delegate = self
-        preferencesCollectionView.collectionViewLayout = tagCellLayout
+        preferencesCollectionView.allowsMultipleSelection = true
         preferencesCollectionView.delegate = self
-        preferencesCollectionView.register(UINib(nibName: "PreferedGenreCell", bundle: nil), forCellWithReuseIdentifier: "PreferedGenreCell")
+        preferencesCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
         preferencesCollectionView.dataSource = self
     }
 }
 
 extension PreferencesCell: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return preferedGenres.count
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreferedGenreCell", for: indexPath) as? PreferedGenreCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PreferedGenreCell.identifier, for: indexPath) as? PreferedGenreCell else {
             return UICollectionViewCell()
         }
         
-        cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
+        cell.preferedGenreLabel.text = preferedGenres[indexPath.section][indexPath.row]
         return cell
     }
 }
@@ -71,46 +74,36 @@ extension PreferencesCell: UICollectionViewDelegateFlowLayout {
         let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
         return CGSize(width: itemWidth, height: cellHeight)
     }
-}
-
-extension PreferencesCell: TagCellLayoutDelegate {
     
-    func tagCellLayoutTagSize(layout: TagCellLayout, atIndex index: Int) -> CGSize {
-        
-        if index == longTagIndex || index == (longTagIndex + 3) {
-            var s = NSString(string: longString).boundingRect(with: CGSize(width: 75.0, height: Double.greatestFiniteMagnitude),
-                                                              options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                                  attributes: [NSFontAttributeName: self],
-                                                                  context: nil).size
-            s.height += 8.0
-            return s
-        } else {
-            let width = CGFloat(index % 2 == 0 ? 80 : 120)
-            return CGSize(width: width, height: oneLineHeight)
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10.0
     }
 }
 
 extension PreferencesCell: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
+            return
+        }
+        
+        cell.preferedGenreImageView.image = nil
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        collectionView.deselectItem(at: indexPath, animated: false)
-//        let shadowedRed = UIColor(red: 255 / 221, green: 255 / 46, blue: 255 / 81, alpha: 1)
-//        let brightGreen = UIColor(red: 255 / 117, green: 255 / 255, blue: 255 / 140, alpha: 1)
-//        let shadowedYellow = UIColor(red: 255 / 255, green: 255 / 196, blue: 255 / 58, alpha: 1)
-//
-//        guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
-//            return
-//        }
-//
-//        if indexPath.row % 2 == 0 {
-//            cell.preferedGenreLabel.text = "lelrfg"
-//        } else if indexPath.row % 3 == 0 {
-//            cell.backgroundColor = .green
-//        } else {
-//            cell.backgroundColor = shadowedRed
-//        }
-//        preferencesCollectionView.reloadItems(at: [indexPath])
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
+            return
+        }
+        
+        if indexPath.row % 2 == 0 {
+            cell.preferedGenreImageView.image = UIImage(named: "genresblue")
+        } else if indexPath.row % 3 == 0 {
+            cell.preferedGenreImageView.image = UIImage(named: "genresblue")
+        } else {
+            cell.preferedGenreImageView.image = UIImage(named: "genresgreen")
+        }
     }
 }
 

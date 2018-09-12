@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,25 +31,36 @@
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:33" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIb-aR-syp">
+                        <rect key="frame" x="347" y="164" width="25" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="WEm-FL-R3u"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="PDh-jf-8UF" firstAttribute="centerY" secondItem="BQt-zR-xIH" secondAttribute="centerY" constant="1.5" id="C5O-np-wgw"/>
+                <constraint firstAttribute="bottom" secondItem="zIb-aR-syp" secondAttribute="bottom" constant="40" id="EZs-pK-V0o"/>
                 <constraint firstItem="BQt-zR-xIH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Gqx-To-CPh"/>
                 <constraint firstItem="BQt-zR-xIH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="IKo-mf-jtE"/>
                 <constraint firstAttribute="bottom" secondItem="q1S-HP-0gQ" secondAttribute="bottom" constant="11" id="JdD-dJ-cEZ"/>
                 <constraint firstItem="q1S-HP-0gQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="K2G-g5-kW6"/>
+                <constraint firstAttribute="trailing" secondItem="zIb-aR-syp" secondAttribute="trailing" constant="3" id="SJd-0S-wfc"/>
                 <constraint firstAttribute="trailing" secondItem="q1S-HP-0gQ" secondAttribute="trailing" constant="20" id="V1J-sR-k5c"/>
                 <constraint firstItem="PDh-jf-8UF" firstAttribute="centerX" secondItem="BQt-zR-xIH" secondAttribute="centerX" constant="1" id="dxy-wg-BKy"/>
                 <constraint firstAttribute="trailing" secondItem="BQt-zR-xIH" secondAttribute="trailing" id="fgj-cY-dPw"/>
-                <constraint firstItem="q1S-HP-0gQ" firstAttribute="top" secondItem="BQt-zR-xIH" secondAttribute="bottom" constant="8" id="oU3-3l-UsX"/>
                 <constraint firstItem="q1S-HP-0gQ" firstAttribute="top" secondItem="BQt-zR-xIH" secondAttribute="bottom" constant="8" id="sXW-jv-zhQ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="375" height="220"/>
             <connections>
                 <outlet property="clipCoverImageView" destination="BQt-zR-xIH" id="LIk-aH-knC"/>
+                <outlet property="timeOfClip" destination="zIb-aR-syp" id="hSP-0B-QiL"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="64"/>
         </collectionViewCell>

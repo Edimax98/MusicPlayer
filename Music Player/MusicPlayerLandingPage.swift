@@ -21,7 +21,7 @@ class MusicPlayerLandingPage: UITableViewController {
     private let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
     fileprivate var selectedSongCover = ""
-    fileprivate let headerSize: CGFloat = 60.0
+    fileprivate let headerSize: CGFloat = 60
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,33 +39,19 @@ class MusicPlayerLandingPage: UITableViewController {
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "musicWasSelected" {
-            ///
-//            guard let destinationNav =  segue.destination as? UINavigationController else {
-//                print("Could not cast or its nil")
-//                return
-//            }
-            
-//            guard let destinationVc = destinationNav.viewControllers.first as? PlayerViewController else {
-//                print("Could not cast or its nil")
-//                return
-//            }
-            
-            //destinationVc.albumArtworkImageView.image = UIImage(named: selectedSongCover)
-        }
-    }
-    
     private func fillDataSource() {
         
-        let pink = UIColor(red: 199 / 255, green: 21 / 105, blue: 133 / 180, alpha: 1)
+        let lightOrange = UIColor(red: 186/255.0, green: 81/255.0, blue: 49/255.0, alpha:1/1.0)
+        let brightPink = UIColor(red: 244/255.0, green:64/255.0, blue:113/255.0, alpha:1/1.0)
+        let lightPurple = UIColor(red: 144/255.0, green:19/255.0, blue:254/255.0, alpha:1/1.0)
+        let lightBlue = UIColor(red: 53/255.0, green:181/255.0, blue:214/255.0, alpha:1/1.0)
+        let pink = UIColor(red: 226/255.0, green:65/255.0, blue:170/255.0, alpha:1/1.0)
         
-        dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences", dividerColor: .blue))
-        dataSource.append(HeaderData(icon: "section2", title: "Playlists for today", dividerColor: .purple))
+        dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences", dividerColor: lightBlue))
+        dataSource.append(HeaderData(icon: "section2", title: "Playlists for today", dividerColor: lightPurple))
         dataSource.append(HeaderData(icon: "section3", title: "New Releases", dividerColor: pink))
-        dataSource.append(HeaderData(icon: "section4", title: "New Video clips", dividerColor: .orange))
-        dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: .red))
+        dataSource.append(HeaderData(icon: "section4", title: "New Video clips", dividerColor: lightOrange))
+        dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: brightPink))
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
