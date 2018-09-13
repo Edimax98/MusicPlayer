@@ -104,9 +104,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }
     }
     
-        //MARK-
-    
-    
     // Table View Part of the code. Displays Song name and Artist Name
     // MARK: - UITableViewDataSource
     
@@ -417,35 +414,31 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         
     }
     
-    
-    //MARK:-
-    
-    func startTimer(){
+    func startTimer() {
+        
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(PlayerViewController.update(_:)), userInfo: nil,repeats: true)
             timer.fire()
         }
     }
     
-    func stopTimer(){
+    func stopTimer() {
         timer.invalidate()
-        
     }
     
-    
-    @objc func update(_ timer: Timer){
-        if !audioPlayer.isPlaying{
+    @objc func update(_ timer: Timer) {
+        
+        if !audioPlayer.isPlaying {
             return
         }
         let time = calculateTimeFromNSTimeInterval(audioPlayer.currentTime)
         progressTimerLabel.text  = "\(time.minute):\(time.second)"
         playerProgressSlider.value = CFloat(audioPlayer.currentTime)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: "playerProgressSliderValue")
-
-        
     }
     
-    func retrievePlayerProgressSliderValue(){
+    func retrievePlayerProgressSliderValue() {
+        
         let playerProgressSliderValue =  UserDefaults.standard.float(forKey: "playerProgressSliderValue")
         if playerProgressSliderValue != 0 {
             playerProgressSlider.value  = playerProgressSliderValue
@@ -455,15 +448,13 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
             progressTimerLabel.text  = "\(time.minute):\(time.second)"
             playerProgressSlider.value = CFloat(audioPlayer.currentTime)
             
-        }else{
+        } else {
             playerProgressSlider.value = 0.0
             audioPlayer.currentTime = 0.0
             progressTimerLabel.text = "00:00:00"
         }
     }
 
-    
-    
     //This returns song length
     func calculateTimeFromNSTimeInterval(_ duration:TimeInterval) ->(minute:String, second:String){
        // let hour_   = abs(Int(duration)/3600)
@@ -476,19 +467,15 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         return (minute,second)
     }
     
-
-    
     func showTotalSongLength(){
         calculateSongLength()
         totalLengthOfAudioLabel.text = totalLengthOfAudio
     }
     
-    
     func calculateSongLength(){
         let time = calculateTimeFromNSTimeInterval(audioLength)
         totalLengthOfAudio = "\(time.minute):\(time.second)"
     }
-    
     
     //Read plist file and creates an array of dictionary
     func readFromPlist(){
