@@ -23,37 +23,58 @@ class PreferencesCell: UITableViewCell {
     var longTagIndex: Int {
         return 1
     }
-        
+    
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     fileprivate let cellHeight: CGFloat = 37
     fileprivate let inset: CGFloat = 10
     fileprivate let minimumInteritemSpacing: CGFloat = 10
     fileprivate let cellsPerRow = 3
     fileprivate let countOfItemsInSection = 2
-    fileprivate let preferedGenres = [["Indie Rock", "Deep House","Hip-Hop"],
-                                      ["Trance","EDM","Trap"],
-                                      ["Lounge","Rock'n'Roll","Classical"],
-                                      ["House","Minimal","Psy Trance"],
-                                      ["Alternative","Jazz","Country","Disco"]]
+    fileprivate let preferedGenres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country", "Disco"]
+    fileprivate let genresImages = ["genrespink","genresgreen","genresblue","genresorange"]
     
     @IBOutlet weak var preferencesCollectionView: UICollectionView!
+    @IBOutlet weak var preferencesSecondLineCollectionView: UICollectionView!
+    @IBOutlet weak var preferencesThirdLineCollectionView: UICollectionView!
+    @IBOutlet weak var preferencesFourthLineCollectionView: UICollectionView!
+    @IBOutlet weak var preferencesFifthLineCollecctionview: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
+        preferencesCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesSecondLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesThirdLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesFourthLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesFifthLineCollecctionview.backgroundColor = defaultBackgroundColor
+        self.backgroundColor = defaultBackgroundColor
+        preferencesSecondLineCollectionView.dataSource = self
+        preferencesSecondLineCollectionView.delegate = self
+        preferencesThirdLineCollectionView.dataSource = self
+        preferencesThirdLineCollectionView.delegate = self
+        preferencesFourthLineCollectionView.delegate = self
+        preferencesFourthLineCollectionView.dataSource = self
+        preferencesFifthLineCollecctionview.dataSource = self
+        preferencesFifthLineCollecctionview.delegate = self
         preferencesCollectionView.allowsMultipleSelection = true
+        preferencesSecondLineCollectionView.allowsMultipleSelection = true
+        preferencesThirdLineCollectionView.allowsMultipleSelection = true
+        preferencesFourthLineCollectionView.allowsMultipleSelection = true
+        preferencesFifthLineCollecctionview.allowsMultipleSelection = true
         preferencesCollectionView.delegate = self
-        preferencesCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
         preferencesCollectionView.dataSource = self
+        preferencesSecondLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesThirdLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesFourthLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesFifthLineCollecctionview.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
     }
 }
 
 extension PreferencesCell: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return preferedGenres.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -62,7 +83,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.preferedGenreLabel.text = preferedGenres[indexPath.section][indexPath.row]
+        cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
         return cell
     }
 }
@@ -73,10 +94,6 @@ extension PreferencesCell: UICollectionViewDelegateFlowLayout {
         let marginsAndInsets = inset * 2.0 + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
         let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
         return CGSize(width: itemWidth, height: cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
     }
 }
 
@@ -97,13 +114,8 @@ extension PreferencesCell: UICollectionViewDelegate {
             return
         }
         
-        if indexPath.row % 2 == 0 {
-            cell.preferedGenreImageView.image = UIImage(named: "genresblue")
-        } else if indexPath.row % 3 == 0 {
-            cell.preferedGenreImageView.image = UIImage(named: "genresblue")
-        } else {
-            cell.preferedGenreImageView.image = UIImage(named: "genresgreen")
-        }
+        let randomNumber = Int(arc4random() % 4)
+        cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
     }
 }
 

@@ -10,6 +10,7 @@ import UIKit
 
 class TodaysPlaylistCell: UITableViewCell {
     
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     fileprivate let playlistsCoverNames = ["playlist1","playlist2","playlist3","playlist4"]
     fileprivate let cellWidth: CGFloat = 144
     fileprivate let cellHeight: CGFloat = 140
@@ -18,8 +19,10 @@ class TodaysPlaylistCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         if todaysPlaylistCollectionView != nil {
             todaysPlaylistCollectionView.register(UINib(nibName: "TodaySongCell", bundle: nil), forCellWithReuseIdentifier: "TodaySongCell")
+            todaysPlaylistCollectionView.backgroundColor = defaultBackgroundColor
             todaysPlaylistCollectionView.dataSource = self
             todaysPlaylistCollectionView.delegate = self
         }

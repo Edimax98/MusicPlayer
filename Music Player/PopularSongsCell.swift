@@ -17,11 +17,13 @@ class PopularSongsCell: UITableViewCell {
                              "albom9","albom10","albom11","albom12"]
     
     @IBOutlet weak var popularSongsCollectionView: UICollectionView!
-    
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        self.selectionStyle = .none
         if popularSongsCollectionView != nil {
+            popularSongsCollectionView.backgroundColor = defaultBackgroundColor
             popularSongsCollectionView.dataSource = self
             popularSongsCollectionView.delegate = self
             popularSongsCollectionView.register(UINib(nibName: "SongCell", bundle: nil), forCellWithReuseIdentifier: "SongCell")

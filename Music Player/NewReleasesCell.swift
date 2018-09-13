@@ -18,6 +18,7 @@ class NewReleasesCell: UITableViewCell {
         return "NewReleasesCell"
     }
     
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     fileprivate var bunchOfNewAlbumCovers = ["rel1","rel2","rel3","rel4","rel5"]
     fileprivate var indexOfCellBeforeDragging = 0
     
@@ -34,11 +35,12 @@ class NewReleasesCell: UITableViewCell {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        self.selectionStyle = .none
         if releasesCollectionVeiw != nil {
             setupLayout()
             releasesCollectionVeiw.delegate = self
             releasesCollectionVeiw.dataSource = self
+            releasesCollectionVeiw.backgroundColor = defaultBackgroundColor
             releasesCollectionVeiw.register(UINib(nibName: "NewAlbumCell", bundle: nil), forCellWithReuseIdentifier: "NewAlbumCell")
         }
     }

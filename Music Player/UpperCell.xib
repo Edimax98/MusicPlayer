@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -60,6 +61,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="backgroundImage" destination="esp-wv-tY4" id="deC-Tq-tlQ"/>
+                <outlet property="containerView" destination="H2p-sc-9uM" id="8EP-kz-gZ1"/>
                 <outlet property="headphoneImage" destination="Y0e-VR-FI8" id="STj-9v-lIR"/>
                 <outlet property="subTitleLabel" destination="nCp-xb-V2j" id="BpL-Sl-nyY"/>
                 <outlet property="titleLabel" destination="b5p-M1-XKp" id="tvq-lI-s72"/>

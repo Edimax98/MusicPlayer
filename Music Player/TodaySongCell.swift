@@ -15,6 +15,7 @@ class TodaySongCell: UICollectionViewCell {
 	@IBOutlet weak var infoAboutPlaylistLabel: UILabel!
 	
     fileprivate let cornerRadius: CGFloat = 7
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
 	override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +24,7 @@ class TodaySongCell: UICollectionViewCell {
             playlistCoverImageView.layer.cornerRadius = cornerRadius
             typeOfPlaylistLabel.text = "Type of playlist"
             infoAboutPlaylistLabel.text = "Info about playlist"
+            self.backgroundColor = defaultBackgroundColor
         }
     }
 }

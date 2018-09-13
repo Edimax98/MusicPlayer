@@ -63,6 +63,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="containerView" destination="S8G-oC-Bu2" id="ces-wZ-ucV"/>
                 <outlet property="dividerView" destination="fzB-Kq-b2t" id="zaJ-Sj-GG1"/>
                 <outlet property="sectionIconImageView" destination="BnA-hs-ftq" id="Dup-6J-ixw"/>
                 <outlet property="sectionNameLabel" destination="7OV-l5-gbl" id="anz-iY-a3E"/>

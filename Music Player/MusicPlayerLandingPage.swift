@@ -39,11 +39,13 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var dataSource = [HeaderData]()
     fileprivate var selectedSongCover = ""
     fileprivate let headerSize: CGFloat = 60
+    fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = defaultBackgroundColor
         fillDataSource()
         self.title = "Landing page"
         tableView.separatorStyle = .none
@@ -162,6 +164,8 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         switch indexPath.section {
+        case 1:
+            return 220
         case 3:
             return 300
         case 4:
@@ -187,14 +191,14 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 1))
-        footerView.backgroundColor = .black
+        footerView.backgroundColor = defaultBackgroundColor
         return footerView
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 1))
-        headerView.backgroundColor = .black
+        headerView.backgroundColor = defaultBackgroundColor
         
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderView.identifier) as? SectionHeaderView else {
             return UIView()
@@ -211,7 +215,6 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         return header
     }
 }
-
 
 extension  MusicPlayerLandingPage: ActionHandler {
     
