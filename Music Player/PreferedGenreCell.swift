@@ -18,7 +18,7 @@ class PreferedGenreCell: UICollectionViewCell {
     
 	override func awakeFromNib() {
         super.awakeFromNib()
-		self.layer.cornerRadius = 15
+		self.layer.cornerRadius = 37 / 2
         self.backgroundColor = defaultColor
     }
 }

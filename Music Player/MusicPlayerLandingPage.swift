@@ -170,7 +170,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 
         switch indexPath.section {
         case 1:
-            return 230
+            return 200
         case 3:
             return 300
         case 4:
