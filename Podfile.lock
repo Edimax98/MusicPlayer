@@ -1,16 +1,30 @@
 PODS:
-  - TagCellLayout (1.0)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - FacebookCore (0.3.2):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.35)
+  - FBSDKCoreKit (4.36.0):
+    - Bolts (~> 1.7)
 
 DEPENDENCIES:
-  - TagCellLayout
+  - FacebookCore
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - TagCellLayout
+    - Bolts
+    - FacebookCore
+    - FBSDKCoreKit
 
 SPEC CHECKSUMS:
-  TagCellLayout: e138f3f59ba3993b332bb1a4ff84f9b624ed1af2
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  FacebookCore: fe93222bb70346730ef33b061d493e9e7a7cb1f5
+  FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
 
-PODFILE CHECKSUM: 1c13f8d3663425bc7a7f5bb0380ecc73ff862360
+PODFILE CHECKSUM: 8ac8118e865c0124b45b314a8ebf49b35af80bf6
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

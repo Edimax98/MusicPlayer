@@ -17,7 +17,7 @@
 import UIKit
 import AVFoundation
 import MediaPlayer
-
+import FBSDKCoreKit
 
 extension UIImageView {
     
@@ -31,7 +31,7 @@ extension UIImageView {
 class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,AVAudioPlayerDelegate {
     
     //Choose background here. Between 1 - 7
-    let selectedBackground = 3
+    let selectedBackground = 7
 	
     var audioPlayer:AVAudioPlayer! = nil
     var currentAudio = ""
@@ -140,9 +140,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54.0
     }
-    
-    
-    
+
     func tableView(_ tableView: UITableView,willDisplay cell: UITableViewCell,forRowAt indexPath: IndexPath){
         tableView.backgroundColor = UIColor.clear
         
@@ -583,7 +581,17 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         let alert = UIAlertController(title: "Trial", message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true) {
+            
+//            FBSDKAppEvents.logEvent("Trial has started", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
+//                                                                      "id": FBSDKAppEventParameterNameContentID,
+//                                                                      "USD": FBSDKAppEventParameterNameCurrency])
+        //    FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
+                                                                         // "id": FBSDKAppEventParameterNameContentID])
+            FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
+                                                                         FBSDKAppEventParameterNameContentID : "id"])
+        }
+        
 //        if shuffleState == true {
 //            shuffleArray.removeAll()
 //        }
@@ -662,6 +670,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         effectToggle = !effectToggle
         let showList = UIImage(named: "list")
         let removeList = UIImage(named: "listS")
-        effectToggle ? "\(listButton.setImage( showList, for: UIControlState()))" : "\(listButton.setImage(removeList , for: UIControlState()))"
+        effectToggle ? "\(listButton.setImage(showList, for: UIControlState()))" : "\(listButton.setImage(removeList , for: UIControlState()))"
     }
 }

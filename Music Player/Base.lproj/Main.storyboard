@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qHK-8T-lUi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FNU-cT-jE0">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -116,7 +116,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Michael Jacson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="kPD-hL-hhf" userLabel="ArtistName">
-                                <rect key="frame" x="30" y="97" width="338" height="38"/>
+                                <rect key="frame" x="30" y="53" width="338" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="MuU-0m-0jI"/>
                                 </constraints>
@@ -125,21 +125,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4U1-Vn-jnd" userLabel="Line">
-                                <rect key="frame" x="32" y="143" width="336" height="2"/>
+                                <rect key="frame" x="32" y="99" width="336" height="2"/>
                                 <color key="backgroundColor" red="0.21176470588235294" green="0.2627450980392157" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="FC1-T7-tVE"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow.png" translatesAutoresizingMaskIntoConstraints="NO" id="fRc-tf-XzO" userLabel="Shadow">
-                                <rect key="frame" x="85" y="155" width="200" height="200"/>
+                                <rect key="frame" x="85" y="111" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="2RU-FQ-mVL"/>
                                     <constraint firstAttribute="width" constant="200" id="Cwf-ng-xZ4"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="demo1.png" translatesAutoresizingMaskIntoConstraints="NO" id="OQc-He-Wkx" userLabel="Album Cover">
-                                <rect key="frame" x="97.5" y="155" width="180" height="180"/>
+                                <rect key="frame" x="97.5" y="111" width="180" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="AiC-vf-dKz"/>
                                     <constraint firstAttribute="width" constant="180" id="Lmj-Cy-Fbs"/>
@@ -387,9 +387,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="FNU-cT-jE0" kind="relationship" relationship="rootViewController" id="S3Y-mS-mbV"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NbD-st-jto" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

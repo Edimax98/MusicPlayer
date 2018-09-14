@@ -41,6 +41,10 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -63,7 +67,7 @@ class MusicPlayerLandingPage: UIViewController {
         
         let startColorForButton = UIColor(red: 255 / 255, green: 124 / 255 , blue: 7 / 255, alpha: 1)
         let endColorForButton = UIColor(red: 220 / 255, green: 13 / 255 , blue: 49 / 255, alpha: 1)
-        let viewForButton = UIView(frame: CGRect(x: 0, y: self.view.frame.height - 100, width: self.view.frame.width, height: 100))
+        let viewForButton = UIView(frame: CGRect(x: 0, y: self.view.frame.height - 130, width: self.view.frame.width, height: 130))
         let btn = UIButton(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: 5, width: 290, height: 60))
         btn.backgroundColor = .red
         btn.layer.masksToBounds = true
@@ -73,9 +77,10 @@ class MusicPlayerLandingPage: UIViewController {
         btn.layer.cornerRadius = 30
         btn.addTarget(self, action: #selector(startTrialButtonPressed), for: .touchUpInside)
         
-        let lableWithAdditionalInfo = UILabel(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: btn.frame.height, width: btn.frame.width, height: 60))
+        let lableWithAdditionalInfo = UILabel(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: btn.frame.height + 3, width: btn.frame.width, height: 60))
         lableWithAdditionalInfo.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore "
         lableWithAdditionalInfo.font = UIFont.systemFont(ofSize: 12)
+        lableWithAdditionalInfo.textAlignment = .center
         lableWithAdditionalInfo.numberOfLines = 0
         lableWithAdditionalInfo.textColor = UIColor(red: 74/255, green: 74 / 255, blue: 74 / 255, alpha: 1)
         
@@ -165,7 +170,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 
         switch indexPath.section {
         case 1:
-            return 220
+            return 230
         case 3:
             return 300
         case 4:

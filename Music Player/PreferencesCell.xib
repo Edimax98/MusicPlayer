@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xgL-RV-EFj">
-                        <rect key="frame" x="0.0" y="163" width="320" height="34"/>
+                        <rect key="frame" x="0.0" y="161" width="320" height="34"/>
                         <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="xgL-RV-EFj" secondAttribute="height" multiplier="160:17" id="1Ot-yu-cgi"/>
@@ -34,7 +34,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="yAn-MG-6ck">
-                        <rect key="frame" x="0.0" y="129" width="320" height="34"/>
+                        <rect key="frame" x="0.0" y="125" width="320" height="34"/>
                         <color key="backgroundColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="yAn-MG-6ck" secondAttribute="height" multiplier="160:17" id="biz-Zz-5xO"/>
@@ -47,7 +47,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="nVr-iT-hD5">
-                        <rect key="frame" x="0.0" y="95" width="320" height="34"/>
+                        <rect key="frame" x="0.0" y="89" width="320" height="34"/>
                         <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="nVr-iT-hD5" secondAttribute="height" multiplier="160:17" id="4Vi-mG-PF2"/>
@@ -60,7 +60,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="deg-XE-H9s">
-                        <rect key="frame" x="0.0" y="61" width="320" height="34"/>
+                        <rect key="frame" x="0.0" y="53" width="320" height="34"/>
                         <color key="backgroundColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="deg-XE-H9s" secondAttribute="height" multiplier="160:17" id="two-g5-L45"/>
@@ -73,7 +73,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="6Te-W0-qXW">
-                        <rect key="frame" x="0.0" y="27" width="320" height="34"/>
+                        <rect key="frame" x="0.0" y="17" width="320" height="34"/>
                         <color key="backgroundColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="6Te-W0-qXW" secondAttribute="height" multiplier="160:17" id="bL3-Hq-cfy"/>
@@ -87,21 +87,21 @@
                     </collectionView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="yAn-MG-6ck" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="129" id="4Fo-Mn-Drg"/>
+                    <constraint firstItem="yAn-MG-6ck" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="125" id="4Fo-Mn-Drg"/>
                     <constraint firstAttribute="trailing" secondItem="yAn-MG-6ck" secondAttribute="trailing" id="5w3-kk-jYn"/>
                     <constraint firstItem="yAn-MG-6ck" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="A3t-79-10N"/>
-                    <constraint firstItem="deg-XE-H9s" firstAttribute="top" secondItem="6Te-W0-qXW" secondAttribute="bottom" id="BUk-Er-Rv8"/>
+                    <constraint firstItem="deg-XE-H9s" firstAttribute="top" secondItem="6Te-W0-qXW" secondAttribute="bottom" constant="2" id="BUk-Er-Rv8"/>
                     <constraint firstItem="nVr-iT-hD5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="CAh-9a-9sg"/>
-                    <constraint firstItem="yAn-MG-6ck" firstAttribute="top" secondItem="nVr-iT-hD5" secondAttribute="bottom" id="ET4-hP-6ss"/>
-                    <constraint firstAttribute="bottom" secondItem="xgL-RV-EFj" secondAttribute="bottom" id="GJn-eR-r1y"/>
-                    <constraint firstItem="xgL-RV-EFj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="163" id="MFP-Mn-euj"/>
-                    <constraint firstItem="6Te-W0-qXW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="27" id="POb-qU-HhR"/>
-                    <constraint firstItem="deg-XE-H9s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="61" id="Ssy-Qz-2n7"/>
+                    <constraint firstItem="yAn-MG-6ck" firstAttribute="top" secondItem="nVr-iT-hD5" secondAttribute="bottom" constant="2" id="ET4-hP-6ss"/>
+                    <constraint firstAttribute="bottom" secondItem="xgL-RV-EFj" secondAttribute="bottom" constant="1.5" id="GJn-eR-r1y"/>
+                    <constraint firstItem="xgL-RV-EFj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="161" id="MFP-Mn-euj"/>
+                    <constraint firstItem="6Te-W0-qXW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="17" id="POb-qU-HhR"/>
+                    <constraint firstItem="deg-XE-H9s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="53" id="Ssy-Qz-2n7"/>
                     <constraint firstItem="6Te-W0-qXW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Xse-2q-lPb"/>
-                    <constraint firstItem="xgL-RV-EFj" firstAttribute="top" secondItem="yAn-MG-6ck" secondAttribute="bottom" id="XwH-E8-CRx"/>
+                    <constraint firstItem="xgL-RV-EFj" firstAttribute="top" secondItem="yAn-MG-6ck" secondAttribute="bottom" constant="2" id="XwH-E8-CRx"/>
                     <constraint firstItem="xgL-RV-EFj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ZbW-nZ-7s8"/>
-                    <constraint firstItem="nVr-iT-hD5" firstAttribute="top" secondItem="deg-XE-H9s" secondAttribute="bottom" id="bte-Ht-8pu"/>
-                    <constraint firstItem="nVr-iT-hD5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="95" id="cCx-A8-nuH"/>
+                    <constraint firstItem="nVr-iT-hD5" firstAttribute="top" secondItem="deg-XE-H9s" secondAttribute="bottom" constant="2" id="bte-Ht-8pu"/>
+                    <constraint firstItem="nVr-iT-hD5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="89" id="cCx-A8-nuH"/>
                     <constraint firstItem="deg-XE-H9s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="cJs-xY-Rud"/>
                     <constraint firstAttribute="trailing" secondItem="xgL-RV-EFj" secondAttribute="trailing" id="dzP-sz-1jE"/>
                     <constraint firstAttribute="trailing" secondItem="deg-XE-H9s" secondAttribute="trailing" id="f6L-o3-VU4"/>

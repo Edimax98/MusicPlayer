@@ -9,6 +9,8 @@
 
 import UIKit
 import StoreKit
+import FacebookCore
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         SubscriptionService.shared.loadSubscriptionOptions()
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        AppEventsLogger.activate(application)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        return handled
     }
 }
 
@@ -55,6 +67,11 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
             }
         }
+        
+        //FBSdkpar
+        
+        //let params = []
+        
     }
     
     func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {

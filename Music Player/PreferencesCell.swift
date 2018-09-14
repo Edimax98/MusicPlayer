@@ -30,7 +30,11 @@ class PreferencesCell: UITableViewCell {
     fileprivate let minimumInteritemSpacing: CGFloat = 10
     fileprivate let cellsPerRow = 3
     fileprivate let countOfItemsInSection = 2
-    fileprivate let preferedGenres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country", "Disco"]
+    fileprivate let preferedGenres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country"]
+    fileprivate let preferedGenresSecondLine = ["Beats", "Float House","EDM", "DeepHouse", "Trance", "Techno"]
+    fileprivate let preferedGenresThirdLine = ["Art Pop", "Rock", "Classical", "Trap", "Pop", "Neo Soul"]
+    fileprivate let preferedGenresFourthLine = ["Modern Rock", "Chill", "Chill Lounge", "Bass Trap", "Dance Pop"]
+    fileprivate let preferedGenresFifthLine = ["Electro Jazz", "J-Core","Pop Rock", "K-Pop", "Rif"]
     fileprivate let genresImages = ["genrespink","genresgreen","genresblue","genresorange"]
     
     @IBOutlet weak var preferencesCollectionView: UICollectionView!
@@ -83,7 +87,30 @@ extension PreferencesCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
+        if collectionView === preferencesCollectionView {
+            cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
+            return cell
+        }
+        
+        if collectionView === preferencesSecondLineCollectionView {
+            cell.preferedGenreLabel.text = preferedGenresSecondLine[indexPath.row]
+            return cell
+        }
+        
+        if collectionView === preferencesThirdLineCollectionView {
+            cell.preferedGenreLabel.text = preferedGenresThirdLine[indexPath.row]
+            return cell
+        }
+        
+        if collectionView === preferencesFourthLineCollectionView {
+            cell.preferedGenreLabel.text = preferedGenresFourthLine[indexPath.row]
+            return cell
+        }
+        
+        if collectionView === preferencesFifthLineCollecctionview {
+            cell.preferedGenreLabel.text = preferedGenresFifthLine[indexPath.row]
+            return cell
+        }
         return cell
     }
 }
