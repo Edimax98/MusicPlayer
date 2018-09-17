@@ -18,6 +18,8 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 import FBSDKCoreKit
+import Alamofire
+import SwiftyJSON
 
 extension UIImageView {
     
@@ -28,7 +30,7 @@ extension UIImageView {
     }
 }
 
-class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,AVAudioPlayerDelegate {
+class PlayerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     
     //Choose background here. Between 1 - 7
     let selectedBackground = 7
@@ -74,7 +76,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     @IBOutlet weak var blurView: UIVisualEffectView!
     
-    
     @IBOutlet weak var tableViewContainerTopConstrain: NSLayoutConstraint!
     
     
@@ -88,8 +89,8 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
-        if event!.type == UIEventType.remoteControl{
-            switch event!.subtype{
+        if event!.type == UIEventType.remoteControl {
+            switch event!.subtype {
             case UIEventSubtype.remoteControlPlay:
                 play(self)
             case UIEventSubtype.remoteControlPause:
@@ -116,11 +117,11 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
-        var songNameDict = NSDictionary();
+        var songNameDict = NSDictionary()
         songNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
         let songName = songNameDict.value(forKey: "songName") as! String
         
-        var albumNameDict = NSDictionary();
+        var albumNameDict = NSDictionary()
         albumNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
         let albumName = albumNameDict.value(forKey: "albumName") as! String
         
@@ -134,8 +135,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         cell.detailTextLabel?.text = albumName
         return cell
     }
-    
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54.0
@@ -218,10 +217,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }else{
             repeatButton.isSelected = false
         }
-    
     }
-    
-    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -263,7 +259,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
                 if shuffleArray.count >= audioList.count {
                 playButton.setImage( UIImage(named: "play"), for: UIControlState())
                 return
-                
                 }
                 
                 
@@ -295,17 +290,14 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
                     randomIndex =  Int(arc4random_uniform(UInt32(audioList.count)))
                     if shuffleArray.contains(randomIndex) {
                         newIndex = false
-                    }else{
+                    } else {
                         newIndex = true
                     }
                 }
                 currentAudioIndex = randomIndex
                 prepareAudio()
                 playAudio()
-			
-            
             }
-            
         }
     }
     
@@ -319,7 +311,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     
     func saveCurrentTrackNumber(){
-        UserDefaults.standard.set(currentAudioIndex, forKey:"currentAudioIndex")
+        UserDefaults.standard.set(currentAudioIndex, forKey: "currentAudioIndex")
         UserDefaults.standard.synchronize()
         
     }
@@ -331,8 +323,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
             currentAudioIndex = 0
         }
     }
-
-
     
     // Prepare audio for playing
     func prepareAudio(){
@@ -398,7 +388,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }else{
             prepareAudio()
         }
-        
     }
     
     
@@ -513,7 +502,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         let artworkName = infoDict.value(forKey: "albumArtwork") as! String
         return artworkName
     }
-
     
     func updateLabels(){
         updateArtistNameLabel()
@@ -551,7 +539,6 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
             self.tableViewContainer.layoutIfNeeded()
             }, completion: { (bool) in
         })
-        
     }
 
     func animateTableViewToOffScreen() {
@@ -588,8 +575,8 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
 //                                                                      "USD": FBSDKAppEventParameterNameCurrency])
         //    FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
                                                                          // "id": FBSDKAppEventParameterNameContentID])
-            FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
-                                                                         FBSDKAppEventParameterNameContentID : "id"])
+          //  FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
+                                                                  //       FBSDKAppEventParameterNameContentID : "id"])
         }
         
 //        if shuffleState == true {
@@ -635,6 +622,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     }
 	
     @IBAction func shuffleButtonTapped(_ sender: UIButton) {
+        
 		shuffleArray.removeAll()
 		if sender.isSelected == true {
 			sender.isSelected = false
@@ -648,6 +636,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
     }
 	
     @IBAction func repeatButtonTapped(_ sender: UIButton) {
+        
         if sender.isSelected == true {
             sender.isSelected = false
             repeatState = false
@@ -659,7 +648,7 @@ class PlayerViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }
     }
 	
-    @IBAction func presentListTableView(_ sender : AnyObject) {
+    @IBAction func presentListTableView(_ sender: AnyObject) {
         if effectToggle {
             isTableViewOnscreen = true
             setNeedsStatusBarAppearanceUpdate()

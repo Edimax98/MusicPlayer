@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             
     var window: UIWindow?
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -67,11 +66,6 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
             }
         }
-        
-        //FBSdkpar
-        
-        //let params = []
-        
     }
     
     func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {

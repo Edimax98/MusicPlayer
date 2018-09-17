@@ -34,6 +34,10 @@
 		A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD81D2146CDCA006C7EA0 /* SongCell.swift */; };
 		A52FD8202146CDCA006C7EA0 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52FD81E2146CDCA006C7EA0 /* SongCell.xib */; };
 		A5630F51214A837C0051759A /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5630F50214A837C0051759A /* SubscriptionService.swift */; };
+		A59EF478214FFAB200BC6CEA /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF477214FFAB200BC6CEA /* CollectionViewDataSource.swift */; };
+		A59EF47A214FFAEF00BC6CEA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF479214FFAEF00BC6CEA /* Model.swift */; };
+		A59EF47C2150038F00BC6CEA /* AlbumCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF47B2150038F00BC6CEA /* AlbumCollectionViewDataSource.swift */; };
+		A59EF47E2150043700BC6CEA /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF47D2150043700BC6CEA /* Album.swift */; };
 		A5BD8E1121467D1400F3F812 /* NewAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */; };
 		A5BD8E1221467D1400F3F812 /* NewAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */; };
 		A5C7350B2147BF4000F58D1E /* UPCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */; };
@@ -115,6 +119,10 @@
 		A5931347214B9D3C0071C75B /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5931349214B9D410071C75B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A593134B214B9DB00071C75B /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A59EF477214FFAB200BC6CEA /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
+		A59EF479214FFAEF00BC6CEA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A59EF47B2150038F00BC6CEA /* AlbumCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		A59EF47D2150043700BC6CEA /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlbumCell.swift; sourceTree = "<group>"; };
 		A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAlbumCell.xib; sourceTree = "<group>"; };
 		A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCarouselFlowLayout.swift; sourceTree = "<group>"; };
@@ -269,6 +277,15 @@
 			name = PopularSongs;
 			sourceTree = "<group>";
 		};
+		A59EF47F2150086E00BC6CEA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A59EF479214FFAEF00BC6CEA /* Model.swift */,
+				A59EF47D2150043700BC6CEA /* Album.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		A5B7C096214AAFBE0019E5C8 /* MusicPlayerLanding */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +403,7 @@
 			children = (
 				D3D2E95219A36A0000DEF125 /* AppDelegate.swift */,
 				D3D2E95419A36A0000DEF125 /* PlayerViewController.swift */,
+				A59EF477214FFAB200BC6CEA /* CollectionViewDataSource.swift */,
 				A50017B7214A860B00E30175 /* Subscription */,
 				D36191C319E96E1400CC9026 /* Settings */,
 				D3C1748419A36B3700C3F4E4 /* Asset */,
@@ -393,6 +411,8 @@
 				D36191BB19E9647B00CC9026 /* Main.storyboard */,
 				D3D2E95919A36A0000DEF125 /* Images.xcassets */,
 				D3D2E95019A36A0000DEF125 /* Supporting Files */,
+				A59EF47F2150086E00BC6CEA /* Models */,
+				A59EF47B2150038F00BC6CEA /* AlbumCollectionViewDataSource.swift */,
 			);
 			path = "Music Player";
 			sourceTree = "<group>";
@@ -553,15 +573,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Music Player/Pods-Music Player-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -606,12 +630,16 @@
 				A5630F51214A837C0051759A /* SubscriptionService.swift in Sources */,
 				A5BD8E1121467D1400F3F812 /* NewAlbumCell.swift in Sources */,
 				83843A8D21458C1500C8A0BE /* PopularSongsCell.swift in Sources */,
+				A59EF47E2150043700BC6CEA /* Album.swift in Sources */,
 				A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */,
 				A50017BF214A9A4000E30175 /* PaidSubscription.swift in Sources */,
+				A59EF47A214FFAEF00BC6CEA /* Model.swift in Sources */,
 				A50017BD214A98CE00E30175 /* Session.swift in Sources */,
 				A5C7350D2147C57400F58D1E /* SectionHeaderView.swift in Sources */,
+				A59EF478214FFAB200BC6CEA /* CollectionViewDataSource.swift in Sources */,
 				83843A8121458B4900C8A0BE /* TodaysPlaylistCell.swift in Sources */,
 				83843A9321459E3600C8A0BE /* PreferedGenreCell.swift in Sources */,
+				A59EF47C2150038F00BC6CEA /* AlbumCollectionViewDataSource.swift in Sources */,
 				A52FD81B2146A439006C7EA0 /* ClipCell.swift in Sources */,
 				A5C735112147E2A600F58D1E /* ActionHandler.swift in Sources */,
 				A5C7350B2147BF4000F58D1E /* UPCarouselFlowLayout.swift in Sources */,

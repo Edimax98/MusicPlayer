@@ -12,6 +12,7 @@ class NewAlbumCell: UICollectionViewCell {
 
     @IBOutlet weak var newAlbumCoverImageView: UIImageView!
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
+    static var identifier = "NewAlbumCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()

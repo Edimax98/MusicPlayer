@@ -36,6 +36,7 @@ class NewReleasesCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
+        
         if releasesCollectionVeiw != nil {
             setupLayout()
             releasesCollectionVeiw.delegate = self
@@ -65,10 +66,6 @@ extension NewReleasesCell: UICollectionViewDataSource {
         cell.newAlbumCoverImageView.image = UIImage(named: bunchOfNewAlbumCovers[indexPath.row])
         return cell
     }
-}
-
-extension NewReleasesCell: UICollectionViewDelegateFlowLayout {
-    
 }
 
 extension NewReleasesCell: UICollectionViewDelegate {
