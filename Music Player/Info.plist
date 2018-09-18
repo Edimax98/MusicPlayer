@@ -52,5 +52,10 @@
 	<string>2094400630876165</string>
 	<key>FacebookDisplayName</key>
 	<string>MusicalPlayer</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

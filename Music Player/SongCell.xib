@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -53,7 +54,9 @@
             <viewLayoutGuide key="safeArea" id="y9x-U5-JTy"/>
             <size key="customSize" width="100" height="89"/>
             <connections>
+                <outlet property="songArtistNameLabel" destination="34Y-x6-0GY" id="XzT-Ei-UWV"/>
                 <outlet property="songCoverImageView" destination="mW0-74-zKl" id="Nd4-tc-LNI"/>
+                <outlet property="songNameLabel" destination="JMd-mF-UpW" id="WQx-d3-UUc"/>
             </connections>
             <point key="canvasLocation" x="-34" y="-6"/>
         </collectionViewCell>

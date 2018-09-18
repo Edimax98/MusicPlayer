@@ -16,11 +16,13 @@ struct HeaderData {
 }
 
 extension UIView {
+    
     func applyGradient(colours: [UIColor]) -> Void {
         self.applyGradient(colours: colours, locations: nil)
     }
     
     func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> Void {
+        
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.colors = colours.map { $0.cgColor }
@@ -34,6 +36,8 @@ extension UIView {
 class MusicPlayerLandingPage: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    
+    fileprivate var interactor: MusicPlayerLandingPageInteractor?
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
@@ -47,6 +51,8 @@ class MusicPlayerLandingPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let networkService = NetworkService()
+        interactor = MusicPlayerLandingPageInteractor(networkService)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = defaultBackgroundColor
@@ -61,6 +67,7 @@ class MusicPlayerLandingPage: UIViewController {
         tableView.register(UINib(nibName: "PopularSongsCell", bundle: nil), forCellReuseIdentifier: PopularSongsCell.identifier)
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
         configureFloatButtonView()
+        interactor?.fetchSong(by: "")
     }
     
     private func configureFloatButtonView() {
@@ -156,6 +163,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.hanlder = self
+            self.interactor?.output = cell
             return cell
         default:
             break
@@ -227,8 +235,6 @@ extension  MusicPlayerLandingPage: ActionHandler {
         performSegue(withIdentifier: "musicWasSelected", sender: self)
     }
 }
-
-
 
 
 
