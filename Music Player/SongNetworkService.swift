@@ -17,5 +17,5 @@ protocol SongNetworkService: class {
     
     var songNetworkServiceDelegate: SongNetworkServiceDelegate? { get set }
     
-    func fetchSongs()
+    func fetchSongs(_ amount: UInt)
 }

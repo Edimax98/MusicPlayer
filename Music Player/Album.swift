@@ -10,8 +10,7 @@ import Foundation
 
 struct Album: Model {
     
-    var id: UInt64
     var name: String
     var artistName: String
-    var image: String
+    var imagePath: String
 }

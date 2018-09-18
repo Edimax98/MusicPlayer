@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import AlamofireImage
 
 struct Song {
     
     var name: String
-    var image: String
+    var imagePath: String
     var artistName: String
     var duration: UInt
+    var image: Image?
 }

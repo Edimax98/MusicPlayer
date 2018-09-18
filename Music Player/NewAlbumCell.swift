@@ -11,6 +11,10 @@ import UIKit
 class NewAlbumCell: UICollectionViewCell {
 
     @IBOutlet weak var newAlbumCoverImageView: UIImageView!
+    
+    @IBOutlet weak var albumNameLabel: UILabel!
+    @IBOutlet weak var albumAuthorNameLabel: UILabel!
+    
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     static var identifier = "NewAlbumCell"
 

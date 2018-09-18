@@ -20,8 +20,8 @@ class MusicPlayerLandingPageInteractor {
         self.songNetworkService.songNetworkServiceDelegate = self
     }
     
-    func fetchSong(by id: String) {
-        networkService.fetchSongs()
+    func fetchSong(_ amount: UInt) {
+        networkService.fetchSongs(10)
     }
 }
 

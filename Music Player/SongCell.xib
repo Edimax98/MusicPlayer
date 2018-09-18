@@ -20,17 +20,17 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="albom2" translatesAutoresizingMaskIntoConstraints="NO" id="mW0-74-zKl">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="105.5"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMd-mF-UpW">
-                        <rect key="frame" x="2" y="102" width="63" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="2" y="108" width="95" height="14"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secondary info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="34Y-x6-0GY">
-                        <rect key="frame" x="3" y="122" width="79" height="14"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <rect key="frame" x="3" y="125" width="94" height="12"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="10"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -38,18 +38,18 @@
             </view>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="34Y-x6-0GY" secondAttribute="trailing" constant="18" id="5qA-nE-EOa"/>
+                <constraint firstAttribute="trailing" secondItem="34Y-x6-0GY" secondAttribute="trailing" constant="3" id="5qA-nE-EOa"/>
                 <constraint firstItem="JMd-mF-UpW" firstAttribute="top" secondItem="mW0-74-zKl" secondAttribute="bottom" constant="2" id="BBe-33-Ver"/>
                 <constraint firstItem="34Y-x6-0GY" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" constant="3" id="MMP-nl-JhN"/>
                 <constraint firstItem="mW0-74-zKl" firstAttribute="top" secondItem="lxL-Ke-tUb" secondAttribute="top" id="NFa-Au-9BT"/>
-                <constraint firstAttribute="bottom" secondItem="34Y-x6-0GY" secondAttribute="bottom" constant="4" id="Nyu-Gp-sR3"/>
-                <constraint firstItem="34Y-x6-0GY" firstAttribute="top" secondItem="JMd-mF-UpW" secondAttribute="bottom" constant="2" id="P6s-G3-0FS"/>
+                <constraint firstAttribute="bottom" secondItem="34Y-x6-0GY" secondAttribute="bottom" constant="3" id="Nyu-Gp-sR3"/>
+                <constraint firstItem="34Y-x6-0GY" firstAttribute="top" secondItem="JMd-mF-UpW" secondAttribute="bottom" constant="3" id="P6s-G3-0FS"/>
                 <constraint firstItem="mW0-74-zKl" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" id="YE4-jh-8FI"/>
                 <constraint firstItem="JMd-mF-UpW" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" constant="2" id="fBY-bY-HMZ"/>
                 <constraint firstAttribute="trailing" secondItem="mW0-74-zKl" secondAttribute="trailing" id="l9N-XA-n2s"/>
                 <constraint firstItem="JMd-mF-UpW" firstAttribute="top" secondItem="mW0-74-zKl" secondAttribute="bottom" constant="2" id="o6x-xL-5ei"/>
-                <constraint firstItem="34Y-x6-0GY" firstAttribute="top" secondItem="JMd-mF-UpW" secondAttribute="bottom" constant="2" id="qhU-W5-vGa"/>
-                <constraint firstAttribute="trailing" secondItem="JMd-mF-UpW" secondAttribute="trailing" constant="35" id="wLu-8F-hXC"/>
+                <constraint firstItem="34Y-x6-0GY" firstAttribute="top" secondItem="JMd-mF-UpW" secondAttribute="bottom" constant="3" id="qhU-W5-vGa"/>
+                <constraint firstAttribute="trailing" secondItem="JMd-mF-UpW" secondAttribute="trailing" constant="3" id="wLu-8F-hXC"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="y9x-U5-JTy"/>
             <size key="customSize" width="100" height="89"/>
@@ -58,7 +58,7 @@
                 <outlet property="songCoverImageView" destination="mW0-74-zKl" id="Nd4-tc-LNI"/>
                 <outlet property="songNameLabel" destination="JMd-mF-UpW" id="WQx-d3-UUc"/>
             </connections>
-            <point key="canvasLocation" x="-34" y="-6"/>
+            <point key="canvasLocation" x="-154" y="-86"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -67,7 +67,7 @@ class MusicPlayerLandingPage: UIViewController {
         tableView.register(UINib(nibName: "PopularSongsCell", bundle: nil), forCellReuseIdentifier: PopularSongsCell.identifier)
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
         configureFloatButtonView()
-        interactor?.fetchSong(by: "")
+        interactor?.fetchSong(10)
     }
     
     private func configureFloatButtonView() {
