@@ -12,10 +12,6 @@ class PopularSongsCell: UITableViewCell {
     
     var hanlder: ActionHandler?
     var songsDataSource = PopularSongsDataSource()
-    let bunchOfSongCovers = ["albom1","albom2","albom3","albom4",
-                             "albom5","albom6","albom7","albom8",
-                             "albom9","albom10","albom11","albom12"]
-    
     static var identifier = "PopularSongsCell"
     
     @IBOutlet weak var popularSongsCollectionView: UICollectionView!
@@ -46,11 +42,13 @@ extension PopularSongsCell: UICollectionViewDelegateFlowLayout {
 extension PopularSongsCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        hanlder?.musicWasSelected(with: bunchOfSongCovers[indexPath.row])
+        
+        let song = songsDataSource.getSongs()[indexPath.row]
+        hanlder?.musicWasSelected(song)
     }
 }
 
-extension PopularSongsCell: MusicPlayerInteractorOutput {
+extension PopularSongsCell: SongsInteractorOutput {
     
     func sendSongs(_ songs: [Song]) {
         songsDataSource.setSongs(songs)

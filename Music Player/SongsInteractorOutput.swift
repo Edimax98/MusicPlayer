@@ -8,7 +8,12 @@
 
 import Foundation
 
-protocol MusicPlayerInteractorOutput: class {
+protocol SongsInteractorOutput: class {
     
     func sendSongs(_ songs: [Song])
+}
+
+protocol AlbumInteractorOutput: class {
+    
+    func sendAlbums(_ albums: [Album])
 }

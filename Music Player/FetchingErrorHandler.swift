@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FetchingErrorHandler {
+protocol FetchingErrorHandler: class {
     
     func fetchingEndedWithError(_ error: Error)
 }

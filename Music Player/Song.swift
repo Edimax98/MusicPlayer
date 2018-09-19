@@ -15,5 +15,7 @@ struct Song {
     var imagePath: String
     var artistName: String
     var duration: UInt
+    var albumName: String
+    var audioPath: String
     var image: Image?
 }

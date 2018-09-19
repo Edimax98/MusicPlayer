@@ -17,6 +17,10 @@ class PopularSongsDataSource: NSObject {
     func setSongs(_ songs: [Song]) {
         self.songs = songs
     }
+    
+    func getSongs() -> [Song] {
+       return self.songs
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -28,7 +32,7 @@ extension PopularSongsDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let song = songs[indexPath.row]
+        var song = songs[indexPath.row]
         let queue = DispatchQueue.global(qos: .utility)
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SongCell.identifier, for: indexPath) as? SongCell else {
@@ -42,6 +46,7 @@ extension PopularSongsDataSource: UICollectionViewDataSource {
                     if let image = response.result.value {
                         DispatchQueue.main.async {
                             cell.songCoverImageView.image = image
+                            self.songs[indexPath.row].image = image
                         }
                     }
             }

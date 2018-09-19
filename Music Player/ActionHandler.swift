@@ -10,5 +10,5 @@ import Foundation
 
 protocol ActionHandler {
     
-    func musicWasSelected(with cover: String)
+    func musicWasSelected(_ song: Song)
 }

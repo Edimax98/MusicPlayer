@@ -16,7 +16,8 @@ class NetworkService {
     private let apiKey: String
     fileprivate var fetchingQueue = DispatchQueue.global(qos: .utility)
     
-    var songNetworkServiceDelegate: SongNetworkServiceDelegate?
+    weak var songNetworkServiceDelegate: SongNetworkServiceDelegate?
+    weak var albumNetworkDelegate: AlbumNetworkServiceDelegate?
     
     init() {
         apiKey = "88dda971"
@@ -71,15 +72,44 @@ extension NetworkService: SongNetworkService {
                 let json = JSON(responseValue)["results"]
                 
                 let songs = json.array?.map { jsonArr -> Song in
-                    Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue, duration: jsonArr["duration"].uIntValue, image: nil)
+                    Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue, duration: jsonArr["duration"].uIntValue, albumName: jsonArr["album_name"].stringValue, audioPath: jsonArr["audio"].stringValue, image: nil)
                 }
                 
-                guard var songsToReturn = songs else {
+                guard let songsToReturn = songs else {
                     print("Songs are nil after being parsed")
                     return
                 }
                 
                 self.songNetworkServiceDelegate?.songNetworkerServiceDidGet(songsToReturn)
+        }
+    }
+}
+
+extension NetworkService: AlbumNetworkService {
+
+    func fetchAlbums(_ amount: UInt) {
+        
+        let fetchingQueue = DispatchQueue.global(qos: .utility)
+        
+        request("https://api.jamendo.com/v3.0/tracks/?", method: .get, parameters: ["limit":amount, "client_id":apiKey], encoding: URLEncoding(), headers: nil)
+            .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
+                
+                guard let responseValue = response.result.value else {
+                    print("Album raw json is nil")
+                    return
+                }
+                
+                let json = JSON(responseValue)["results"]
+                
+                let albums = json.array?.map { jsonArr -> Album in
+                    Album(name: jsonArr["name"].stringValue, artistName: jsonArr["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue)
+                }
+                
+                guard let albumsToReturn = albums else {
+                    print("Albums are nil after being parsed")
+                    return
+                }
+                self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumsToReturn)
         }
     }
 }

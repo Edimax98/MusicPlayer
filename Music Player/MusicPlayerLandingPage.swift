@@ -38,10 +38,11 @@ class MusicPlayerLandingPage: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
+    fileprivate weak var output: LandingPageViewOutput?
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
-    fileprivate var selectedSongCover = ""
+    fileprivate var selectedSong: Song?
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
@@ -53,12 +54,32 @@ class MusicPlayerLandingPage: UIViewController {
         super.viewDidLoad()
         let networkService = NetworkService()
         interactor = MusicPlayerLandingPageInteractor(networkService)
+        self.title = "Landing page"
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = defaultBackgroundColor
+        registerCells(for: tableView)
         fillDataSource()
-        self.title = "Landing page"
-        tableView.separatorStyle = .none
+        configureFloatButtonView()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "musicWasSelected" {
+            
+            guard let destinationVc = segue.destination as? PlayerViewController else {
+                print("Could not cast destination VC")
+                return
+            }
+            
+            destinationVc.song = selectedSong
+            self.output = destinationVc
+        }
+    }
+    
+    private func registerCells(for tableView: UITableView) {
+        
         tableView.register(UINib(nibName: "UpperCell", bundle: nil), forCellReuseIdentifier: UpperCell.identifier)
         tableView.register(UINib(nibName: "PreferencesCell", bundle: nil), forCellReuseIdentifier: PreferencesCell.identifier)
         tableView.register(UINib(nibName: "TodaysPlaylistCell", bundle: nil), forCellReuseIdentifier: TodaysPlaylistCell.identifier)
@@ -66,8 +87,6 @@ class MusicPlayerLandingPage: UIViewController {
         tableView.register(UINib(nibName: "NewClipsCell", bundle: nil), forCellReuseIdentifier: NewClipsCell.identifier)
         tableView.register(UINib(nibName: "PopularSongsCell", bundle: nil), forCellReuseIdentifier: PopularSongsCell.identifier)
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
-        configureFloatButtonView()
-        interactor?.fetchSong(10)
     }
     
     private func configureFloatButtonView() {
@@ -151,6 +170,8 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.handler = self
+            self.interactor?.albumsOutput = cell
+            interactor?.fetchAlbums(10)
             return cell
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewClipsCell.identifier, for: indexPath) as? NewClipsCell else {
@@ -163,7 +184,8 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.hanlder = self
-            self.interactor?.output = cell
+            self.interactor?.songsOutput = cell
+            interactor?.fetchSong(10)
             return cell
         default:
             break
@@ -184,7 +206,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         case 4:
             return 200
         case 5:
-            return 350
+            return 450
         default:
             return 150
         }
@@ -231,8 +253,9 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 
 extension  MusicPlayerLandingPage: ActionHandler {
     
-    func musicWasSelected(with cover: String) {
-        performSegue(withIdentifier: "musicWasSelected", sender: self)
+    func musicWasSelected(_ song: Song) {
+         performSegue(withIdentifier: "musicWasSelected", sender: self)
+        output?.sendSong(song)
     }
 }
 

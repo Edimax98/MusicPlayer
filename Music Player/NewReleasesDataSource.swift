@@ -27,7 +27,7 @@ extension NewReleasesDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let album = albums[indexPath.row]
+        var album = albums[indexPath.row]
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewAlbumCell.identifier, for: indexPath) as? NewAlbumCell else {
             return UICollectionViewCell()
@@ -38,6 +38,7 @@ extension NewReleasesDataSource: UICollectionViewDataSource {
             if let image = response.result.value {
                 DispatchQueue.main.async {
                     cell.newAlbumCoverImageView.image = image
+                    album.image = image
                 }
             } else {
                 print("image is nil")

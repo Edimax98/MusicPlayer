@@ -44,22 +44,33 @@ class NewReleasesCell: UITableViewCell {
             releasesCollectionVeiw.delegate = self
             releasesCollectionVeiw.dataSource = dataSource
             releasesCollectionVeiw.backgroundColor = defaultBackgroundColor
-            releasesCollectionVeiw.register(UINib(nibName: "NewAlbumCell", bundle: nil), forCellWithReuseIdentifier: "NewAlbumCell")
+            releasesCollectionVeiw.register(UINib(nibName: "NewAlbumCell", bundle: nil), forCellWithReuseIdentifier: NewAlbumCell.identifier)
         }
     }
 
     fileprivate func setupLayout() {
         let layout = releasesCollectionVeiw.collectionViewLayout as! UPCarouselFlowLayout
-        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.overlap(visibleOffset: 30)
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.fixed(spacing: 5)
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension NewReleasesCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        handler?.musicWasSelected(with: bunchOfNewAlbumCovers[indexPath.row])
+        
     }
 }
+
+// MARK: - AlbumInteractorOutput
+extension NewReleasesCell: AlbumInteractorOutput {
+    
+    func sendAlbums(_ albums: [Album]) {
+        dataSource.setAlbums(albums)
+        releasesCollectionVeiw.reloadData()
+    }
+}
+
 
 
 
