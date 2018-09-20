@@ -8,37 +8,13 @@
 
 import UIKit
 
-struct HeaderData {
-    
-    var icon: String
-    var title: String
-    var dividerColor: UIColor
-}
-
-extension UIView {
-    
-    func applyGradient(colours: [UIColor]) -> Void {
-        self.applyGradient(colours: colours, locations: nil)
-    }
-    
-    func applyGradient(colours: [UIColor], locations: [NSNumber]?) -> Void {
-        
-        let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.frame = self.bounds
-        gradient.colors = colours.map { $0.cgColor }
-        gradient.locations = locations
-        gradient.startPoint = CGPoint(x: 0.0,y: 0.5)
-        gradient.endPoint = CGPoint(x: 1.0,y: 0.5)
-        self.layer.insertSublayer(gradient, at: 1)
-    }
-}
-
 class MusicPlayerLandingPage: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
-    fileprivate weak var output: LandingPageViewOutput?
+    fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
+    fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
@@ -72,9 +48,17 @@ class MusicPlayerLandingPage: UIViewController {
                 print("Could not cast destination VC")
                 return
             }
-            
             destinationVc.song = selectedSong
-            self.output = destinationVc
+            self.outputSingleValue = destinationVc
+        }
+        
+        if  segue.identifier == "albumWasSelected" {
+            
+            guard let destinationVc = segue.destination as? MusicListViewController else {
+                print("Could not cast destination VC")
+                return
+            }
+            self.outputMultipleValue = destinationVc
         }
     }
     
@@ -171,7 +155,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             }
             cell.handler = self
             self.interactor?.albumsOutput = cell
-            interactor?.fetchAlbums(10)
+            interactor?.fetchNewAlbums(amount: 10)
             return cell
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewClipsCell.identifier, for: indexPath) as? NewClipsCell else {
@@ -251,11 +235,21 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
     }
 }
 
-extension  MusicPlayerLandingPage: ActionHandler {
+// MARK: - SongsActionHandler
+extension MusicPlayerLandingPage: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
          performSegue(withIdentifier: "musicWasSelected", sender: self)
-        output?.sendSong(song)
+        outputSingleValue?.sendSong(song)
+    }
+}
+
+// MARK: - AlbumsActionHandler
+extension MusicPlayerLandingPage: AlbumsActionHandler {
+    
+    func albumWasSelected(_ album: Album) {
+        performSegue(withIdentifier: "albumWasSelected", sender: self)
+        outputMultipleValue?.sendSongs(album.songs)
     }
 }
 

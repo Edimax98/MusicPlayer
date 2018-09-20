@@ -24,6 +24,7 @@ class NetworkService {
     }
 }
 
+// MARK: - SongNetworkService
 extension NetworkService: SongNetworkService {
     
     private func fetchImages(from urls: [String], completionHandler: @escaping ([Image]) -> Void) {
@@ -85,13 +86,15 @@ extension NetworkService: SongNetworkService {
     }
 }
 
+// MARK: - AlbumNetworkService
 extension NetworkService: AlbumNetworkService {
-
+        
     func fetchAlbums(_ amount: UInt) {
         
         let fetchingQueue = DispatchQueue.global(qos: .utility)
+        let parameters = AlbumApi.bunchOfAlbums(amount: amount).parameters
         
-        request("https://api.jamendo.com/v3.0/tracks/?", method: .get, parameters: ["limit":amount, "client_id":apiKey], encoding: URLEncoding(), headers: nil)
+        request(AlbumApi.baseUrl, method: .get, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
                 
                 guard let responseValue = response.result.value else {
@@ -102,7 +105,12 @@ extension NetworkService: AlbumNetworkService {
                 let json = JSON(responseValue)["results"]
                 
                 let albums = json.array?.map { jsonArr -> Album in
-                    Album(name: jsonArr["name"].stringValue, artistName: jsonArr["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue)
+                    Album(name: jsonArr["name"].stringValue, artistName: jsonArr["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue,
+                          songs: jsonArr["tracks"].array!.map { jsonTrackArr -> Song in
+                            Song(name: jsonTrackArr["name"].stringValue, imagePath: jsonTrackArr["image"].stringValue, artistName: jsonTrackArr["artist_name"].stringValue,
+                                 duration: jsonTrackArr["duration"].uIntValue, albumName: jsonTrackArr["album_name"].stringValue, audioPath: jsonTrackArr["audio"].stringValue, image: nil)
+                        }
+                    )
                 }
                 
                 guard let albumsToReturn = albums else {
@@ -110,6 +118,40 @@ extension NetworkService: AlbumNetworkService {
                     return
                 }
                 self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumsToReturn)
+        }
+    }
+    
+    
+    func fetchAlbums(amount: UInt, between startDate: String, and endDate: String) {
+        
+        let fetchingQueue = DispatchQueue.global(qos: .utility)
+        let parameters = AlbumApi.newReleases(amount: amount, startDate: startDate, endDate: endDate).parameters
+        
+        request(AlbumApi.baseUrl, method: .get, parameters: parameters, encoding: URLEncoding(), headers: nil)
+            .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
+                
+                guard let responseValue = response.result.value else {
+                    print("Album raw json is nil")
+                    return
+                }
+                
+                let json = JSON(responseValue)["results"]
+                
+                let albums = json.array?.map { jsonArr -> Album in
+                    Album(name: jsonArr["name"].stringValue, artistName: json["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue,
+                          songs: jsonArr["tracks"].array!.map { jsonTrackArr -> Song in
+                              Song(name: jsonTrackArr["name"].stringValue, imagePath: jsonTrackArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
+                                   duration: jsonTrackArr["duration"].uIntValue, albumName: jsonArr["name"].stringValue, audioPath: jsonTrackArr["audio"].stringValue, image: nil)
+                        }
+                    )
+                }
+                
+                guard let albumToReturn = albums else {
+                    print("Album is nil after being parsed")
+                    return
+                }
+                
+                self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumToReturn)
         }
     }
 }

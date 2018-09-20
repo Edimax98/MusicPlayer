@@ -17,23 +17,14 @@ import AVFoundation
 import MediaPlayer
 import FBSDKCoreKit
 import Alamofire
-import SwiftyJSON
-
-extension UIImageView {
-    
-    func setRounded() {
-        let radius = self.frame.width / 2
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
-    }
-}
 
 class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlayerDelegate {
     
     //Choose background here. Between 1 - 7
-    let selectedBackground = 7
-	
+    let selectedBackground = 2
+    
     var audioPlayer: AVPlayer! = nil
+    //var queuePlayer = AVQueuePlayer()
     var currentAudio = ""
     var currentAudioPath:URL!
     var audioList:NSArray!
@@ -49,6 +40,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     var repeatState = false
     var shuffleArray = [Int]()
     var song: Song?
+    var albumTracks = [Song]()
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet var songNo : UILabel!
@@ -104,45 +96,45 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
-//        var songNameDict = NSDictionary()
-//        songNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
-//        let songName = songNameDict.value(forKey: "songName") as! String
-//
-//        var albumNameDict = NSDictionary()
-//        albumNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
-//        let albumName = albumNameDict.value(forKey: "albumName") as! String
-
+        //        var songNameDict = NSDictionary()
+        //        songNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
+        //        let songName = songNameDict.value(forKey: "songName") as! String
+        //
+        //        var albumNameDict = NSDictionary()
+        //        albumNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
+        //        let albumName = albumNameDict.value(forKey: "albumName") as! String
+        
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-//        cell.textLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-BookIta", size: 25.0)
-//        cell.textLabel?.textColor = UIColor.white
-//        cell.textLabel?.text = songName
-//
-//        cell.detailTextLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-Book", size: 16.0)
-//        cell.detailTextLabel?.textColor = UIColor.white
-//        cell.detailTextLabel?.text = albumName
+        //        cell.textLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-BookIta", size: 25.0)
+        //        cell.textLabel?.textColor = UIColor.white
+        //        cell.textLabel?.text = songName
+        //
+        //        cell.detailTextLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-Book", size: 16.0)
+        //        cell.detailTextLabel?.textColor = UIColor.white
+        //        cell.detailTextLabel?.text = albumName
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54.0
     }
-
-    func tableView(_ tableView: UITableView,willDisplay cell: UITableViewCell,forRowAt indexPath: IndexPath){
+    
+    func tableView(_ tableView: UITableView,willDisplay cell: UITableViewCell,forRowAt indexPath: IndexPath) {
+        
         tableView.backgroundColor = UIColor.clear
-
         let backgroundView = UIView(frame: CGRect.zero)
         backgroundView.backgroundColor = UIColor.clear
         cell.backgroundView = backgroundView
         cell.backgroundColor = UIColor.clear
     }
-
-
+    
+    
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -157,49 +149,44 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         let play = UIImage(named: "play")
         let pause = UIImage(named: "pause")
         audioPlayer.rate > 0 ? "\(playButton.setImage(pause, for: UIControlState()))" : "\(playButton.setImage(play , for: UIControlState()))"
-
+        
         blurView.isHidden = true
     }
-	
+    
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
     
     override var prefersStatusBarHidden : Bool {
-        
         if isTableViewOnscreen {
             return true
         } else {
             return false
         }
     }
-	
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //assing background
         backgroundImageView.image = UIImage(named: "background\(selectedBackground)")
-        
-        //this sets last listened trach number as current
-        retrieveSavedTrackNumber()
-       // prepareAudio()
-        //updateLabels()
-        //assingSliderUI()
-        //setRepeatAndShuffle()
-        //retrievePlayerProgressSliderValue()
-        //LockScreen Media control registry
-        if UIApplication.shared.responds(to: #selector(UIApplication.beginReceivingRemoteControlEvents)) {
-            UIApplication.shared.beginReceivingRemoteControlEvents()
-            UIApplication.shared.beginBackgroundTask {
-                
-            }
-        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableViewContainerTopConstrain.constant = 1000.0
+        self.tableViewContainer.layoutIfNeeded()
+        blurView.isHidden = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        albumArtworkImageView.setRounded()
+    }
+
     func setRepeatAndShuffle() {
         
         shuffleState = UserDefaults.standard.bool(forKey: "shuffleState")
         repeatState = UserDefaults.standard.bool(forKey: "repeatState")
+        
         if shuffleState == true {
             shuffleButton.isSelected = true
         } else {
@@ -212,23 +199,6 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             repeatButton.isSelected = false
         }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableViewContainerTopConstrain.constant = 1000.0
-        self.tableViewContainer.layoutIfNeeded()
-        blurView.isHidden = true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        albumArtworkImageView.setRounded()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK:- AVAudioPlayer Delegate's Callback method
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool){
@@ -238,42 +208,41 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
                 // do nothing
                 playButton.setImage( UIImage(named: "play"), for: UIControlState())
                 return
-            
+                
             } else if shuffleState == false && repeatState == true {
-            //repeat same song
+                //repeat same song
                 prepareAudio()
                 playAudio()
-            
+                
             } else if shuffleState == true && repeatState == false {
-            //shuffle songs but do not repeat at the end
-            //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
-               shuffleArray.append(currentAudioIndex)
+                //shuffle songs but do not repeat at the end
+                //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
+                shuffleArray.append(currentAudioIndex)
                 if shuffleArray.count >= audioList.count {
-                playButton.setImage( UIImage(named: "play"), for: UIControlState())
-                return
+                    playButton.setImage(UIImage(named: "play"), for: UIControlState())
+                    return
                 }
                 
                 var randomIndex = 0
                 var newIndex = false
                 while newIndex == false {
-                    randomIndex =  Int(arc4random_uniform(UInt32(audioList.count)))
+                    randomIndex = Int(arc4random_uniform(UInt32(audioList.count)))
                     if shuffleArray.contains(randomIndex) {
                         newIndex = false
-                    }else{
+                    } else {
                         newIndex = true
                     }
                 }
                 currentAudioIndex = randomIndex
                 prepareAudio()
                 playAudio()
-            
+                
             } else if shuffleState == true && repeatState == true {
                 //shuffle song endlessly
                 shuffleArray.append(currentAudioIndex)
                 if shuffleArray.count >= audioList.count {
                     shuffleArray.removeAll()
                 }
-                
                 
                 var randomIndex = 0
                 var newIndex = false
@@ -285,10 +254,39 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
                         newIndex = true
                     }
                 }
+                
                 currentAudioIndex = randomIndex
                 prepareAudio()
                 playAudio()
             }
+        }
+    }
+    
+    func addAllSongsToQueuePlayer() {
+        
+//        for song in albumTracks {
+//            guard let url = URL(string: song.audioPath) else {
+//                print("Incorrect url")
+//                return
+//            }
+//            let asset = AVAsset(url: url)
+//            let item = AVPlayerItem(asset: asset)
+//            audioPlayer.insert(item, after: queuePlayer.items().last)
+//        }
+    }
+    
+    func saveCurrentTrackNumber() {
+        
+        UserDefaults.standard.set(currentAudioIndex, forKey: "currentAudioIndex")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func retrieveSavedTrackNumber() {
+        
+        if let currentAudioIndex_ = UserDefaults.standard.object(forKey: "currentAudioIndex") as? Int{
+            currentAudioIndex = currentAudioIndex_
+        } else {
+            currentAudioIndex = 0
         }
     }
     
@@ -308,25 +306,10 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         currentAudioPath = url
     }
     
-    func saveCurrentTrackNumber() {
-        
-        UserDefaults.standard.set(currentAudioIndex, forKey: "currentAudioIndex")
-        UserDefaults.standard.synchronize()
-    }
-    
-    func retrieveSavedTrackNumber() {
-        
-        if let currentAudioIndex_ = UserDefaults.standard.object(forKey: "currentAudioIndex") as? Int{
-            currentAudioIndex = currentAudioIndex_
-        } else {
-            currentAudioIndex = 0
-        }
-    }
-    
     // Prepare audio for playing
     func prepareAudio() {
-        setCurrentAudioPath()
         
+        setCurrentAudioPath()
         do {
             //keep alive audio at background
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -341,6 +324,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         UIApplication.shared.beginReceivingRemoteControlEvents()
         let playerItem = AVPlayerItem(url: currentAudioPath)
         audioPlayer = AVPlayer(playerItem: playerItem)
+        //addAllSongsToQueuePlayer()
         playerProgressSlider.maximumValue = CFloat(song!.duration)
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
@@ -414,7 +398,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         let time = secondsToMinutesSeconds(seconds: UInt(seconds))
         
         progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
-
+        
         playerProgressSlider.value = CFloat(seconds)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: "playerProgressSliderValue")
     }
@@ -428,7 +412,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             let seconds = Double(playerProgressSlider.value)
             let targetTime = CMTime(seconds: seconds, preferredTimescale: 1000)
             audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
-        
+            
             let currentTime = audioPlayer.currentTime().seconds
             let time = secondsToMinutesSeconds(seconds: song!.duration)
             progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
@@ -441,7 +425,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             progressTimerLabel.text = "00:00:00"
         }
     }
-
+    
     func secondsToMinutesSeconds (seconds : UInt) -> (minutes: UInt, seconds: UInt) {
         
         let minutes = seconds % 3600 / 60
@@ -474,29 +458,29 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         self.blurView.isHidden = false
         UIView.animate(withDuration: 0.15, delay: 0.01, options:
             UIViewAnimationOptions.curveEaseIn, animations: {
-            self.tableViewContainerTopConstrain.constant = 0.0
-            self.tableViewContainer.layoutIfNeeded()
-            }, completion: { (bool) in
+                self.tableViewContainerTopConstrain.constant = 0.0
+                self.tableViewContainer.layoutIfNeeded()
+        }, completion: { (bool) in
         })
     }
-
+    
     func animateTableViewToOffScreen() {
         isTableViewOnscreen = false
         setNeedsStatusBarAppearanceUpdate()
         self.tableViewContainerTopConstrain.constant = 1000.0
-		
+        
         UIView.animate(withDuration: 0.20, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-			self.tableViewContainer.layoutIfNeeded()
-            }, completion: { (value: Bool) in
-                self.blurView.isHidden = true
+            self.tableViewContainer.layoutIfNeeded()
+        }, completion: { (value: Bool) in
+            self.blurView.isHidden = true
         })
     }
-	
+    
     func assingSliderUI () {
         let minImage = UIImage(named: "slider-track-fill")
         let maxImage = UIImage(named: "slider-track")
         let thumb = UIImage(named: "thumb")
-
+        
         playerProgressSlider.setMinimumTrackImage(minImage, for: UIControlState())
         playerProgressSlider.setMaximumTrackImage(maxImage, for: UIControlState())
         playerProgressSlider.setThumbImage(thumb, for: UIControlState())
@@ -504,24 +488,24 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     
     @IBAction func play(_ sender : AnyObject) {
         
-//        let alert = UIAlertController(title: "Trial", message: nil, preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//        alert.addAction(okAction)
-//        self.present(alert, animated: true) {
+        //        let alert = UIAlertController(title: "Trial", message: nil, preferredStyle: .alert)
+        //        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        //        alert.addAction(okAction)
+        //        self.present(alert, animated: true) {
         
-//            FBSDKAppEvents.logEvent("Trial has started", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
-//                                                                      "id": FBSDKAppEventParameterNameContentID,
-//                                                                      "USD": FBSDKAppEventParameterNameCurrency])
+        //            FBSDKAppEvents.logEvent("Trial has started", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
+        //                                                                      "id": FBSDKAppEventParameterNameContentID,
+        //                                                                      "USD": FBSDKAppEventParameterNameCurrency])
         //    FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: ["trial_subscription": FBSDKAppEventParameterNameContentType,
-                                                                         // "id": FBSDKAppEventParameterNameContentID])
-          //  FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
-                            //       FBSDKAppEventParameterNameContentID : "id"])
-  //      }
+        // "id": FBSDKAppEventParameterNameContentID])
+        //  FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
+        //       FBSDKAppEventParameterNameContentID : "id"])
+        //      }
         
         if shuffleState == true {
             shuffleArray.removeAll()
         }
-
+        
         let play = UIImage(named: "play")
         let pause = UIImage(named: "pause")
         
@@ -533,22 +517,22 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             audioPlayer.rate > 0 ? "\(playButton.setImage( pause, for: UIControlState()))" : "\(playButton.setImage(play , for: UIControlState()))"
         }
     }
-	
+    
     @IBAction func next(_ sender : AnyObject) {
         playNextAudio()
     }
-	
+    
     @IBAction func previous(_ sender : AnyObject) {
         playPreviousAudio()
     }
-	
+    
     @IBAction func changeAudioLocationSlider(_ sender : UISlider) {
         
         let seconds = Double(sender.value)
         let targetTime = CMTime(seconds: seconds, preferredTimescale: 1000)
         audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
     }
-
+    
     @IBAction func userTapped(_ sender : UITapGestureRecognizer) {
         play(self)
     }
@@ -564,21 +548,21 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     @IBAction func userSwipeUp(_ sender : UISwipeGestureRecognizer) {
         presentListTableView(self)
     }
-	
+    
     @IBAction func shuffleButtonTapped(_ sender: UIButton) {
         
-		shuffleArray.removeAll()
-		if sender.isSelected == true {
-			sender.isSelected = false
-			shuffleState = false
-			UserDefaults.standard.set(false, forKey: "shuffleState")
-		} else {
-			sender.isSelected = true
-			shuffleState = true
-			UserDefaults.standard.set(true, forKey: "shuffleState")
-		}
+        shuffleArray.removeAll()
+        if sender.isSelected == true {
+            sender.isSelected = false
+            shuffleState = false
+            UserDefaults.standard.set(false, forKey: "shuffleState")
+        } else {
+            sender.isSelected = true
+            shuffleState = true
+            UserDefaults.standard.set(true, forKey: "shuffleState")
+        }
     }
-	
+    
     @IBAction func repeatButtonTapped(_ sender: UIButton) {
         
         if sender.isSelected == true {
@@ -591,7 +575,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             UserDefaults.standard.set(true, forKey: "repeatState")
         }
     }
-	
+    
     @IBAction func presentListTableView(_ sender: AnyObject) {
         
         if effectToggle {
@@ -609,7 +593,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
 }
 
 // MARK: - LandingPageViewOutput
-extension PlayerViewController: LandingPageViewOutput {
+extension PlayerViewController: LandingPageViewOutputSingleValue {
     
     func sendSong(_ song: Song) {
         
@@ -621,9 +605,21 @@ extension PlayerViewController: LandingPageViewOutput {
         updateLabels()
         assingSliderUI()
         setRepeatAndShuffle()
-       // retrievePlayerProgressSliderValue()
     }
 }
+
+// MARK: - LandingPageViewOutputMultipleValues
+extension PlayerViewController: LandingPageViewOutputMultipleValues {
+    
+    func sendSongs(_ songs: [Song]) {
+        self.albumTracks = songs
+        prepareAudio()
+        updateLabels()
+        assingSliderUI()
+        setRepeatAndShuffle()
+    }
+}
+
 
 
 

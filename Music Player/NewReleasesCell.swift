@@ -13,7 +13,7 @@ class NewReleasesCell: UITableViewCell {
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var releasesCollectionVeiw: UICollectionView!
     
-    var handler: ActionHandler?
+    weak var handler: AlbumsActionHandler?
     var dataSource = NewReleasesDataSource()
     
     static var identifier: String {
@@ -59,6 +59,20 @@ extension NewReleasesCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        var album = dataSource.getAlbums()[indexPath.row]
+        
+        guard let selectedCell = collectionView.cellForItem(at: indexPath) as? NewAlbumCell else {
+            print("Could not cast selected cell to NewAlbumCell")
+            return
+        }
+        
+        var i = 0
+        while(i <= album.songs.count - 1) {
+            album.songs[i].image = selectedCell.newAlbumCoverImageView.image
+            i += 1
+        }
+        
+        handler?.albumWasSelected(album)
     }
 }
 

@@ -19,6 +19,40 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Music List View Controller-->
+        <scene sceneID="KYv-zN-qFy">
+            <objects>
+                <viewController id="PMn-cD-q3B" customClass="MusicListViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MpF-Mc-RJj"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xzn-MV-Sda"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="10s-bP-gK7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Quk-uK-gW4">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Quk-uK-gW4" firstAttribute="top" secondItem="MpF-Mc-RJj" secondAttribute="bottom" id="3MK-7F-5FN"/>
+                            <constraint firstItem="Quk-uK-gW4" firstAttribute="leading" secondItem="10s-bP-gK7" secondAttribute="leading" id="FXO-4d-VPA"/>
+                            <constraint firstAttribute="trailing" secondItem="Quk-uK-gW4" secondAttribute="trailing" id="LOx-FL-Hdc"/>
+                            <constraint firstItem="Xzn-MV-Sda" firstAttribute="top" secondItem="Quk-uK-gW4" secondAttribute="bottom" id="x6o-K7-8hO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="musicTableView" destination="Quk-uK-gW4" id="QaH-Rf-6WF"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="albumTrackSelected" id="w9L-vk-L4K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JnE-u3-6NF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2129" y="-359"/>
+        </scene>
         <!--Player View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -371,6 +405,7 @@
                     <connections>
                         <outlet property="tableView" destination="bED-Nd-gb6" id="ET2-RV-4pX"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="musicWasSelected" id="s7b-AA-gvc"/>
+                        <segue destination="PMn-cD-q3B" kind="show" identifier="albumWasSelected" id="qRH-ze-PxT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oR4-zS-aZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -390,4 +425,7 @@
         <image name="shuffle.png" width="32" height="26"/>
         <image name="shuffle_s.png" width="32" height="26"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="w9L-vk-L4K"/>
+    </inferredMetricsTieBreakers>
 </document>

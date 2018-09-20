@@ -8,7 +8,12 @@
 
 import Foundation
 
-protocol LandingPageViewOutput: class {
+protocol LandingPageViewOutputSingleValue: class {
     
     func sendSong(_ song: Song)
+}
+
+protocol LandingPageViewOutputMultipleValues: class {
+
+    func sendSongs(_ songs: [Song])
 }

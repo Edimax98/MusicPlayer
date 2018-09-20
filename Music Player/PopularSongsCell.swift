@@ -10,7 +10,7 @@ import UIKit
 
 class PopularSongsCell: UITableViewCell {
     
-    var hanlder: ActionHandler?
+    weak var hanlder: SongsActionHandler?
     var songsDataSource = PopularSongsDataSource()
     static var identifier = "PopularSongsCell"
     

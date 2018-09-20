@@ -17,6 +17,10 @@ class NewReleasesDataSource: NSObject {
     func setAlbums(_ albums: [Album]) {
         self.albums = albums
     }
+    
+    func getAlbums() -> [Album] {
+        return self.albums
+    }
 }
 
 extension NewReleasesDataSource: UICollectionViewDataSource {

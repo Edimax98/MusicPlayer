@@ -10,7 +10,6 @@ import Foundation
 import AlamofireImage
 
 struct Song {
-    
     var name: String
     var imagePath: String
     var artistName: String

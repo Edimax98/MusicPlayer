@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TrackCell" rowHeight="81" id="KGk-i7-Jjw" customClass="TrackCell" customModule="Music_Player" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="albom1" translatesAutoresizingMaskIntoConstraints="NO" id="fPB-yJ-hrh">
+                        <rect key="frame" x="10" y="15" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="fPB-yJ-hrh" secondAttribute="height" multiplier="1:1" id="CeR-fm-gMU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhu-Qm-dQU">
+                        <rect key="frame" x="75" y="22" width="229" height="19"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1R-P8-MdY">
+                        <rect key="frame" x="75" y="42" width="229" height="17"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fPB-yJ-hrh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="4QC-BA-57t"/>
+                    <constraint firstItem="m1R-P8-MdY" firstAttribute="top" secondItem="uhu-Qm-dQU" secondAttribute="bottom" constant="1" id="Drb-2M-XxB"/>
+                    <constraint firstItem="fPB-yJ-hrh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="K6G-g9-na4"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="uhu-Qm-dQU" secondAttribute="trailing" id="KAO-r7-ZTy"/>
+                    <constraint firstAttribute="bottom" secondItem="fPB-yJ-hrh" secondAttribute="bottom" constant="15.5" id="R15-hS-2bQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="m1R-P8-MdY" secondAttribute="trailing" id="X22-a1-ztO"/>
+                    <constraint firstItem="uhu-Qm-dQU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="ZDz-UM-3sJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="m1R-P8-MdY" secondAttribute="bottom" constant="11" id="av5-eA-hyw"/>
+                    <constraint firstItem="uhu-Qm-dQU" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="hB6-g0-YJT"/>
+                    <constraint firstItem="m1R-P8-MdY" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="pU0-vi-Mn2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="artistNameLable" destination="m1R-P8-MdY" id="hHh-jl-zik"/>
+                <outlet property="posterImageView" destination="fPB-yJ-hrh" id="VO6-AM-Uxa"/>
+                <outlet property="songNameLabel" destination="uhu-Qm-dQU" id="Grf-Ps-4lK"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="-54.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="albom1" width="96" height="96"/>
+    </resources>
+</document>
