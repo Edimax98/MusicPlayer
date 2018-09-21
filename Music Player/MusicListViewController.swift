@@ -12,7 +12,8 @@ class MusicListViewController: UIViewController {
 
     @IBOutlet weak var musicTableView: UITableView!
     fileprivate let dataSource = SongsDataSource()
-    fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
+    fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
+    fileprivate weak var songActionHandler: SongsActionHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,9 @@ class MusicListViewController: UIViewController {
                 print("Could not cast destination")
                 return
             }
-            outputSingleValue = distinationVc
+            multipleDataOutput = distinationVc
+            songActionHandler = distinationVc
+            multipleDataOutput?.sendSongs(dataSource.getSongs())
         }
     }
 }
@@ -39,7 +42,7 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let song = dataSource.getSongs()[indexPath.row]
         performSegue(withIdentifier: "albumTrackSelected", sender: self)
-        outputSingleValue?.sendSong(song)
+        songActionHandler?.musicWasSelected(song)
     }
 }
 

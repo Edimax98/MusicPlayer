@@ -15,6 +15,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
     fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
     fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
+    fileprivate weak var songActionHandler: SongsActionHandler?
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
@@ -48,8 +49,8 @@ class MusicPlayerLandingPage: UIViewController {
                 print("Could not cast destination VC")
                 return
             }
-            destinationVc.song = selectedSong
-            self.outputSingleValue = destinationVc
+            self.songActionHandler = destinationVc
+            destinationVc.albumTracks.append(selectedSong!)
         }
         
         if  segue.identifier == "albumWasSelected" {
@@ -239,8 +240,9 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 extension MusicPlayerLandingPage: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
+        selectedSong = song
          performSegue(withIdentifier: "musicWasSelected", sender: self)
-        outputSingleValue?.sendSong(song)
+       // songActionHandler?.musicWasSelected(song)
     }
 }
 

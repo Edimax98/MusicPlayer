@@ -43,15 +43,22 @@ class PreferencesCell: UITableViewCell {
     @IBOutlet weak var preferencesFourthLineCollectionView: UICollectionView!
     @IBOutlet weak var preferencesFifthLineCollecctionview: UICollectionView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.selectionStyle = .none
-        preferencesCollectionView.backgroundColor = defaultBackgroundColor
-        preferencesSecondLineCollectionView.backgroundColor = defaultBackgroundColor
-        preferencesThirdLineCollectionView.backgroundColor = defaultBackgroundColor
-        preferencesFourthLineCollectionView.backgroundColor = defaultBackgroundColor
-        preferencesFifthLineCollecctionview.backgroundColor = defaultBackgroundColor
-        self.backgroundColor = defaultBackgroundColor
+    private func registerCells() {
+        
+        preferencesSecondLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil),
+                                                     forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesThirdLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil),
+                                                    forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesFourthLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil),
+                                                     forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil),
+                                           forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+        preferencesFifthLineCollecctionview.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil),
+                                                     forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+    }
+    
+    private func setDataSourcesAndDelegates() {
+        
         preferencesSecondLineCollectionView.dataSource = self
         preferencesSecondLineCollectionView.delegate = self
         preferencesThirdLineCollectionView.dataSource = self
@@ -60,18 +67,33 @@ class PreferencesCell: UITableViewCell {
         preferencesFourthLineCollectionView.dataSource = self
         preferencesFifthLineCollecctionview.dataSource = self
         preferencesFifthLineCollecctionview.delegate = self
+        preferencesCollectionView.delegate = self
+        preferencesCollectionView.dataSource = self
+    }
+    
+    private func setupCollectionView() {
+        
+        self.selectionStyle = .none
+        self.backgroundColor = defaultBackgroundColor
+        preferencesCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesSecondLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesThirdLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesFourthLineCollectionView.backgroundColor = defaultBackgroundColor
+        preferencesFifthLineCollecctionview.backgroundColor = defaultBackgroundColor
+        
         preferencesCollectionView.allowsMultipleSelection = true
         preferencesSecondLineCollectionView.allowsMultipleSelection = true
         preferencesThirdLineCollectionView.allowsMultipleSelection = true
         preferencesFourthLineCollectionView.allowsMultipleSelection = true
         preferencesFifthLineCollecctionview.allowsMultipleSelection = true
-        preferencesCollectionView.delegate = self
-        preferencesCollectionView.dataSource = self
-        preferencesSecondLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
-        preferencesThirdLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
-        preferencesFourthLineCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
-        preferencesCollectionView.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
-        preferencesFifthLineCollecctionview.register(UINib(nibName: PreferedGenreCell.identifier, bundle: nil), forCellWithReuseIdentifier: PreferedGenreCell.identifier)
+
+        registerCells()
+        setDataSourcesAndDelegates()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupCollectionView()
     }
 }
 
@@ -86,7 +108,7 @@ extension PreferencesCell: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PreferedGenreCell.identifier, for: indexPath) as? PreferedGenreCell else {
             return UICollectionViewCell()
         }
-        
+    
         if collectionView === preferencesCollectionView {
             cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
             return cell
@@ -111,6 +133,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             cell.preferedGenreLabel.text = preferedGenresFifthLine[indexPath.row]
             return cell
         }
+        
         return cell
     }
 }

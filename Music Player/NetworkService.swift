@@ -18,6 +18,7 @@ class NetworkService {
     
     weak var songNetworkServiceDelegate: SongNetworkServiceDelegate?
     weak var albumNetworkDelegate: AlbumNetworkServiceDelegate?
+    weak var imageFetcherDelegate: ImageFetchNetworkServiceDelegate?
     
     init() {
         apiKey = "88dda971"
@@ -88,7 +89,7 @@ extension NetworkService: SongNetworkService {
 
 // MARK: - AlbumNetworkService
 extension NetworkService: AlbumNetworkService {
-        
+    
     func fetchAlbums(_ amount: UInt) {
         
         let fetchingQueue = DispatchQueue.global(qos: .utility)
@@ -140,8 +141,8 @@ extension NetworkService: AlbumNetworkService {
                 let albums = json.array?.map { jsonArr -> Album in
                     Album(name: jsonArr["name"].stringValue, artistName: json["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue,
                           songs: jsonArr["tracks"].array!.map { jsonTrackArr -> Song in
-                              Song(name: jsonTrackArr["name"].stringValue, imagePath: jsonTrackArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
-                                   duration: jsonTrackArr["duration"].uIntValue, albumName: jsonArr["name"].stringValue, audioPath: jsonTrackArr["audio"].stringValue, image: nil)
+                            Song(name: jsonTrackArr["name"].stringValue, imagePath: jsonTrackArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
+                                 duration: jsonTrackArr["duration"].uIntValue, albumName: jsonArr["name"].stringValue, audioPath: jsonTrackArr["audio"].stringValue, image: nil)
                         }
                     )
                 }
@@ -150,11 +151,47 @@ extension NetworkService: AlbumNetworkService {
                     print("Album is nil after being parsed")
                     return
                 }
-                
                 self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumToReturn)
         }
     }
 }
+
+// MARK: - ImageFetchNetworkService
+extension NetworkService: ImageFetchNetworkService {
+    
+    func fetchImages(from urls: [String], for modelType: ModelType) {
+        
+        let fetchingQueue = DispatchQueue.global(qos: .utility)
+        let group = DispatchGroup()
+        var images = [Image]()
+        
+        for url in urls {
+            group.enter()
+            let block = DispatchWorkItem(flags: .inheritQoS) {
+                request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseImage { response in
+                    
+                    guard let image = response.result.value else {
+                        print("Image is nil")
+                        return
+                    }
+                    
+                    images.append(image)
+                    group.leave()
+                }
+            }
+            fetchingQueue.async(execute: block)
+        }
+    
+        group.notify(queue: .main) {
+            self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(images, with: modelType)
+        }
+    }
+}
+
+
+
+
+
 
 
 

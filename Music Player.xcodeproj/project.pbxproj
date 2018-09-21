@@ -59,6 +59,8 @@
 		A5CB1A832153CA330002D7CC /* SongsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB1A822153CA330002D7CC /* SongsDataSource.swift */; };
 		A5CB1A872153CB530002D7CC /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB1A852153CB530002D7CC /* TrackCell.swift */; };
 		A5CB1A882153CB530002D7CC /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5CB1A862153CB530002D7CC /* TrackCell.xib */; };
+		A5E9635121552AB5006509C7 /* ImageFetchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */; };
+		A5E96353215542D6006509C7 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E96352215542D6006509C7 /* ModelType.swift */; };
 		A5EC62D721539A6700721542 /* HeaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EC62D621539A6700721542 /* HeaderData.swift */; };
 		A5EC62D921539B0600721542 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EC62D821539B0600721542 /* Extensions.swift */; };
 		D32130581BDCFAD700A45A00 /* Baby Be Mine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D32130561BDCFAD700A45A00 /* Baby Be Mine.mp3 */; };
@@ -161,6 +163,8 @@
 		A5CB1A822153CA330002D7CC /* SongsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsDataSource.swift; sourceTree = "<group>"; };
 		A5CB1A852153CB530002D7CC /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		A5CB1A862153CB530002D7CC /* TrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
+		A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetchNetworkService.swift; sourceTree = "<group>"; };
+		A5E96352215542D6006509C7 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		A5EC62D621539A6700721542 /* HeaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderData.swift; sourceTree = "<group>"; };
 		A5EC62D821539B0600721542 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D32130561BDCFAD700A45A00 /* Baby Be Mine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Baby Be Mine.mp3"; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 				A56BDED62150EBEA00D75F83 /* NetworkService.swift */,
 				A56BDEDA2150ECBD00D75F83 /* SongNetworkService.swift */,
 				A567491A21523E130017BB68 /* AlbumNetworkService.swift */,
+				A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 				A59EF47D2150043700BC6CEA /* Album.swift */,
 				A56BDEDE2150ED6400D75F83 /* Song.swift */,
 				A5EC62D621539A6700721542 /* HeaderData.swift */,
+				A5E96352215542D6006509C7 /* ModelType.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -784,11 +790,13 @@
 				A5EC62D921539B0600721542 /* Extensions.swift in Sources */,
 				83843A8D21458C1500C8A0BE /* PopularSongsCell.swift in Sources */,
 				A56BDED72150EBEA00D75F83 /* NetworkService.swift in Sources */,
+				A5E96353215542D6006509C7 /* ModelType.swift in Sources */,
 				A56BDEE72151012900D75F83 /* PopularSongsDataSource.swift in Sources */,
 				A56BDEE52150FD6100D75F83 /* MusicPlayerLandingPageInteractor.swift in Sources */,
 				A59EF47E2150043700BC6CEA /* Album.swift in Sources */,
 				A5CB1A7E2153AC540002D7CC /* AlbumEndPoint.swift in Sources */,
 				A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */,
+				A5E9635121552AB5006509C7 /* ImageFetchNetworkService.swift in Sources */,
 				A567491B21523E130017BB68 /* AlbumNetworkService.swift in Sources */,
 				A50017BF214A9A4000E30175 /* PaidSubscription.swift in Sources */,
 				A59EF47A214FFAEF00BC6CEA /* Model.swift in Sources */,

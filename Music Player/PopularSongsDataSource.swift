@@ -40,18 +40,18 @@ extension PopularSongsDataSource: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        queue.async {
-            request(song.imagePath, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
-                .responseImage { (response) in
-                    if let image = response.result.value {
-                        DispatchQueue.main.async {
-                            cell.songCoverImageView.image = image
-                            self.songs[indexPath.row].image = image
-                        }
-                    }
-            }
-        }
-        
+//        queue.async {
+//            request(song.imagePath, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
+//                .responseImage { (response) in
+//                    if let image = response.result.value {
+//                        DispatchQueue.main.async {
+//                            cell.songCoverImageView.image = image
+//                            self.songs[indexPath.row].image = image
+//                        }
+//                    }
+//            }
+//        }
+        cell.songCoverImageView.image = song.image
         cell.songNameLabel.text = song.name
         cell.songArtistNameLabel.text = song.artistName
         return cell

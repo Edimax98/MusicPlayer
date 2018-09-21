@@ -23,8 +23,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     //Choose background here. Between 1 - 7
     let selectedBackground = 2
     
-    var audioPlayer: AVPlayer! = nil
-    //var queuePlayer = AVQueuePlayer()
+    var audioPlayer = AVPlayer()
     var currentAudio = ""
     var currentAudioPath:URL!
     var audioList:NSArray!
@@ -39,8 +38,9 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     var shuffleState = false
     var repeatState = false
     var shuffleArray = [Int]()
-    var song: Song?
     var albumTracks = [Song]()
+    var song: Song?
+    var playerItems = [AVPlayerItem]()
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet var songNo : UILabel!
@@ -67,10 +67,14 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var tableViewContainerTopConstrain: NSLayoutConstraint!
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK:- Lockscreen Media Control
     // This shows media info on lock screen - used currently and perform controls
     func showMediaInfo() {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist : song!.artistName,  MPMediaItemPropertyTitle : song!.name]
+       // MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist : song!.artistName,  MPMediaItemPropertyTitle : song!.name]
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
@@ -164,10 +168,16 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
             return false
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImageView.image = UIImage(named: "background\(selectedBackground)")
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
+        fillPlayerItems(with: albumTracks)
+        prepareAudio()
+        updateLabels()
+        assingSliderUI()
+        setRepeatAndShuffle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,7 +191,25 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         super.viewWillLayoutSubviews()
         albumArtworkImageView.setRounded()
     }
+    
+    private func fillPlayerItems(with songs: [Song]) {
+        
+        for song in songs {
+            guard let url = URL(string: song.audioPath) else {
+                print("Incorrect url")
+                return
+            }
+            let asset = AVAsset(url: url)
+            let item = AVPlayerItem(asset: asset)
+            playerItems.append(item)
+        }
+    }
 
+    @objc func playerItemDidReachEnd(notification: NSNotification) {
+        resetTime()
+        playNextAudio()
+    }
+    
     func setRepeatAndShuffle() {
         
         shuffleState = UserDefaults.standard.bool(forKey: "shuffleState")
@@ -262,23 +290,11 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         }
     }
     
-    func addAllSongsToQueuePlayer() {
-        
-//        for song in albumTracks {
-//            guard let url = URL(string: song.audioPath) else {
-//                print("Incorrect url")
-//                return
-//            }
-//            let asset = AVAsset(url: url)
-//            let item = AVPlayerItem(asset: asset)
-//            audioPlayer.insert(item, after: queuePlayer.items().last)
-//        }
-    }
-    
     func saveCurrentTrackNumber() {
         
         UserDefaults.standard.set(currentAudioIndex, forKey: "currentAudioIndex")
         UserDefaults.standard.synchronize()
+    
     }
     
     func retrieveSavedTrackNumber() {
@@ -309,23 +325,21 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     // Prepare audio for playing
     func prepareAudio() {
         
-        setCurrentAudioPath()
+     //   setCurrentAudioPath()
         do {
             //keep alive audio at background
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         } catch _ {
         }
-        
+
         do {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch _ {
         }
-        
+
         UIApplication.shared.beginReceivingRemoteControlEvents()
-        let playerItem = AVPlayerItem(url: currentAudioPath)
-        audioPlayer = AVPlayer(playerItem: playerItem)
-        //addAllSongsToQueuePlayer()
-        playerProgressSlider.maximumValue = CFloat(song!.duration)
+        audioPlayer.replaceCurrentItem(with: playerItems.first)
+        playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
         showTotalSongLength()
@@ -335,6 +349,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     
     //MARK:- Player Controls Methods
     func  playAudio() {
+        audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         audioPlayer.play()
         startTimer()
         updateLabels()
@@ -342,12 +357,12 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         showMediaInfo()
     }
     
-    func playNextAudio(){
+    func playNextAudio() {
         
-        currentAudioIndex += 1
-        if currentAudioIndex > audioList.count - 1{
-            currentAudioIndex -= 1
-            return
+        if currentAudioIndex + 1 > playerItems.count - 1 {
+            currentAudioIndex = 0
+        } else {
+            currentAudioIndex += 1
         }
         
         if audioPlayer.rate > 0 {
@@ -356,36 +371,37 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         } else {
             prepareAudio()
         }
+        resetTime()
     }
     
-    func playPreviousAudio(){
-        currentAudioIndex -= 1
-        if currentAudioIndex<0{
-            currentAudioIndex += 1
-            return
+    func playPreviousAudio() {
+        if currentAudioIndex - 1 < 0 {
+            currentAudioIndex = (playerItems.count - 1) < 0 ? 0 : (playerItems.count - 1)
+        } else {
+            currentAudioIndex -= 1
         }
-        if audioPlayer.rate > 0 {
-            prepareAudio()
-            playAudio()
-        }else{
-            prepareAudio()
-        }
+        playAudio()
+        resetTime()
     }
     
-    func pauseAudioPlayer(){
+    func pauseAudioPlayer() {
         audioPlayer.pause()
     }
     
     func startTimer() {
     
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update(_:)), userInfo: nil,repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update(_:)), userInfo: nil, repeats: true)
             timer.fire()
         }
     }
     
     func stopTimer() {
         timer.invalidate()
+    }
+    
+    private func resetTime() {
+        audioPlayer.seek(to: kCMTimeZero)
     }
     
     @objc func update(_ timer: Timer) {
@@ -398,33 +414,32 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         let time = secondsToMinutesSeconds(seconds: UInt(seconds))
         
         progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
-        
         playerProgressSlider.value = CFloat(seconds)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: "playerProgressSliderValue")
     }
     
-    func retrievePlayerProgressSliderValue() {
-        
-        let playerProgressSliderValue =  UserDefaults.standard.float(forKey: "playerProgressSliderValue")
-        if playerProgressSliderValue != 0 {
-            
-            playerProgressSlider.value  = playerProgressSliderValue
-            let seconds = Double(playerProgressSlider.value)
-            let targetTime = CMTime(seconds: seconds, preferredTimescale: 1000)
-            audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
-            
-            let currentTime = audioPlayer.currentTime().seconds
-            let time = secondsToMinutesSeconds(seconds: song!.duration)
-            progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
-            playerProgressSlider.value = CFloat(currentTime)
-            
-        } else {
-            playerProgressSlider.value = 0.0
-            let targetTime = CMTime()
-            audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
-            progressTimerLabel.text = "00:00:00"
-        }
-    }
+//    func retrievePlayerProgressSliderValue() {
+//
+//        let playerProgressSliderValue =  UserDefaults.standard.float(forKey: "playerProgressSliderValue")
+//        if playerProgressSliderValue != 0 {
+//
+//            playerProgressSlider.value  = playerProgressSliderValue
+//            let seconds = Double(playerProgressSlider.value)
+//            let targetTime = CMTime(seconds: seconds, preferredTimescale: 1000)
+//            audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+//
+//            let currentTime = audioPlayer.currentTime().seconds
+//            let time = secondsToMinutesSeconds(seconds: song!.duration)
+//            progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
+//            playerProgressSlider.value = CFloat(currentTime)
+//
+//        } else {
+//            playerProgressSlider.value = 0.0
+//            let targetTime = CMTime()
+//            audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+//            progressTimerLabel.text = "00:00:00"
+//        }
+//    }
     
     func secondsToMinutesSeconds (seconds : UInt) -> (minutes: UInt, seconds: UInt) {
         
@@ -436,21 +451,16 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     
     func showTotalSongLength() {
         
-        let time = secondsToMinutesSeconds(seconds: song!.duration)
+        let time = secondsToMinutesSeconds(seconds: albumTracks[currentAudioIndex].duration)
         totalLengthOfAudioLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
     }
     
     func updateLabels() {
         
-        guard let song = self.song else {
-            print("Song is nil")
-            return
-        }
-        
-        artistNameLabel.text = song.artistName
-        albumNameLabel.text = song.albumName
-        songNameLabel.text = song.name
-        albumArtworkImageView.image = song.image
+        artistNameLabel.text = albumTracks[currentAudioIndex].artistName
+        albumNameLabel.text = albumTracks[currentAudioIndex].albumName
+        songNameLabel.text = albumTracks[currentAudioIndex].name
+        albumArtworkImageView.image = albumTracks[currentAudioIndex].image
     }
     
     //creates animation and push table view to screen
@@ -477,6 +487,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     }
     
     func assingSliderUI () {
+        
         let minImage = UIImage(named: "slider-track-fill")
         let maxImage = UIImage(named: "slider-track")
         let thumb = UIImage(named: "thumb")
@@ -501,7 +512,7 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
         //  FBSDKAppEvents.logPurchase(0.0, currency: "USD", parameters: [FBSDKAppEventParameterNameContentType : "trial",
         //       FBSDKAppEventParameterNameContentID : "id"])
         //      }
-        
+
         if shuffleState == true {
             shuffleArray.removeAll()
         }
@@ -592,19 +603,13 @@ class PlayerViewController: UIViewController, UITableViewDataSource, AVAudioPlay
     }
 }
 
-// MARK: - LandingPageViewOutput
-extension PlayerViewController: LandingPageViewOutputSingleValue {
+// MARK: - SongsActionHandler
+extension PlayerViewController: SongsActionHandler {
     
-    func sendSong(_ song: Song) {
-        
-        self.song = song
-        self.songNameLabel.text = song.name
-        self.artistNameLabel.text = song.artistName
-        
-        prepareAudio()
-        updateLabels()
-        assingSliderUI()
-        setRepeatAndShuffle()
+    func musicWasSelected(_ song: Song) {
+        albumTracks.append(song)
+        let newItem = AVPlayerItem(url: URL(string: song.audioPath)!)
+        playerItems.append(newItem)
     }
 }
 
@@ -613,10 +618,7 @@ extension PlayerViewController: LandingPageViewOutputMultipleValues {
     
     func sendSongs(_ songs: [Song]) {
         self.albumTracks = songs
-        prepareAudio()
-        updateLabels()
-        assingSliderUI()
-        setRepeatAndShuffle()
+        fillPlayerItems(with: songs)
     }
 }
 
