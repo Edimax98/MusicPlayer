@@ -21,7 +21,7 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="JPN-o4-iCz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nWr-5X-kC5">
                             <size key="itemSize" width="250" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -37,6 +37,7 @@
                     <constraint firstItem="JPN-o4-iCz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iqv-XG-ZcM"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="todaysPlaylistCollectionView" destination="JPN-o4-iCz" id="2SQ-x6-hAd"/>

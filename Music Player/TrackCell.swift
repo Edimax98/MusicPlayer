@@ -16,7 +16,11 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var artistNameLable: UILabel!
     
+    fileprivate let imageCornerRadius: CGFloat = 2
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        posterImageView.layer.cornerRadius = imageCornerRadius
+        posterImageView.layer.masksToBounds = true
     }
 }

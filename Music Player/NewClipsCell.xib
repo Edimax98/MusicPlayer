@@ -21,7 +21,7 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="U0k-GD-3UT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="scrollIndicatorInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nLj-kw-2CG">
                             <size key="itemSize" width="250" height="200"/>
@@ -38,6 +38,7 @@
                     <constraint firstItem="U0k-GD-3UT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="d0I-AZ-WJi"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="clipsCollectionView" destination="U0k-GD-3UT" id="O8u-2h-MSH"/>

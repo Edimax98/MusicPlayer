@@ -11,8 +11,11 @@ import AlamofireImage
 import Alamofire
 
 class SongsDataSource: NSObject {
-    
+        
     var songs = [Song]()
+    
+    fileprivate var backgroundColorForEvenCells = UIColor(red: 33 / 255, green: 34 / 255, blue: 49 / 255, alpha: 1.0)
+    fileprivate var backgroundColorForOddCells = UIColor(red: 29 / 255, green: 30 / 255, blue: 44 / 255, alpha: 1.0)
     
     func setSongs(_ songs: [Song]) {
         self.songs = songs
@@ -39,6 +42,11 @@ extension SongsDataSource: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = backgroundColorForEvenCells
+        } else {
+            cell.backgroundColor = backgroundColorForOddCells
+        }
         cell.posterImageView?.image = song.image
         cell.artistNameLable.text = song.artistName
         cell.songNameLabel.text = song.name

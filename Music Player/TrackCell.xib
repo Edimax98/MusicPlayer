@@ -21,7 +21,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="80.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="albom1" translatesAutoresizingMaskIntoConstraints="NO" id="fPB-yJ-hrh">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="albom10" translatesAutoresizingMaskIntoConstraints="NO" id="fPB-yJ-hrh">
                         <rect key="frame" x="10" y="15" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="fPB-yJ-hrh" secondAttribute="height" multiplier="1:1" id="CeR-fm-gMU"/>
@@ -29,40 +29,60 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uhu-Qm-dQU">
                         <rect key="frame" x="75" y="22" width="229" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uhu-Qm-dQU" secondAttribute="height" multiplier="229:19" id="uEx-yx-kJA"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1R-P8-MdY">
                         <rect key="frame" x="75" y="42" width="229" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="m1R-P8-MdY" secondAttribute="height" multiplier="229:17" id="0Am-id-ShF"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsw-Uq-0nC">
+                        <rect key="frame" x="276" y="30" width="35" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="gsw-Uq-0nC" secondAttribute="height" multiplier="7:4" id="22b-uP-sfl"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="song_more_button"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="fPB-yJ-hrh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="4QC-BA-57t"/>
+                    <constraint firstAttribute="trailing" secondItem="gsw-Uq-0nC" secondAttribute="trailing" constant="9" id="4XM-2F-SmP"/>
+                    <constraint firstItem="uhu-Qm-dQU" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="6cZ-Cn-H2c"/>
                     <constraint firstItem="m1R-P8-MdY" firstAttribute="top" secondItem="uhu-Qm-dQU" secondAttribute="bottom" constant="1" id="Drb-2M-XxB"/>
                     <constraint firstItem="fPB-yJ-hrh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="K6G-g9-na4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uhu-Qm-dQU" secondAttribute="trailing" id="KAO-r7-ZTy"/>
+                    <constraint firstItem="gsw-Uq-0nC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="MoZ-0E-iVN"/>
                     <constraint firstAttribute="bottom" secondItem="fPB-yJ-hrh" secondAttribute="bottom" constant="15.5" id="R15-hS-2bQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="m1R-P8-MdY" secondAttribute="trailing" id="X22-a1-ztO"/>
                     <constraint firstItem="uhu-Qm-dQU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="ZDz-UM-3sJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="m1R-P8-MdY" secondAttribute="bottom" constant="11" id="av5-eA-hyw"/>
+                    <constraint firstItem="m1R-P8-MdY" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="bwA-45-Qsq"/>
                     <constraint firstItem="uhu-Qm-dQU" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="hB6-g0-YJT"/>
                     <constraint firstItem="m1R-P8-MdY" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="pU0-vi-Mn2"/>
+                    <constraint firstAttribute="bottom" secondItem="gsw-Uq-0nC" secondAttribute="bottom" constant="30.5" id="ph2-ER-tPU"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="artistNameLable" destination="m1R-P8-MdY" id="hHh-jl-zik"/>
                 <outlet property="posterImageView" destination="fPB-yJ-hrh" id="VO6-AM-Uxa"/>
                 <outlet property="songNameLabel" destination="uhu-Qm-dQU" id="Grf-Ps-4lK"/>
             </connections>
-            <point key="canvasLocation" x="34" y="-54.5"/>
+            <point key="canvasLocation" x="32" y="-103"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="albom1" width="96" height="96"/>
+        <image name="albom10" width="96" height="96"/>
+        <image name="song_more_button" width="114" height="74"/>
     </resources>
 </document>

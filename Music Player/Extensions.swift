@@ -24,6 +24,15 @@ extension UIView {
         gradient.endPoint = CGPoint(x: 1.0,y: 0.5)
         self.layer.insertSublayer(gradient, at: 1)
     }
+    
+    func applyGradientForSongCell(colors: [UIColor], startPoint: CGPoint, endPoint: CGPoint) {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = colors.map { $0.cgColor }
+        gradient.startPoint = startPoint
+        gradient.endPoint = endPoint
+        self.layer.insertSublayer(gradient, at: 1)
+    }
 }
 
 extension UIImageView {

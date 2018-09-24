@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +21,7 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Rpi-dk-4iX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="328.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="5" id="hwa-SO-Ca1" customClass="UPCarouselFlowLayout" customModule="Music_Player" customModuleProvider="target">
                             <size key="itemSize" width="200" height="230"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -36,6 +37,7 @@
                     <constraint firstAttribute="bottom" secondItem="Rpi-dk-4iX" secondAttribute="bottom" id="kiJ-dp-LRw"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="k1F-pG-D6N"/>
             <connections>
                 <outlet property="collectionViewLayout" destination="hwa-SO-Ca1" id="NQa-bW-Y1J"/>

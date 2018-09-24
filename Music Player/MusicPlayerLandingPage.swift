@@ -59,6 +59,7 @@ class MusicPlayerLandingPage: UIViewController {
                 print("Could not cast destination VC")
                 return
             }
+        
             self.outputMultipleValue = destinationVc
         }
     }
@@ -241,8 +242,24 @@ extension MusicPlayerLandingPage: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
         selectedSong = song
-         performSegue(withIdentifier: "musicWasSelected", sender: self)
-       // songActionHandler?.musicWasSelected(song)
+        let vc = PlayerViewController.instance()
+        self.songActionHandler = vc
+        songActionHandler?.musicWasSelected(song)
+        
+        let popupController = PopupController
+            .create(self)
+            .customize(
+                [
+                    .animation(.fadeIn),
+                    .scrollable(false),
+                    .backgroundStyle(.blackFilter(alpha: 0.7))
+                ]
+            )
+            .show(vc)
+        
+        vc.closeHandler = {
+            popupController.dismiss()
+        }
     }
 }
 
@@ -250,8 +267,21 @@ extension MusicPlayerLandingPage: SongsActionHandler {
 extension MusicPlayerLandingPage: AlbumsActionHandler {
     
     func albumWasSelected(_ album: Album) {
-        performSegue(withIdentifier: "albumWasSelected", sender: self)
+    //    performSegue(withIdentifier: "albumWasSelected", sender: self)
+        let vc = MusicListViewController.instance()
+        self.outputMultipleValue = vc
         outputMultipleValue?.sendSongs(album.songs)
+        
+        PopupController
+            .create(self)
+            .customize(
+                [
+                    .animation(.fadeIn),
+                    .scrollable(false),
+                    .backgroundStyle(.blackFilter(alpha: 0.7))
+                ]
+            )
+            .show(vc)
     }
 }
 

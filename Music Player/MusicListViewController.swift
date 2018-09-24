@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MusicListViewController: UIViewController {
-
+class MusicListViewController: UIViewController, PopupContentViewController {
+    
     @IBOutlet weak var musicTableView: UITableView!
     fileprivate let dataSource = SongsDataSource()
     fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
@@ -29,10 +29,20 @@ class MusicListViewController: UIViewController {
                 print("Could not cast destination")
                 return
             }
+            
             multipleDataOutput = distinationVc
             songActionHandler = distinationVc
             multipleDataOutput?.sendSongs(dataSource.getSongs())
         }
+    }
+    
+    class func instance() -> MusicListViewController {
+        let storyboard = UIStoryboard(name: "MusicList", bundle: nil)
+        return storyboard.instantiateInitialViewController() as! MusicListViewController
+    }
+    
+    func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
+        return CGSize(width: 350, height: 500)
     }
 }
 
@@ -51,6 +61,6 @@ extension MusicListViewController: LandingPageViewOutputMultipleValues {
     
     func sendSongs(_ songs: [Song]) {
         dataSource.setSongs(songs)
-        musicTableView.reloadData()
+      //  musicTableView.reloadData()
     }
 }
