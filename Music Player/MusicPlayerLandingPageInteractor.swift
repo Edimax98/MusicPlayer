@@ -13,23 +13,35 @@
     
     weak var songsOutput: SongsInteractorOutput?
     weak var albumsOutput: AlbumInteractorOutput?
+    weak var playlistOutput: PlaylistInteractorOutput?
     
     fileprivate var networkService: NetworkService
     fileprivate var songNetworkService: SongNetworkService
     fileprivate var albumNetworkService: AlbumNetworkService
     fileprivate var imageFetcherNetworkService: ImageFetchNetworkService
+    fileprivate var todayPlaylistNetworkService: TodaysPlaylistsNetworkService
     
     fileprivate var songs = [Song]()
     fileprivate var albums = [Album]()
+    fileprivate var playlists = [Album]()
+    fileprivate var imagesInsidePlaylists: [[Image]]? {
+        didSet {
+            if imagesInsidePlaylists?.count == playlists.count {
+                self.playlistOutput?.sendPlaylist(playlists)
+            }
+        }
+    }
     
     init(_ networkService: NetworkService) {
         self.networkService = networkService
         self.songNetworkService = networkService
         self.albumNetworkService = networkService
         self.imageFetcherNetworkService = networkService
+        self.todayPlaylistNetworkService = networkService
         self.songNetworkService.songNetworkServiceDelegate = self
         self.albumNetworkService.albumNetworkDelegate = self
         self.imageFetcherNetworkService.imageFetcherDelegate = self
+        self.todayPlaylistNetworkService.todaysPlaylistDelegate = self
     }
     
     private func calculateDateForNewRealeases(with timeOffset: DateComponents) -> Date {
@@ -39,7 +51,6 @@
             print("Could not add date")
             return Date()
         }
-        
         return futureDate
     }
     
@@ -60,6 +71,17 @@
         return albums.map { $0.imagePath }
     }
     
+    fileprivate func getImagePathsForSongs(in playlists: [Album]) -> [[String]] {
+        
+        var paths = [[String]]()
+        
+        for playlist in playlists {
+            paths.append(getImagePaths(from: playlist.songs))
+         }
+        
+        return paths
+    }
+    
     fileprivate func setImagesForAlbums(_ images: [Image]) {
         
         var i = 0
@@ -69,6 +91,19 @@
         }
     }
     
+    fileprivate func setImagesForSongsInsidePlaylist(_ images: [Image]) {
+        
+        var i = 0
+        
+        for var playlist in self.playlists {
+            while i <= images.count - 1 {
+                playlist.songs[i].image = images[i]
+                i += 1
+            }
+        }
+        self.imagesInsidePlaylists?.append(images)
+    }
+    
     fileprivate func setImagesForSongs(_ images: [Image])  {
         
         var i = 0
@@ -76,6 +111,21 @@
             songs[i].image = images[i]
             i += 1
         }
+    }
+    
+    fileprivate func getRandomGenres(from genres: [String], with amount: Int) -> [String] {
+        
+        var result = [String]()
+        var i = 0
+        
+        while i <= amount {
+            let randomIndex = Int(arc4random_uniform(UInt32(genres.count)))
+            if !result.contains(genres[randomIndex]) {
+                result.append(genres[randomIndex])
+            }
+            i += 1
+        }
+        return result
     }
     
     func fetchSong(_ amount: UInt) {
@@ -96,12 +146,17 @@
         
         networkService.fetchAlbums(amount: amount, between: startDateString, and: endDateString)
     }
+    
+    func fetchTodaysPlaylists(for genres: [String], amountOfSongs: Int) {
+        networkService.fetchTodaysPlaylists(for: genres, amountOfSongs: amountOfSongs)
+    }
  }
  
  // MARK: - SongNetworkServiceDelegate
  extension MusicPlayerLandingPageInteractor: SongNetworkServiceDelegate {
     
     func songNetworkerServiceDidGet(_ songs: [Song]) {
+        
         self.songs = songs
         let paths = getImagePaths(from: songs)
         networkService.fetchImages(from: paths, for: .song)
@@ -135,9 +190,27 @@
             case .album:
                 self.setImagesForAlbums(images)
                 self.albumsOutput?.sendAlbums(self.albums)
+            case .playlist:
+                self.setImagesForSongsInsidePlaylist(images)
             }
         }
     }
  }
+ 
+// MARK: - TodaysPlaylistsNetworkServiceDelegate
+ extension MusicPlayerLandingPageInteractor: TodaysPlaylistsNetworkServiceDelegate {
+    
+    func todaysPlaylistNetworkServiceDidGet(_ playlists: [Album]) {
+        
+//        let paths = getImagePathsForSongs(in: playlists)
+//
+//        for path in paths {
+//            networkService.fetchImages(from: path, for: .playlist)
+//        }
+        playlistOutput?.sendPlaylist(playlists)
+    }
+ }
+ 
+ 
  
  

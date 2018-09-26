@@ -11,4 +11,5 @@ import Foundation
 enum ModelType {
     case song
     case album
+    case playlist
 }

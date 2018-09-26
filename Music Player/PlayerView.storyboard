@@ -97,24 +97,6 @@
                                             <constraint firstAttribute="width" constant="120" id="rcx-DV-zPR"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGP-Ip-Fb1">
-                                        <rect key="frame" x="37" y="28" width="300" height="23"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="EGP-Ip-Fb1" secondAttribute="height" multiplier="300:23" id="O2r-56-4L2"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDY-l4-9Qq">
-                                        <rect key="frame" x="38" y="50" width="300" height="23"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="MDY-l4-9Qq" secondAttribute="height" multiplier="300:23" id="LEj-Pi-Crn"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6U-y1-izL">
                                         <rect key="frame" x="305" y="4" width="70" height="70"/>
                                         <constraints>
@@ -125,6 +107,24 @@
                                             <action selector="hidePlayerButtonPressed:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="W4l-Kt-qYt"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGP-Ip-Fb1">
+                                        <rect key="frame" x="52" y="37" width="270" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="EGP-Ip-Fb1" secondAttribute="height" multiplier="300:23" constant="-30" id="O2r-56-4L2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDY-l4-9Qq">
+                                        <rect key="frame" x="52" y="60" width="270" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="MDY-l4-9Qq" secondAttribute="height" multiplier="300:23" constant="-30" id="LEj-Pi-Crn"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
@@ -133,22 +133,22 @@
                                     <constraint firstItem="i6A-Jl-x93" firstAttribute="centerX" secondItem="WoW-Ed-r8c" secondAttribute="centerX" constant="-0.5" id="4Oa-x6-VNz"/>
                                     <constraint firstAttribute="trailing" secondItem="fFq-To-7ex" secondAttribute="trailing" constant="-16" id="7De-Ol-V6E"/>
                                     <constraint firstAttribute="height" constant="200" id="Bvj-1L-oIZ"/>
-                                    <constraint firstItem="MDY-l4-9Qq" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="50" id="Ds3-jm-CtK"/>
+                                    <constraint firstItem="MDY-l4-9Qq" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="60" id="Ds3-jm-CtK"/>
                                     <constraint firstAttribute="bottom" secondItem="SM7-P1-dgr" secondAttribute="bottom" constant="-60" id="E2R-TN-ZI2"/>
-                                    <constraint firstAttribute="trailing" secondItem="MDY-l4-9Qq" secondAttribute="trailing" constant="37" id="HrR-wI-zwx"/>
+                                    <constraint firstAttribute="trailing" secondItem="MDY-l4-9Qq" secondAttribute="trailing" constant="53" id="HrR-wI-zwx"/>
                                     <constraint firstItem="SM7-P1-dgr" firstAttribute="centerY" secondItem="i6A-Jl-x93" secondAttribute="centerY" id="OhC-tk-d8q"/>
                                     <constraint firstItem="q6U-y1-izL" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="4" id="Px2-Fj-S3V"/>
-                                    <constraint firstItem="EGP-Ip-Fb1" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="28" id="SNC-I3-B0S"/>
+                                    <constraint firstItem="EGP-Ip-Fb1" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="37" id="SNC-I3-B0S"/>
                                     <constraint firstItem="q6U-y1-izL" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="4" id="SpC-JZ-lup"/>
                                     <constraint firstItem="fFq-To-7ex" firstAttribute="top" secondItem="WoW-Ed-r8c" secondAttribute="top" constant="-16" id="UI1-2T-xG7"/>
-                                    <constraint firstItem="MDY-l4-9Qq" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="38" id="W4n-l2-AGp"/>
+                                    <constraint firstItem="MDY-l4-9Qq" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="52" id="W4n-l2-AGp"/>
                                     <constraint firstAttribute="trailing" secondItem="q6U-y1-izL" secondAttribute="trailing" id="Z3I-8b-cV5"/>
-                                    <constraint firstAttribute="trailing" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="38" id="fTs-Fv-Ixh"/>
+                                    <constraint firstAttribute="trailing" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="53" id="fTs-Fv-Ixh"/>
                                     <constraint firstItem="SM7-P1-dgr" firstAttribute="top" secondItem="fFq-To-7ex" secondAttribute="bottom" constant="9" id="iU0-Oj-h20"/>
-                                    <constraint firstItem="EGP-Ip-Fb1" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="37" id="jKh-m8-ujx"/>
+                                    <constraint firstItem="EGP-Ip-Fb1" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="52" id="jKh-m8-ujx"/>
                                     <constraint firstItem="fFq-To-7ex" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="-14" id="n4R-jW-36c"/>
                                     <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="305" id="oTZ-s6-ava"/>
-                                    <constraint firstItem="SM7-P1-dgr" firstAttribute="centerX" secondItem="MDY-l4-9Qq" secondAttribute="centerX" id="ofG-S1-S9W"/>
+                                    <constraint firstItem="SM7-P1-dgr" firstAttribute="centerX" secondItem="MDY-l4-9Qq" secondAttribute="centerX" constant="1" id="ofG-S1-S9W"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Y5A-YZ-txB" appends="YES" id="oue-Xp-vT0"/>

@@ -12,10 +12,11 @@ class TodaysPlaylistCell: UITableViewCell {
     
     @IBOutlet weak var todaysPlaylistCollectionView: UICollectionView!
     
+    weak var albumHandler: AlbumsActionHandler?
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
-    fileprivate let playlistsCoverNames = ["playlist1","playlist2","playlist3","playlist4"]
     fileprivate let cellWidth: CGFloat = 144
     fileprivate let cellHeight: CGFloat = 140
+    var dataSource = TodaysPlaylistDataSource()
     static var identifier = "TodaysPlaylistCell"
     
     override func awakeFromNib() {
@@ -24,35 +25,39 @@ class TodaysPlaylistCell: UITableViewCell {
         if todaysPlaylistCollectionView != nil {
             todaysPlaylistCollectionView.register(UINib(nibName: "TodaySongCell", bundle: nil), forCellWithReuseIdentifier: TodaySongCell.identifier)
             todaysPlaylistCollectionView.backgroundColor = defaultBackgroundColor
-            todaysPlaylistCollectionView.dataSource = self
+            todaysPlaylistCollectionView.dataSource = dataSource
             todaysPlaylistCollectionView.delegate = self
         }
     }
 }
 
-extension TodaysPlaylistCell: UICollectionViewDataSource {
+// MARK: - UICollectionViewDelegate
+ extension TodaysPlaylistCell: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return playlistsCoverNames.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodaySongCell.identifier, for: indexPath) as? TodaySongCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.playlistCoverImageView.image = UIImage(named: playlistsCoverNames[indexPath.row])!
-        return cell
+        let album = dataSource.getPlaylists()[indexPath.row]
+        albumHandler?.albumWasSelected(album)
     }
-}
-
+ }
+ 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension TodaysPlaylistCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }
+ 
+// MARK: - PlaylistInteractorOutput
+ extension TodaysPlaylistCell: PlaylistInteractorOutput {
+    
+    func sendPlaylist(_ playlists: [Album]) {
+        dataSource.setPlaylists(playlists)
+        todaysPlaylistCollectionView.reloadData()
+    }
+ }
+ 
 
 
 

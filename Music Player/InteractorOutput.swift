@@ -17,3 +17,8 @@ protocol AlbumInteractorOutput: class {
     
     func sendAlbums(_ albums: [Album])
 }
+
+protocol PlaylistInteractorOutput: class {
+    
+    func sendPlaylist(_ playlists: [Album])
+}

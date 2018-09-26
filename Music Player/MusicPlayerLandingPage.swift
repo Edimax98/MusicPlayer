@@ -16,6 +16,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
     fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
     fileprivate weak var songActionHandler: SongsActionHandler?
+    fileprivate weak var albumActionHandler: AlbumsActionHandler?
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 6
     fileprivate var dataSource = [HeaderData]()
@@ -39,29 +40,6 @@ class MusicPlayerLandingPage: UIViewController {
         registerCells(for: tableView)
         fillDataSource()
         configureFloatButtonView()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "musicWasSelected" {
-            
-            guard let destinationVc = segue.destination as? PlayerViewController else {
-                print("Could not cast destination VC")
-                return
-            }
-            self.songActionHandler = destinationVc
-            destinationVc.albumTracks.append(selectedSong!)
-        }
-        
-        if  segue.identifier == "albumWasSelected" {
-            
-            guard let destinationVc = segue.destination as? MusicListViewController else {
-                print("Could not cast destination VC")
-                return
-            }
-        
-            self.outputMultipleValue = destinationVc
-        }
     }
     
     private func registerCells(for tableView: UITableView) {
@@ -149,6 +127,9 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TodaysPlaylistCell.identifier, for: indexPath) as? TodaysPlaylistCell else {
                 return UITableViewCell()
             }
+            cell.albumHandler = self
+            self.interactor?.playlistOutput = cell
+            interactor?.fetchTodaysPlaylists(for: ["Rock","Pop","Rap"], amountOfSongs: 10)
             return cell
             
         case 3:
@@ -267,21 +248,24 @@ extension MusicPlayerLandingPage: SongsActionHandler {
 extension MusicPlayerLandingPage: AlbumsActionHandler {
     
     func albumWasSelected(_ album: Album) {
-    //    performSegue(withIdentifier: "albumWasSelected", sender: self)
+
         let vc = MusicListViewController.instance()
-        self.outputMultipleValue = vc
-        outputMultipleValue?.sendSongs(album.songs)
+        self.albumActionHandler = vc
+        albumActionHandler?.albumWasSelected(album)
         
-        PopupController
-            .create(self)
-            .customize(
-                [
-                    .animation(.fadeIn),
-                    .scrollable(false),
-                    .backgroundStyle(.blackFilter(alpha: 0.7))
-                ]
-            )
-            .show(vc)
+        let popup = PopupController
+                        .create(self)
+                        .customize(
+                            [
+                                .animation(.slideDown),
+                                .scrollable(false),
+                                .backgroundStyle(.blackFilter(alpha: 0.7))
+                            ])
+                        .show(vc)
+        
+        vc.closeHandler = {
+            popup.dismiss()
+        }
     }
 }
 

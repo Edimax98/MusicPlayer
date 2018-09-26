@@ -6,12 +6,6 @@
 //  Copyright (c) 2014 polat. All rights reserved.
 // contact  bpolat@live.com
 
-// Build 3 - July 1 2015 - Please refer git history for full changes
-// Build 4 - Oct 24 2015 - Please refer git history for full changes
-
-//Build 5 - Dec 14 - 2015 Adding shuffle - repeat
-
-
 import UIKit
 import AVFoundation
 import MediaPlayer

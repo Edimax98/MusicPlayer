@@ -20,12 +20,7 @@ class TodaySongCell: UICollectionViewCell {
     
 	override func awakeFromNib() {
         super.awakeFromNib()
-        
-        if playlistCoverImageView != nil && typeOfPlaylistLabel != nil && infoAboutPlaylistLabel != nil {
-            playlistCoverImageView.layer.cornerRadius = cornerRadius
-            typeOfPlaylistLabel.text = "Type of playlist"
-            infoAboutPlaylistLabel.text = "Info about playlist"
-            self.backgroundColor = defaultBackgroundColor
-        }
+        playlistCoverImageView.layer.cornerRadius = cornerRadius
+        self.backgroundColor = defaultBackgroundColor
     }
 }

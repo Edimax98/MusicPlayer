@@ -20,6 +20,7 @@ class TrackCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         posterImageView.layer.cornerRadius = imageCornerRadius
         posterImageView.layer.masksToBounds = true
     }

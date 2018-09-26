@@ -19,6 +19,7 @@ class NetworkService {
     weak var songNetworkServiceDelegate: SongNetworkServiceDelegate?
     weak var albumNetworkDelegate: AlbumNetworkServiceDelegate?
     weak var imageFetcherDelegate: ImageFetchNetworkServiceDelegate?
+    weak var todaysPlaylistDelegate: TodaysPlaylistsNetworkServiceDelegate?
     
     init() {
         apiKey = "88dda971"
@@ -139,7 +140,7 @@ extension NetworkService: AlbumNetworkService {
                 let json = JSON(responseValue)["results"]
                 
                 let albums = json.array?.map { jsonArr -> Album in
-                    Album(name: jsonArr["name"].stringValue, artistName: json["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue,
+                    Album(name: jsonArr["name"].stringValue, artistName: jsonArr["artist_name"].stringValue, imagePath: jsonArr["image"].stringValue,
                           songs: jsonArr["tracks"].array!.map { jsonTrackArr -> Song in
                             Song(name: jsonTrackArr["name"].stringValue, imagePath: jsonTrackArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
                                  duration: jsonTrackArr["duration"].uIntValue, albumName: jsonArr["name"].stringValue, audioPath: jsonTrackArr["audio"].stringValue, image: nil)
@@ -174,19 +175,70 @@ extension NetworkService: ImageFetchNetworkService {
                         print("Image is nil")
                         return
                     }
-                    
                     images.append(image)
                     group.leave()
                 }
             }
             fetchingQueue.async(execute: block)
         }
-    
         group.notify(queue: .main) {
             self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(images, with: modelType)
         }
     }
 }
+
+// MARK: - TodaysPlaylistsNetworkService
+extension NetworkService: TodaysPlaylistsNetworkService {
+    
+    func fetchTodaysPlaylists(for genres: [String], amountOfSongs: Int) {
+        
+        let fetchingQueue = DispatchQueue.global(qos: .utility)
+        let group = DispatchGroup()
+        var playlists = [Album]()
+        
+        for genre in genres {
+            group.enter()
+            let parameters = TodayPlaylistApi.todayPlaylist(genre: genre, amountOfSongs: amountOfSongs).parameters
+            
+            let block = DispatchWorkItem(flags: .inheritQoS) {
+                request(TodayPlaylistApi.baseUrl, method: .get, parameters: parameters, encoding: URLEncoding(), headers: nil).responseJSON { response in
+                    
+                    guard let responseValue = response.result.value else {
+                        print("Today playlist raw json is nil")
+                        return
+                    }
+                    
+                    let json = JSON(responseValue)["results"]
+                    
+                    let todaysPlaylist = Album(name: genre, artistName: "Ur friend", imagePath: "", songs: (json.array?.map { jsonArr -> Song in
+                        Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
+                             duration: jsonArr["duration"].uIntValue, albumName: genre, audioPath: jsonArr["audio"].stringValue, image: nil)
+                        })!)
+                    
+                    playlists.append(todaysPlaylist)
+                    group.leave()
+                }
+            }
+            fetchingQueue.async(execute: block)
+        }
+        group.notify(queue: .main) {
+            self.todaysPlaylistDelegate?.todaysPlaylistNetworkServiceDidGet(playlists)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
