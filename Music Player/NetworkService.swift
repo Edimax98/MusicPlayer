@@ -63,7 +63,7 @@ extension NetworkService: SongNetworkService {
     
     func fetchSongs(_ amount: UInt) {
         
-        request("https://api.jamendo.com/v3.0/tracks/?client_id=88dda971&limit=10", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
+        request("https://api.jamendo.com/v3.0/tracks/?client_id=88dda971&limit=10&order=popularity_month", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
             .validate()
             .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
                 
@@ -159,6 +159,41 @@ extension NetworkService: AlbumNetworkService {
 
 // MARK: - ImageFetchNetworkService
 extension NetworkService: ImageFetchNetworkService {
+    
+    func fetchNestedImages(from nestedUrls: [[String]]) {
+        
+        let fetchingQueue = DispatchQueue.global(qos: .utility)
+        let group = DispatchGroup()
+        let outerGroup = DispatchGroup()
+        var nestedImages = [[Image]]()
+        
+        for urls in nestedUrls {
+            var images = [Image]()
+            outerGroup.enter()
+            for url in urls {
+                group.enter()
+                let block = DispatchWorkItem(flags: .inheritQoS) {
+                    request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseImage { response in
+                        
+                        guard let image = response.result.value else {
+                            print("Image is nil")
+                            return
+                        }
+                        images.append(image)
+                        group.leave()
+                    }
+                }
+                fetchingQueue.async(execute: block)
+            }
+            group.notify(queue: .main) {
+                nestedImages.append(images)
+                outerGroup.leave()
+            }
+        }
+        outerGroup.notify(queue: .main) {
+            self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(nestedImages)
+        }
+    }
     
     func fetchImages(from urls: [String], for modelType: ModelType) {
         

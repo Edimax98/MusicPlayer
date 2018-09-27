@@ -11,6 +11,8 @@ import AlamofireImage
 protocol ImageFetchNetworkServiceDelegate: FetchingErrorHandler {
 
     func imageFetchNetworkSeriviceDidGet(_ images: [Image], with modelType: ModelType)
+    
+    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[Image]])
 }
 
 protocol ImageFetchNetworkService {
@@ -18,4 +20,6 @@ protocol ImageFetchNetworkService {
     var imageFetcherDelegate: ImageFetchNetworkServiceDelegate? { get set }
     
     func fetchImages(from urls: [String], for modelType: ModelType)
+    
+    func fetchNestedImages(from nestedUrls: [[String]])
 }

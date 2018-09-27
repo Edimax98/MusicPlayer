@@ -24,7 +24,9 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     var albumTracks = [Song]()
     var song: Song?
     var playerItems = [AVPlayerItem]()
+    var wasPlayerOpenAbovePopupViews = false
     
+    @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet var songNameLabel: UILabel!
@@ -63,13 +65,19 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     override var prefersStatusBarHidden : Bool {
         return true
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if wasPlayerOpenAbovePopupViews {
+            exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
+        }
+        
+        albumArtworkImageView.layer.borderWidth = 1
+        albumArtworkImageView.layer.cornerRadius = 50
+        albumArtworkImageView.clipsToBounds = true
+        
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
-        albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
-        albumArtworkImageView.layer.masksToBounds = true
         fillPlayerItems(with: albumTracks)
         prepareAudio()
         updateLabels()
@@ -93,7 +101,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
             playerItems.append(item)
         }
     }
-
+    
     @objc func playerItemDidReachEnd(notification: NSNotification) {
         resetTime()
         playNextAudio()
@@ -139,12 +147,12 @@ class PlayerViewController: UIViewController, PopupContentViewController {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         } catch _ {
         }
-
+        
         do {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch _ {
         }
-
+        
         UIApplication.shared.beginReceivingRemoteControlEvents()
         audioPlayer.replaceCurrentItem(with: playerItems.first)
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
@@ -166,7 +174,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func playNextAudio() {
         
-        if currentAudioIndex + 1 > playerItems.count - 1 {
+        if currentAudioIndex + 1 > playerItems.count - 1 || currentAudioIndex + 1 > albumTracks.count - 1 {
             currentAudioIndex = 0
         } else {
             currentAudioIndex += 1
@@ -196,7 +204,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     func startTimer() {
-    
+        
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update(_:)), userInfo: nil, repeats: true)
             timer.fire()
@@ -304,12 +312,33 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
         closeHandler?()
     }
+    
+    fileprivate func setIndex(for songToFindIndex: Song) {
+        
+        let index = albumTracks.index { (song) -> Bool in
+            if songToFindIndex == song {
+                return true
+            }
+            return false
+        }
+        
+        guard let songIndex = index else {
+            print("Found index is nil")
+            return
+        }
+        
+        currentAudioIndex = Int(songIndex)
+    }
 }
 
 // MARK: - SongsActionHandler
 extension PlayerViewController: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
+        
+        if !albumTracks.isEmpty {
+            setIndex(for: song)
+        }
         albumTracks.append(song)
         let newItem = AVPlayerItem(url: URL(string: song.audioPath)!)
         playerItems.append(newItem)
@@ -322,6 +351,7 @@ extension PlayerViewController: LandingPageViewOutputMultipleValues {
     func sendSongs(_ songs: [Song]) {
         self.albumTracks = songs
         fillPlayerItems(with: songs)
+        wasPlayerOpenAbovePopupViews = true
     }
 }
 

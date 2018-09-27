@@ -18,8 +18,6 @@ class PreferencesCell: UITableViewCell {
         return 54.0
     }
     
-    var longString = "Rock'n'Roll"
-    
     var longTagIndex: Int {
         return 1
     }
@@ -30,11 +28,11 @@ class PreferencesCell: UITableViewCell {
     fileprivate let minimumInteritemSpacing: CGFloat = 10
     fileprivate let cellsPerRow = 3
     fileprivate let countOfItemsInSection = 2
-    fileprivate let preferedGenres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country"]
-    fileprivate let preferedGenresSecondLine = ["Beats", "Float House","EDM", "DeepHouse", "Trance", "Techno"]
-    fileprivate let preferedGenresThirdLine = ["Art Pop", "Rock", "Classical", "Trap", "Pop", "Neo Soul"]
-    fileprivate let preferedGenresFourthLine = ["Modern Rock", "Chill", "Chill Lounge", "Bass Trap", "Dance Pop"]
-    fileprivate let preferedGenresFifthLine = ["Electro Jazz", "J-Core","Pop Rock", "K-Pop", "Rif"]
+    fileprivate let preferedGenres = ["Deep House","Hip-Hop", "Jazz", "Country"]
+    fileprivate let preferedGenresSecondLine = ["Beats","EDM", "DeepHouse", "Techno"]
+    fileprivate let preferedGenresThirdLine = ["Rock", "Classical", "Trap", "Pop", "RNB"]
+    fileprivate let preferedGenresFourthLine = ["Modern Rock", "Chill", "Bass Trap", "Dance Pop"]
+    fileprivate let preferedGenresFifthLine = ["Blues","Pop Rock", "Bass Trap","Trance"]
     fileprivate let genresImages = ["genrespink","genresgreen","genresblue","genresorange"]
     
     @IBOutlet weak var preferencesCollectionView: UICollectionView!
@@ -108,36 +106,46 @@ extension PreferencesCell: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PreferedGenreCell.identifier, for: indexPath) as? PreferedGenreCell else {
             return UICollectionViewCell()
         }
-    
+        
         if collectionView === preferencesCollectionView {
             cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
+            let randomNumber = Int(arc4random() % 4)
+            cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
             return cell
         }
         
         if collectionView === preferencesSecondLineCollectionView {
             cell.preferedGenreLabel.text = preferedGenresSecondLine[indexPath.row]
+            let randomNumber = Int(arc4random() % 4)
+            cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
             return cell
         }
         
         if collectionView === preferencesThirdLineCollectionView {
             cell.preferedGenreLabel.text = preferedGenresThirdLine[indexPath.row]
+            let randomNumber = Int(arc4random() % 4)
+            cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
             return cell
         }
         
         if collectionView === preferencesFourthLineCollectionView {
             cell.preferedGenreLabel.text = preferedGenresFourthLine[indexPath.row]
+            let randomNumber = Int(arc4random() % 4)
+            cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
             return cell
         }
         
         if collectionView === preferencesFifthLineCollecctionview {
             cell.preferedGenreLabel.text = preferedGenresFifthLine[indexPath.row]
+            let randomNumber = Int(arc4random() % 4)
+            cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
             return cell
         }
-        
         return cell
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension PreferencesCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -147,25 +155,15 @@ extension PreferencesCell: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension PreferencesCell: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
-            return
-        }
-        
-        cell.preferedGenreImageView.image = nil
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
             return
         }
-        
-        let randomNumber = Int(arc4random() % 4)
-        cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+        cell.preferedGenreImageView.image = nil
     }
 }
 

@@ -45,22 +45,13 @@
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsw-Uq-0nC">
-                        <rect key="frame" x="276" y="30" width="35" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="gsw-Uq-0nC" secondAttribute="height" multiplier="7:4" id="22b-uP-sfl"/>
-                        </constraints>
-                        <state key="normal" title="Button" image="song_more_button"/>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="fPB-yJ-hrh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="4QC-BA-57t"/>
-                    <constraint firstAttribute="trailing" secondItem="gsw-Uq-0nC" secondAttribute="trailing" constant="9" id="4XM-2F-SmP"/>
                     <constraint firstItem="uhu-Qm-dQU" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="6cZ-Cn-H2c"/>
                     <constraint firstItem="m1R-P8-MdY" firstAttribute="top" secondItem="uhu-Qm-dQU" secondAttribute="bottom" constant="1" id="Drb-2M-XxB"/>
                     <constraint firstItem="fPB-yJ-hrh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="K6G-g9-na4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uhu-Qm-dQU" secondAttribute="trailing" id="KAO-r7-ZTy"/>
-                    <constraint firstItem="gsw-Uq-0nC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="MoZ-0E-iVN"/>
                     <constraint firstAttribute="bottom" secondItem="fPB-yJ-hrh" secondAttribute="bottom" constant="15.5" id="R15-hS-2bQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="m1R-P8-MdY" secondAttribute="trailing" id="X22-a1-ztO"/>
                     <constraint firstItem="uhu-Qm-dQU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="ZDz-UM-3sJ"/>
@@ -68,7 +59,6 @@
                     <constraint firstItem="m1R-P8-MdY" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="bwA-45-Qsq"/>
                     <constraint firstItem="uhu-Qm-dQU" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="hB6-g0-YJT"/>
                     <constraint firstItem="m1R-P8-MdY" firstAttribute="leading" secondItem="fPB-yJ-hrh" secondAttribute="trailing" constant="15" id="pU0-vi-Mn2"/>
-                    <constraint firstAttribute="bottom" secondItem="gsw-Uq-0nC" secondAttribute="bottom" constant="30.5" id="ph2-ER-tPU"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.090196078431372548" green="0.10588235294117647" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -83,6 +73,5 @@
     </objects>
     <resources>
         <image name="albom10" width="96" height="96"/>
-        <image name="song_more_button" width="114" height="74"/>
     </resources>
 </document>

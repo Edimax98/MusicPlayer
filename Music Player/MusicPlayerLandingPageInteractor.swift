@@ -20,17 +20,17 @@
     fileprivate var albumNetworkService: AlbumNetworkService
     fileprivate var imageFetcherNetworkService: ImageFetchNetworkService
     fileprivate var todayPlaylistNetworkService: TodaysPlaylistsNetworkService
+
+    fileprivate let genres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country",
+                        "Art Pop", "Rock", "Classical", "Trap", "Pop", "RNB",
+                        "Modern Rock", "Chill", "Bass Trap", "Dance Pop",
+                        "Blues","Pop Rock", "K-Pop", "Bass Trap",
+                        "Beats","EDM", "DeepHouse", "Trance", "Techno"]
     
     fileprivate var songs = [Song]()
     fileprivate var albums = [Album]()
     fileprivate var playlists = [Album]()
-    fileprivate var imagesInsidePlaylists: [[Image]]? {
-        didSet {
-            if imagesInsidePlaylists?.count == playlists.count {
-                self.playlistOutput?.sendPlaylist(playlists)
-            }
-        }
-    }
+    fileprivate var imagesInsidePlaylists: [[Image]]?
     
     init(_ networkService: NetworkService) {
         self.networkService = networkService
@@ -91,17 +91,19 @@
         }
     }
     
-    fileprivate func setImagesForSongsInsidePlaylist(_ images: [Image]) {
+    fileprivate func setImagesForSongsInsidePlaylist(_ nestedImages: [[Image]]) {
         
         var i = 0
+        var j = 0
         
-        for var playlist in self.playlists {
-            while i <= images.count - 1 {
-                playlist.songs[i].image = images[i]
-                i += 1
+        while i <= nestedImages.count - 1 {
+            j = 0
+            while j <= nestedImages[i].count - 1 {
+                playlists[i].songs[j].image = nestedImages[i][j]
+                j += 1
             }
+            i += 1
         }
-        self.imagesInsidePlaylists?.append(images)
     }
     
     fileprivate func setImagesForSongs(_ images: [Image])  {
@@ -147,8 +149,9 @@
         networkService.fetchAlbums(amount: amount, between: startDateString, and: endDateString)
     }
     
-    func fetchTodaysPlaylists(for genres: [String], amountOfSongs: Int) {
-        networkService.fetchTodaysPlaylists(for: genres, amountOfSongs: amountOfSongs)
+    func fetchTodaysPlaylists(amountOfSongs: Int) {
+        let randomGenres = getRandomGenres(from: self.genres, with: 5)
+        networkService.fetchTodaysPlaylists(for: randomGenres, amountOfSongs: amountOfSongs)
     }
  }
  
@@ -180,6 +183,14 @@
  // MARK: - ImageFetchNetworkServiceDelegate
  extension MusicPlayerLandingPageInteractor: ImageFetchNetworkServiceDelegate {
     
+    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[Image]]) {
+        
+        DispatchQueue.main.async {
+            self.setImagesForSongsInsidePlaylist(nestedImages)
+            self.playlistOutput?.sendPlaylist(self.playlists)
+        }
+    }
+    
     func imageFetchNetworkSeriviceDidGet(_ images: [Image], with modelType: ModelType) {
         
         DispatchQueue.main.async {
@@ -190,8 +201,7 @@
             case .album:
                 self.setImagesForAlbums(images)
                 self.albumsOutput?.sendAlbums(self.albums)
-            case .playlist:
-                self.setImagesForSongsInsidePlaylist(images)
+            default: break
             }
         }
     }
@@ -201,13 +211,9 @@
  extension MusicPlayerLandingPageInteractor: TodaysPlaylistsNetworkServiceDelegate {
     
     func todaysPlaylistNetworkServiceDidGet(_ playlists: [Album]) {
-        
-//        let paths = getImagePathsForSongs(in: playlists)
-//
-//        for path in paths {
-//            networkService.fetchImages(from: path, for: .playlist)
-//        }
-        playlistOutput?.sendPlaylist(playlists)
+        self.playlists = playlists
+        let paths = getImagePathsForSongs(in: playlists)
+        networkService.fetchNestedImages(from: paths)
     }
  }
  

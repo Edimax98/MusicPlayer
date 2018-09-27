@@ -18,7 +18,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate weak var songActionHandler: SongsActionHandler?
     fileprivate weak var albumActionHandler: AlbumsActionHandler?
     fileprivate let countOfRowsInSection = 1
-    fileprivate let countOfSection = 6
+    fileprivate let countOfSection = 5
     fileprivate var dataSource = [HeaderData]()
     fileprivate var selectedSong: Song?
     fileprivate let headerSize: CGFloat = 60
@@ -95,7 +95,6 @@ class MusicPlayerLandingPage: UIViewController {
         dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences", dividerColor: lightBlue))
         dataSource.append(HeaderData(icon: "section2", title: "Playlists for today", dividerColor: lightPurple))
         dataSource.append(HeaderData(icon: "section3", title: "New Releases", dividerColor: pink))
-        dataSource.append(HeaderData(icon: "section4", title: "New Video clips", dividerColor: lightOrange))
         dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: brightPink))
     }
 }
@@ -129,7 +128,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             }
             cell.albumHandler = self
             self.interactor?.playlistOutput = cell
-            interactor?.fetchTodaysPlaylists(for: ["Rock","Pop","Rap"], amountOfSongs: 10)
+            interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
             return cell
             
         case 3:
@@ -141,12 +140,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchNewAlbums(amount: 10)
             return cell
         case 4:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NewClipsCell.identifier, for: indexPath) as? NewClipsCell else {
-                return UITableViewCell()
-            }
-            return cell
-            
-        case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularSongsCell.identifier, for: indexPath) as? PopularSongsCell else {
                 return UITableViewCell()
             }
@@ -171,8 +164,6 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         case 3:
             return 300
         case 4:
-            return 200
-        case 5:
             return 450
         default:
             return 150

@@ -29,21 +29,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         musicTableView.register(UINib(nibName: "TrackCell", bundle: nil), forCellReuseIdentifier: TrackCell.identifier)
         fillLabels()
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "albumTrackSelected" {
-            guard let distinationVc = segue.destination as? PlayerViewController else {
-                print("Could not cast destination")
-                return
-            }
-            
-            multipleDataOutput = distinationVc
-            songActionHandler = distinationVc
-            multipleDataOutput?.sendSongs(dataSource.getSongs())
-        }
-    }
-    
     class func instance() -> MusicListViewController {
         
         let storyboard = UIStoryboard(name: "MusicList", bundle: nil)
@@ -79,8 +65,8 @@ extension MusicListViewController: UITableViewDelegate {
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
         self.multipleDataOutput = vc
-        songActionHandler?.musicWasSelected(song)
         multipleDataOutput?.sendSongs(album!.songs)
+        songActionHandler?.musicWasSelected(song)
         
         let popupController = PopupController
             .create(self)
@@ -93,7 +79,6 @@ extension MusicListViewController: UITableViewDelegate {
                 ]
             )
             .show(vc)
-        
         vc.closeHandler = {
             popupController.dismiss()
         }
