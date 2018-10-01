@@ -116,7 +116,6 @@ open class PopupController: UIViewController {
         super.viewDidLayoutSubviews()
         updateLayouts()
     }
-    
 }
 
 // MARK: - Publics
@@ -388,7 +387,6 @@ private extension PopupController {
         popupView.removeFromSuperview()
         baseScrollView.removeFromSuperview()
     }
-    
 }
 
 // MARK: Animations

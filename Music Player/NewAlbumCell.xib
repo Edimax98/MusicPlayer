@@ -57,7 +57,7 @@
                 <outlet property="albumNameLabel" destination="cvz-cH-B7z" id="GRR-9d-c5A"/>
                 <outlet property="newAlbumCoverImageView" destination="OZD-YT-Qer" id="Bv5-iO-CYw"/>
             </connections>
-            <point key="canvasLocation" x="-39" y="72"/>
+            <point key="canvasLocation" x="17" y="-31"/>
         </collectionViewCell>
     </objects>
     <resources>

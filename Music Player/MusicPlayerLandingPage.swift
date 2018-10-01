@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MusicPlayerLandingPage: UIViewController {
     
@@ -40,6 +41,20 @@ class MusicPlayerLandingPage: UIViewController {
         registerCells(for: tableView)
         fillDataSource()
         configureFloatButtonView()
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            try audioSession.setActive(true)
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     private func registerCells(for tableView: UITableView) {

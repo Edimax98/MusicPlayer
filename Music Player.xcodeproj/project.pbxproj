@@ -600,8 +600,8 @@
 				A5355FDE215918F9005D4101 /* Player */,
 				A5CB1A812153C8F50002D7CC /* MusicListViewController */,
 				A50017B7214A860B00E30175 /* Subscription */,
-				D36191C319E96E1400CC9026 /* Settings */,
 				D3C1748419A36B3700C3F4E4 /* Asset */,
+				D36191C319E96E1400CC9026 /* Settings */,
 				A5B7C096214AAFBE0019E5C8 /* MusicPlayerLanding */,
 				D36191BB19E9647B00CC9026 /* Main.storyboard */,
 				D3D2E95019A36A0000DEF125 /* Application */,
@@ -676,6 +676,11 @@
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = M32M9JNSSA;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					D3D2E95E19A36A0000DEF125 = {
 						CreatedOnToolsVersion = 6.0;

@@ -34,7 +34,6 @@ class PreferencesCell: UITableViewCell {
     fileprivate let preferedGenresFourthLine = ["Modern Rock", "Chill", "Bass Trap", "Dance Pop"]
     fileprivate let preferedGenresFifthLine = ["Blues","Pop Rock", "Bass Trap","Trance"]
     fileprivate let genresImages = ["genrespink","genresgreen","genresblue","genresorange"]
-    
     @IBOutlet weak var preferencesCollectionView: UICollectionView!
     @IBOutlet weak var preferencesSecondLineCollectionView: UICollectionView!
     @IBOutlet weak var preferencesThirdLineCollectionView: UICollectionView!
@@ -149,6 +148,7 @@ extension PreferencesCell: UICollectionViewDataSource {
 extension PreferencesCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let marginsAndInsets = inset * 2.0 + collectionView.safeAreaInsets.left + collectionView.safeAreaInsets.right + minimumInteritemSpacing * CGFloat(cellsPerRow - 1)
         let itemWidth = ((collectionView.bounds.size.width - marginsAndInsets) / CGFloat(cellsPerRow)).rounded(.down)
         return CGSize(width: itemWidth, height: cellHeight)
@@ -163,7 +163,18 @@ extension PreferencesCell: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
             return
         }
+        
         cell.preferedGenreImageView.image = nil
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PreferedGenreCell else {
+            return
+        }
+        
+        let randomNumber = Int(arc4random() % 4)
+        cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
     }
 }
 

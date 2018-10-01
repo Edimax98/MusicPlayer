@@ -9,6 +9,7 @@
 
 import UIKit
 import StoreKit
+import MediaPlayer
 import FacebookCore
 import FBSDKCoreKit
 
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         SubscriptionService.shared.loadSubscriptionOptions()
     //    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         return true
     }
     

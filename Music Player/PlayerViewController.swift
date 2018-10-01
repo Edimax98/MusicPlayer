@@ -19,7 +19,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     var audioPlayer = AVPlayer()
     var currentAudioPath: URL!
     var currentAudioIndex = 0
-    var timer: Timer!
+    weak var timer: Timer?
     var audioLength = 0.0
     var albumTracks = [Song]()
     var song: Song?
@@ -29,18 +29,18 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
-    @IBOutlet var songNameLabel: UILabel!
-    @IBOutlet var progressTimerLabel : UILabel!
-    @IBOutlet var playerProgressSlider : UISlider!
-    @IBOutlet var totalLengthOfAudioLabel : UILabel!
-    @IBOutlet var previousButton : UIButton!
-    @IBOutlet var playButton : UIButton!
-    @IBOutlet var nextButton : UIButton!
+    @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var progressTimerLabel : UILabel!
+    @IBOutlet weak var playerProgressSlider : UISlider!
+    @IBOutlet weak var totalLengthOfAudioLabel : UILabel!
+    @IBOutlet weak var previousButton : UIButton!
+    @IBOutlet weak var playButton : UIButton!
+    @IBOutlet weak var nextButton : UIButton!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     override func remoteControlReceived(with event: UIEvent?) {
         if event!.type == UIEventType.remoteControl {
             switch event!.subtype {
@@ -78,15 +78,40 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         albumArtworkImageView.clipsToBounds = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleSecondaryAudio),
+                                               name: .AVAudioSessionSilenceSecondaryAudioHint,
+                                               object: AVAudioSession.sharedInstance())
+        
         fillPlayerItems(with: albumTracks)
-        prepareAudio()
         updateLabels()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
     }
     
     class func instance() -> PlayerViewController {
         
         let storyboard = UIStoryboard(name: "PlayerView", bundle: nil)
         return storyboard.instantiateInitialViewController() as! PlayerViewController
+    }
+    
+    @objc private func handleSecondaryAudio(notification: Notification) {
+        
+        guard let userInfo =  notification.userInfo,
+            let typeValue = userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey] as? UInt,
+            let type = AVAudioSessionSilenceSecondaryAudioHintType(rawValue: typeValue) else {
+                return
+        }
+        
+        if type == .begin {
+           // try! AVAudioSession.sharedInstance().setActive(false)
+            // Other app audio started playing - mute secondary audio
+        } else {
+            // Other app audio stopped playing - restart secondary audio
+        }
     }
     
     private func fillPlayerItems(with songs: [Song]) {
@@ -143,17 +168,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func prepareAudio() {
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-        } catch _ {
-        }
-        
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch _ {
-        }
-        
-        UIApplication.shared.beginReceivingRemoteControlEvents()
         audioPlayer.replaceCurrentItem(with: playerItems.first)
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0
@@ -165,6 +179,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func playAudio() {
         
+        prepareAudio()
         audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         audioPlayer.play()
         startTimer()
@@ -181,7 +196,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         }
         
         if audioPlayer.rate > 0 {
-            prepareAudio()
             playAudio()
         } else {
             prepareAudio()
@@ -205,14 +219,16 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func startTimer() {
         
-        if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update(_:)), userInfo: nil, repeats: true)
-            timer.fire()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update(_:)), userInfo: nil, repeats: true)
+        if let unwrappedTimer = timer {
+            unwrappedTimer.fire()
         }
     }
     
     func stopTimer() {
-        timer.invalidate()
+        if let unwrappedTimer = timer {
+            unwrappedTimer.invalidate()
+        }
     }
     
     private func resetTime() {
@@ -227,7 +243,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         return (minutes,seconds)
     }
     
-    @objc func update(_ timer: Timer) {
+    @objc func update(_ timer: Timer?) {
         
         if audioPlayer.rate == 0 {
             return
@@ -236,7 +252,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         let seconds = audioPlayer.currentTime().seconds
         let time = secondsToMinutesSeconds(seconds: UInt(seconds))
         
-        progressTimerLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
+        progressTimerLabel.text = String(format: "%02i:%02i", time.minutes, time.seconds)
         playerProgressSlider.value = CFloat(seconds)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: "playerProgressSliderValue")
     }
@@ -244,7 +260,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     func showTotalSongLength() {
         
         let time = secondsToMinutesSeconds(seconds: albumTracks[currentAudioIndex].duration)
-        totalLengthOfAudioLabel.text = String(format:"%02i:%02i", time.minutes, time.seconds)
+        totalLengthOfAudioLabel.text = String(format: "%02i:%02i", time.minutes, time.seconds)
     }
     
     func updateLabels() {
@@ -297,18 +313,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         audioPlayer.seek(to: targetTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
     }
     
-    @IBAction func userTapped(_ sender : UITapGestureRecognizer) {
-        play(self)
-    }
-    
-    @IBAction func userSwipeLeft(_ sender : UISwipeGestureRecognizer) {
-        next(self)
-    }
-    
-    @IBAction func userSwipeRight(_ sender : UISwipeGestureRecognizer) {
-        previous(self)
-    }
-    
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
         closeHandler?()
     }
@@ -340,8 +344,8 @@ extension PlayerViewController: SongsActionHandler {
             setIndex(for: song)
         }
         albumTracks.append(song)
-        let newItem = AVPlayerItem(url: URL(string: song.audioPath)!)
-        playerItems.append(newItem)
+       // let newItem = AVPlayerItem(url: URL(string: song.audioPath)!)
+       // playerItems.append(newItem)
     }
 }
 

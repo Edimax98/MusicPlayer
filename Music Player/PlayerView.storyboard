@@ -151,12 +151,6 @@
                                     <constraint firstItem="bqM-Yj-3pT" firstAttribute="leading" secondItem="WoW-Ed-r8c" secondAttribute="leading" constant="127" id="s69-3c-8iv"/>
                                     <constraint firstItem="bqM-Yj-3pT" firstAttribute="top" secondItem="fFq-To-7ex" secondAttribute="bottom" constant="-3" id="uGY-yX-BEk"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Y5A-YZ-txB" appends="YES" id="oue-Xp-vT0"/>
-                                    <outletCollection property="gestureRecognizers" destination="lcE-kd-kja" appends="YES" id="krI-Px-eFP"/>
-                                    <outletCollection property="gestureRecognizers" destination="ZZ3-2T-6va" appends="YES" id="PEJ-jU-W7w"/>
-                                    <outletCollection property="gestureRecognizers" destination="8Qi-tY-pHh" appends="YES" id="9Hk-KK-Dt5"/>
-                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="st3-9S-Cfa" userLabel="Button previous">
                                 <rect key="frame" x="36" y="393" width="100" height="100"/>
@@ -211,26 +205,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nCL-tZ-i5r" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Y5A-YZ-txB">
-                    <connections>
-                        <action selector="userTapped:" destination="aQQ-q3-Epd" id="vTf-Er-l3L"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="lcE-kd-kja" userLabel="Swipe Gesture Recognizer left">
-                    <connections>
-                        <action selector="userSwipeLeft:" destination="aQQ-q3-Epd" id="BVU-ju-U1I"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="ZZ3-2T-6va" userLabel="Swipe Gesture Recognizer right">
-                    <connections>
-                        <action selector="userSwipeRight:" destination="aQQ-q3-Epd" id="Er5-vO-Ktg"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="up" id="8Qi-tY-pHh" userLabel="Swipe Gesture Recognizer Up">
-                    <connections>
-                        <action selector="userSwipeUp:" destination="aQQ-q3-Epd" id="JCk-zk-CIb"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1908" y="198.35082458770617"/>
         </scene>
