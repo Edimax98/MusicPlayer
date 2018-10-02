@@ -13,6 +13,11 @@ class MusicPlayerLandingPage: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    fileprivate var audioPlayer = AVPlayer()
+    fileprivate var playerItems = [AVPlayerItem]()
+    fileprivate var albumTracks = [Song]()
+    fileprivate var currentAudioIndex = 0
+    
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
     fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
     fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
@@ -24,6 +29,10 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var selectedSong: Song?
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -42,11 +51,45 @@ class MusicPlayerLandingPage: UIViewController {
         fillDataSource()
         configureFloatButtonView()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
+        
         let audioSession = AVAudioSession()
         do {
             try audioSession.setActive(true)
         } catch let error {
             print(error.localizedDescription)
+        }
+    }
+    
+    private func playNext() {
+        
+        if currentAudioIndex + 1 > playerItems.count - 1 {
+            currentAudioIndex = 0
+        } else {
+            currentAudioIndex += 1
+        }
+        
+        let item = AVPlayerItem(asset: playerItems[currentAudioIndex].asset)
+        
+        audioPlayer.replaceCurrentItem(with: item)
+        audioPlayer.play()
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        print(notification.description)
+        playNext()
+    }
+    
+    fileprivate func fillPlayerItems(with songs: [Song]) {
+        
+        for song in songs {
+            guard let url = URL(string: song.audioPath) else {
+                print("Incorrect url")
+                return
+            }
+            let asset = AVAsset(url: url)
+            let item = AVPlayerItem(asset: asset)
+            playerItems.append(item)
         }
     }
     
@@ -94,7 +137,6 @@ class MusicPlayerLandingPage: UIViewController {
     
     private func fillDataSource() {
         
-        let lightOrange = UIColor(red: 186/255.0, green: 81/255.0, blue: 49/255.0, alpha:1/1.0)
         let brightPink = UIColor(red: 244/255.0, green:64/255.0, blue:113/255.0, alpha:1/1.0)
         let lightPurple = UIColor(red: 144/255.0, green:19/255.0, blue:254/255.0, alpha:1/1.0)
         let lightBlue = UIColor(red: 53/255.0, green:181/255.0, blue:214/255.0, alpha:1/1.0)
@@ -104,6 +146,22 @@ class MusicPlayerLandingPage: UIViewController {
         dataSource.append(HeaderData(icon: "section2", title: "Playlists for today", dividerColor: lightPurple))
         dataSource.append(HeaderData(icon: "section3", title: "New Releases", dividerColor: pink))
         dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: brightPink))
+    }
+    
+    fileprivate func setIndex(for songToFindIndex: Song) {
+        
+        let index = albumTracks.index { (song) -> Bool in
+            if songToFindIndex == song {
+                return true
+            }
+            return false
+        }
+        
+        guard let songIndex = index else {
+            print("Found index is nil")
+            return
+        }
+        currentAudioIndex = Int(songIndex)
     }
 }
 
@@ -221,11 +279,21 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 extension MusicPlayerLandingPage: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
+        
+        if playerItems.isEmpty {
+            fillPlayerItems(with: [song])
+        }
+        
         selectedSong = song
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
-        songActionHandler?.musicWasSelected(song)
+
+        if audioPlayer.rate != 0 {
+            audioPlayer.pause()
+        }
         
+        songActionHandler?.musicWasSelected(song)
+
         let popupController = PopupController
             .create(self)
             .customize(
@@ -236,6 +304,22 @@ extension MusicPlayerLandingPage: SongsActionHandler {
                 ]
             )
             .show(vc)
+        
+        vc.closeWithSongPlaying = { [weak self] (currentItem, time) in
+            
+            guard let unwrappedSelf = self, let unwrappedCurrentItem = currentItem, let unwrappedTime = time else {
+                popupController.dismiss()
+                return
+            }
+            
+            let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
+            item.seek(to: unwrappedTime, completionHandler: nil)
+            unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
+            
+            unwrappedSelf.audioPlayer.play()
+            popupController.dismiss()
+        }
+        
         vc.closeHandler = {
             popupController.dismiss()
         }
@@ -246,11 +330,14 @@ extension MusicPlayerLandingPage: SongsActionHandler {
 extension MusicPlayerLandingPage: AlbumsActionHandler {
     
     func albumWasSelected(_ album: Album) {
+        
+        fillPlayerItems(with: album.songs)
 
         let vc = MusicListViewController.instance()
         self.albumActionHandler = vc
+        vc.musicActionHandler = self
         albumActionHandler?.albumWasSelected(album)
-        
+
         let popup = PopupController
                         .create(self)
                         .customize(
@@ -263,6 +350,31 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
         
         vc.closeHandler = {
             popup.dismiss()
+        }
+        
+        vc.closeWithAlbumPlaying = { [weak self] (items,index,time) in
+            
+            guard let unwrappedSelf = self, let unwrappedItems = items, let unwrappedTime = time else {
+                popup.dismiss()
+                return
+            }
+
+            unwrappedSelf.playerItems = unwrappedItems
+            let item = AVPlayerItem(asset: unwrappedSelf.playerItems[index].asset)
+            item.seek(to: unwrappedTime, completionHandler: nil)
+            unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
+            unwrappedSelf.audioPlayer.play()
+            unwrappedSelf.albumActionHandler?.albumWasSelected(album)
+        }
+    }
+}
+
+// MARK: - MusicPlayerActionHandler
+extension MusicPlayerLandingPage: MusicPlayerActionHandler {
+    
+    func songWasSelectedFromAlbum() {
+        if audioPlayer.rate != 0 {
+            audioPlayer.pause()
         }
     }
 }

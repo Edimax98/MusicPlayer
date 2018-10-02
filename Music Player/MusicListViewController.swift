@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MusicListViewController: UIViewController, PopupContentViewController {
     
@@ -15,11 +16,13 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var musicTableView: UITableView!
     
     var closeHandler: (() -> Void)?
+    var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
     fileprivate weak var songActionHandler: SongsActionHandler?
+    weak var musicActionHandler: MusicPlayerActionHandler?
     
     deinit {
         print("List VC deinited")
@@ -69,8 +72,10 @@ extension MusicListViewController: UITableViewDelegate {
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
         self.multipleDataOutput = vc
+        
         multipleDataOutput?.sendSongs(album!.songs)
         songActionHandler?.musicWasSelected(song)
+        musicActionHandler?.songWasSelectedFromAlbum()
         
         let popupController = PopupController
             .create(self)
@@ -83,8 +88,18 @@ extension MusicListViewController: UITableViewDelegate {
                 ]
             )
             .show(vc)
-        vc.closeHandler = {
+        vc.closeWithSongPlaying = { (_,_) in
             popupController.dismiss()
+        }
+        
+        vc.closeWithAlbumPlaying = { [weak self] (items, index, time) in
+            guard let unwrappedSelf = self else { return }
+            unwrappedSelf.closeWithAlbumPlaying?(items,index,time)
+            popupController.dismiss()
+        }
+        
+        vc.closeHandler = { [weak self] in
+            self?.closeHandler?()
         }
     }
 }

@@ -14,6 +14,8 @@ import Alamofire
 
 class PlayerViewController: UIViewController, PopupContentViewController {
     
+    var closeWithSongPlaying: ((_ currentItem: AVPlayerItem?,_ time: CMTime?) -> Void)?
+    var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeHandler: (() -> Void)?
     
     var audioPlayer = AVPlayer()
@@ -24,7 +26,9 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     var albumTracks = [Song]()
     var song: Song?
     var playerItems = [AVPlayerItem]()
-    var wasPlayerOpenAbovePopupViews = false
+    var isAlbum = false
+    
+    weak var actionHanler: MusicPlayerActionHandler?
     
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
@@ -58,7 +62,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         }
     }
     
-    override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
     
@@ -69,7 +73,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if wasPlayerOpenAbovePopupViews {
+        if isAlbum {
             exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
         }
         
@@ -299,7 +303,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         
         let play = UIImage(named: "play_track")
         let pause = UIImage(named: "pause")
-        
+
         if audioPlayer.rate > 0 {
             pauseAudioPlayer()
             audioPlayer.rate > 0 ? playButton.setImage(pause, for: UIControlState()) : playButton.setImage(play , for: UIControlState())
@@ -325,7 +329,22 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
-        closeHandler?()
+        
+        guard audioPlayer.rate != 0 else {
+            closeHandler?()
+            return
+        }
+        
+        guard let currentItem = audioPlayer.currentItem else {
+            closeHandler?()
+            return
+        }
+        
+        if isAlbum {
+            closeWithAlbumPlaying?(playerItems, currentAudioIndex, audioPlayer.currentTime())
+        } else {
+            closeWithSongPlaying?(currentItem, audioPlayer.currentTime())
+        }
     }
     
     fileprivate func setIndex(for songToFindIndex: Song) {
@@ -366,7 +385,7 @@ extension PlayerViewController: LandingPageViewOutputMultipleValues {
     func sendSongs(_ songs: [Song]) {
         self.albumTracks = songs
         fillPlayerItems(with: songs)
-        wasPlayerOpenAbovePopupViews = true
+        isAlbum = true
     }
 }
 

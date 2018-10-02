@@ -29,6 +29,7 @@
 		A50017BB214A976B00E30175 /* SubscriptionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BA214A976B00E30175 /* SubscriptionNetworkService.swift */; };
 		A50017BD214A98CE00E30175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BC214A98CE00E30175 /* Session.swift */; };
 		A50017BF214A9A4000E30175 /* PaidSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BE214A9A4000E30175 /* PaidSubscription.swift */; };
+		A50A11282163976D00A6A6FD /* MusicPlayerActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50A11272163976D00A6A6FD /* MusicPlayerActionHandler.swift */; };
 		A52FD81B2146A439006C7EA0 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD8192146A439006C7EA0 /* ClipCell.swift */; };
 		A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52FD81A2146A439006C7EA0 /* ClipCell.xib */; };
 		A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD81D2146CDCA006C7EA0 /* SongCell.swift */; };
@@ -135,6 +136,7 @@
 		A50017BA214A976B00E30175 /* SubscriptionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionNetworkService.swift; sourceTree = "<group>"; };
 		A50017BC214A98CE00E30175 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		A50017BE214A9A4000E30175 /* PaidSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidSubscription.swift; sourceTree = "<group>"; };
+		A50A11272163976D00A6A6FD /* MusicPlayerActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerActionHandler.swift; sourceTree = "<group>"; };
 		A52FD8192146A439006C7EA0 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
 		A52FD81A2146A439006C7EA0 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
 		A52FD81D2146CDCA006C7EA0 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				D3D2E95019A36A0000DEF125 /* Application */,
 				A56BDED92150EC9D00D75F83 /* Services */,
 				A56BDEDC2150ED2800D75F83 /* FetchingErrorHandler.swift */,
+				A50A11272163976D00A6A6FD /* MusicPlayerActionHandler.swift */,
 			);
 			path = "Music Player";
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				A5B06A62215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift in Sources */,
 				A52FD81B2146A439006C7EA0 /* ClipCell.swift in Sources */,
 				A567491D215251C40017BB68 /* LandingPageViewOutput.swift in Sources */,
+				A50A11282163976D00A6A6FD /* MusicPlayerActionHandler.swift in Sources */,
 				A5CB1A832153CA330002D7CC /* SongsDataSource.swift in Sources */,
 				A5CB1A872153CB530002D7CC /* TrackCell.swift in Sources */,
 				A56BDEDB2150ECBD00D75F83 /* SongNetworkService.swift in Sources */,
