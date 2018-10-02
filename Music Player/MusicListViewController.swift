@@ -21,6 +21,10 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
     fileprivate weak var songActionHandler: SongsActionHandler?
     
+    deinit {
+        print("List VC deinited")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,7 +65,7 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let song = dataSource.getSongs()[indexPath.row]
-        
+    
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
         self.multipleDataOutput = vc

@@ -42,14 +42,7 @@ class MusicPlayerLandingPage: UIViewController {
         fillDataSource()
         configureFloatButtonView()
         
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do {
-            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
+        let audioSession = AVAudioSession()
         do {
             try audioSession.setActive(true)
         } catch let error {
@@ -243,7 +236,6 @@ extension MusicPlayerLandingPage: SongsActionHandler {
                 ]
             )
             .show(vc)
-        
         vc.closeHandler = {
             popupController.dismiss()
         }

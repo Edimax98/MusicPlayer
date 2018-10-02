@@ -19,7 +19,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     var audioPlayer = AVPlayer()
     var currentAudioPath: URL!
     var currentAudioIndex = 0
-    weak var timer: Timer?
+    var timer: Timer?
     var audioLength = 0.0
     var albumTracks = [Song]()
     var song: Song?
@@ -30,12 +30,12 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var songNameLabel: UILabel!
-    @IBOutlet weak var progressTimerLabel : UILabel!
-    @IBOutlet weak var playerProgressSlider : UISlider!
-    @IBOutlet weak var totalLengthOfAudioLabel : UILabel!
-    @IBOutlet weak var previousButton : UIButton!
-    @IBOutlet weak var playButton : UIButton!
-    @IBOutlet weak var nextButton : UIButton!
+    @IBOutlet weak var progressTimerLabel: UILabel!
+    @IBOutlet weak var playerProgressSlider: UISlider!
+    @IBOutlet weak var totalLengthOfAudioLabel: UILabel!
+    @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -83,7 +83,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
                                                name: .AVAudioSessionSilenceSecondaryAudioHint,
                                                object: AVAudioSession.sharedInstance())
         
-        fillPlayerItems(with: albumTracks)
         updateLabels()
     }
     
@@ -128,7 +127,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     @objc func playerItemDidReachEnd(notification: NSNotification) {
-        resetTime()
         playNextAudio()
     }
     
@@ -168,7 +166,15 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func prepareAudio() {
         
-        audioPlayer.replaceCurrentItem(with: playerItems.first)
+        let audioSession = AVAudioSession.sharedInstance()
+
+        do {
+            try audioSession.setActive(true)
+        } catch let error {
+            print("Error in audio session - ", error.localizedDescription)
+        }
+
+        audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
@@ -179,8 +185,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     func playAudio() {
         
+        stopTimer()
         prepareAudio()
-        audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         audioPlayer.play()
         startTimer()
         updateLabels()
@@ -195,15 +201,13 @@ class PlayerViewController: UIViewController, PopupContentViewController {
             currentAudioIndex += 1
         }
         
-        if audioPlayer.rate > 0 {
-            playAudio()
-        } else {
-            prepareAudio()
-        }
+        playAudio()
+        playButton.setImage(#imageLiteral(resourceName: "pause.png"), for: .normal)
         resetTime()
     }
     
     func playPreviousAudio() {
+        
         if currentAudioIndex - 1 < 0 {
             currentAudioIndex = (playerItems.count - 1) < 0 ? 0 : (playerItems.count - 1)
         } else {
@@ -214,6 +218,13 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     func pauseAudioPlayer() {
+        
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        playButton.setImage(#imageLiteral(resourceName: "play_track"), for: UIControlState())
         audioPlayer.pause()
     }
     
@@ -291,10 +302,10 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         
         if audioPlayer.rate > 0 {
             pauseAudioPlayer()
-            audioPlayer.rate > 0 ? "\(playButton.setImage( pause, for: UIControlState()))" : "\(playButton.setImage(play , for: UIControlState()))"
+            audioPlayer.rate > 0 ? playButton.setImage(pause, for: UIControlState()) : playButton.setImage(play , for: UIControlState())
         } else {
             playAudio()
-            audioPlayer.rate > 0 ? "\(playButton.setImage( pause, for: UIControlState()))" : "\(playButton.setImage(play , for: UIControlState()))"
+            audioPlayer.rate > 0 ? playButton.setImage(pause, for: UIControlState()) : playButton.setImage(play , for: UIControlState())
         }
     }
     
@@ -342,10 +353,10 @@ extension PlayerViewController: SongsActionHandler {
         
         if !albumTracks.isEmpty {
             setIndex(for: song)
+        } else {
+            albumTracks.append(song)
+            fillPlayerItems(with: [song])
         }
-        albumTracks.append(song)
-       // let newItem = AVPlayerItem(url: URL(string: song.audioPath)!)
-       // playerItems.append(newItem)
     }
 }
 

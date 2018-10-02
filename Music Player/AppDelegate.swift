@@ -22,6 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubscriptionService.shared.loadSubscriptionOptions()
     //    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
         return true
     }
     
