@@ -97,7 +97,7 @@ open class UPCarouselFlowLayout: UICollectionViewFlowLayout {
         let ratio = (maxDistance - distance)/maxDistance
         
         let alpha = ratio * (1 - self.sideItemAlpha) + self.sideItemAlpha
-        let scale = ratio * (1 - self.sideItemScale) + self.sideItemScale
+        let scale = ratio * (1 - self.sideItemScale) + self.sideItemScale * 1.2 // !!!!! remove 1.2
         let shift = (1 - ratio) * self.sideItemShift
         attributes.alpha = alpha
         attributes.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)

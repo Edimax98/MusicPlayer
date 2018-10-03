@@ -17,6 +17,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     
     var closeHandler: (() -> Void)?
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
+    var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
@@ -88,7 +89,14 @@ extension MusicListViewController: UITableViewDelegate {
                 ]
             )
             .show(vc)
+        
         vc.closeWithSongPlaying = { (_,_) in
+            popupController.dismiss()
+        }
+        
+        vc.closeWithAlbumPaused = { [weak self] (items, index, time) in
+            guard let unwrappedSelf = self else { return }
+            unwrappedSelf.closeWithAlbumPaused?(items,index,time)
             popupController.dismiss()
         }
         
@@ -98,8 +106,8 @@ extension MusicListViewController: UITableViewDelegate {
             popupController.dismiss()
         }
         
-        vc.closeHandler = { [weak self] in
-            self?.closeHandler?()
+        vc.closeHandler = {
+            popupController.dismiss()
         }
     }
 }

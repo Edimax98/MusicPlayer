@@ -12,11 +12,27 @@ import AVFoundation
 class MusicPlayerLandingPage: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var nowPlayingSongCover: UIImageView!
+    @IBOutlet weak var nowPlayingSongName: UILabel!
+    @IBOutlet weak var playButton: UIButton!
     
     fileprivate var audioPlayer = AVPlayer()
     fileprivate var playerItems = [AVPlayerItem]()
-    fileprivate var albumTracks = [Song]()
+
+    fileprivate var tracks = [Song]()
+    fileprivate var shouldBePlayedFromBegining = false
     fileprivate var currentAudioIndex = 0
+    
+    fileprivate var isPlaying: Bool {
+        get {
+            
+            if audioPlayer.rate == 0 {
+                return false
+            } else {
+                return true
+            }
+        }
+    }
     
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
     fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
@@ -26,7 +42,6 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 5
     fileprivate var dataSource = [HeaderData]()
-    fileprivate var selectedSong: Song?
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
@@ -40,16 +55,15 @@ class MusicPlayerLandingPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let networkService = NetworkService()
-        interactor = MusicPlayerLandingPageInteractor(networkService)
-        self.title = "Landing page"
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = defaultBackgroundColor
+        nowPlayingSongCover.layer.cornerRadius = 2
+        let networkService = NetworkService()
+        interactor = MusicPlayerLandingPageInteractor(networkService)
         registerCells(for: tableView)
         fillDataSource()
-        configureFloatButtonView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
         
@@ -58,6 +72,58 @@ class MusicPlayerLandingPage: UIViewController {
             try audioSession.setActive(true)
         } catch let error {
             print(error.localizedDescription)
+        }
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        print(notification.description)
+        playNext()
+    }
+    
+    @IBAction func playNowPlayingSongButtonPressed(_ sender: Any) {
+        
+        if tracks.isEmpty {
+            return
+        }
+        
+        if isPlaying {
+            audioPlayer.pause()
+        } else {
+            if shouldBePlayedFromBegining {
+                audioPlayer.replaceCurrentItem(with: playerItems.last!)
+            }
+            audioPlayer.play()
+        }
+        setupImageForPlayButton()
+    }
+    
+    @IBAction func playNextSongButtonPressed(_ sender: Any) {
+        playNext()
+        setupNowPlayingView()
+    }
+    
+    fileprivate func setupNowPlayingView() {
+        
+        setupImageForPlayButton()
+        nowPlayingSongCover.image = tracks[currentAudioIndex].image
+        nowPlayingSongName.text = tracks[currentAudioIndex].name
+    }
+    
+    private func prepareForNewSongs() {
+        tracks.removeAll()
+        playerItems.removeAll()
+    }
+    
+    private func setupImageForPlayButton() {
+        
+        if tracks.isEmpty {
+            return
+        }
+        
+        if isPlaying {
+            playButton.setImage(#imageLiteral(resourceName: "pause_nowPlaying"), for: .normal)
+        } else {
+            playButton.setImage(#imageLiteral(resourceName: "play_now"), for: .normal)
         }
     }
     
@@ -73,11 +139,6 @@ class MusicPlayerLandingPage: UIViewController {
         
         audioPlayer.replaceCurrentItem(with: item)
         audioPlayer.play()
-    }
-    
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        print(notification.description)
-        playNext()
     }
     
     fileprivate func fillPlayerItems(with songs: [Song]) {
@@ -104,33 +165,6 @@ class MusicPlayerLandingPage: UIViewController {
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
     }
     
-    private func configureFloatButtonView() {
-        
-        let startColorForButton = UIColor(red: 255 / 255, green: 124 / 255 , blue: 7 / 255, alpha: 1)
-        let endColorForButton = UIColor(red: 220 / 255, green: 13 / 255 , blue: 49 / 255, alpha: 1)
-        let viewForButton = UIView(frame: CGRect(x: 0, y: self.view.frame.height - 130, width: self.view.frame.width, height: 130))
-        let btn = UIButton(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: 5, width: 290, height: 60))
-        btn.backgroundColor = .red
-        btn.layer.masksToBounds = true
-        btn.setTitleColor(.white, for: .normal)
-        btn.setAttributedTitle(NSAttributedString(string: "Start free trial", attributes: [NSAttributedStringKey.font : UIFont(name: "Roboto-Bold", size: 27) ?? .boldSystemFont(ofSize: 27), NSAttributedStringKey.foregroundColor : UIColor.white]), for: .normal)
-        btn.applyGradient(colours: [startColorForButton, endColorForButton])
-        btn.layer.cornerRadius = 30
-        btn.addTarget(self, action: #selector(startTrialButtonPressed), for: .touchUpInside)
-        
-        let lableWithAdditionalInfo = UILabel(frame: CGRect(x: viewForButton.frame.width / 2 - 145, y: btn.frame.height + 3, width: btn.frame.width, height: 60))
-        lableWithAdditionalInfo.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore "
-        lableWithAdditionalInfo.font = UIFont.systemFont(ofSize: 12)
-        lableWithAdditionalInfo.textAlignment = .center
-        lableWithAdditionalInfo.numberOfLines = 0
-        lableWithAdditionalInfo.textColor = UIColor(red: 74/255, green: 74 / 255, blue: 74 / 255, alpha: 1)
-        
-        viewForButton.addSubview(btn)
-        viewForButton.addSubview(lableWithAdditionalInfo)
-        viewForButton.backgroundColor = UIColor(red: 23/255.0, green: 21/255.0, blue: 29/255.0, alpha: 1)
-        self.view.addSubview(viewForButton)
-    }
-    
     @objc func startTrialButtonPressed() {
         performSegue(withIdentifier: "musicWasSelected", sender: self)
     }
@@ -150,7 +184,7 @@ class MusicPlayerLandingPage: UIViewController {
     
     fileprivate func setIndex(for songToFindIndex: Song) {
         
-        let index = albumTracks.index { (song) -> Bool in
+        let index = tracks.index { (song) -> Bool in
             if songToFindIndex == song {
                 return true
             }
@@ -280,11 +314,11 @@ extension MusicPlayerLandingPage: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
         
-        if playerItems.isEmpty {
-            fillPlayerItems(with: [song])
-        }
+        self.tracks.append(song)
+        fillPlayerItems(with: tracks)
+        setIndex(for: song)
+        setupNowPlayingView()
         
-        selectedSong = song
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
 
@@ -305,6 +339,21 @@ extension MusicPlayerLandingPage: SongsActionHandler {
             )
             .show(vc)
         
+        vc.closeWithSongPaused = { [weak self] (currentItem, time) in
+            
+            guard let unwrappedSelf = self, let unwrappedCurrentItem = currentItem, let unwrappedTime = time else {
+                popupController.dismiss()
+                return
+            }
+            
+            let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
+            item.seek(to: unwrappedTime, completionHandler: nil)
+            unwrappedSelf.shouldBePlayedFromBegining = true
+            unwrappedSelf.playerItems.append(item)
+            
+            popupController.dismiss()
+        }
+        
         vc.closeWithSongPlaying = { [weak self] (currentItem, time) in
             
             guard let unwrappedSelf = self, let unwrappedCurrentItem = currentItem, let unwrappedTime = time else {
@@ -315,12 +364,18 @@ extension MusicPlayerLandingPage: SongsActionHandler {
             let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
             item.seek(to: unwrappedTime, completionHandler: nil)
             unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
-            
             unwrappedSelf.audioPlayer.play()
+            unwrappedSelf.shouldBePlayedFromBegining = false
+            unwrappedSelf.setupNowPlayingView()
             popupController.dismiss()
         }
         
-        vc.closeHandler = {
+        vc.closeHandler = { [weak self] in
+            guard let unwrappedSelf = self else {
+                popupController.dismiss()
+                return
+            }
+            unwrappedSelf.shouldBePlayedFromBegining = true
             popupController.dismiss()
         }
     }
@@ -332,7 +387,8 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
     func albumWasSelected(_ album: Album) {
         
         fillPlayerItems(with: album.songs)
-
+        tracks = album.songs
+        
         let vc = MusicListViewController.instance()
         self.albumActionHandler = vc
         vc.musicActionHandler = self
@@ -352,19 +408,36 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
             popup.dismiss()
         }
         
+        vc.closeWithAlbumPaused = { [weak self] (items,index,time) in
+            
+            guard let unwrappedSelf = self, let unwrappedItems = items, let unwrappedTime = time else {
+                popup.dismiss()
+                return
+            }
+            
+//            unwrappedSelf.playerItems = unwrappedItems
+//            let item = AVPlayerItem(asset: unwrappedSelf.playerItems[index].asset)
+//            item.seek(to: unwrappedTime, completionHandler: nil)
+//            unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
+//            unwrappedSelf.audioPlayer.play()
+//            unwrappedSelf.albumActionHandler?.albumWasSelected(album)
+        }
+        
         vc.closeWithAlbumPlaying = { [weak self] (items,index,time) in
             
             guard let unwrappedSelf = self, let unwrappedItems = items, let unwrappedTime = time else {
                 popup.dismiss()
                 return
             }
-
+            
             unwrappedSelf.playerItems = unwrappedItems
             let item = AVPlayerItem(asset: unwrappedSelf.playerItems[index].asset)
             item.seek(to: unwrappedTime, completionHandler: nil)
             unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
             unwrappedSelf.audioPlayer.play()
             unwrappedSelf.albumActionHandler?.albumWasSelected(album)
+            unwrappedSelf.shouldBePlayedFromBegining = false
+            unwrappedSelf.setupNowPlayingView()
         }
     }
 }
@@ -378,9 +451,5 @@ extension MusicPlayerLandingPage: MusicPlayerActionHandler {
         }
     }
 }
-
-
-
-
 
 

@@ -24,17 +24,6 @@ class NewReleasesCell: UITableViewCell {
     fileprivate var bunchOfNewAlbumCovers = ["rel1","rel2","rel3","rel4","rel5"]
     fileprivate var indexOfCellBeforeDragging = 0
     
-    fileprivate var pageSize: CGSize {
-        let layout = releasesCollectionVeiw.collectionViewLayout as! UPCarouselFlowLayout
-        var pageSize = layout.itemSize
-        if layout.scrollDirection == .horizontal {
-            pageSize.width += layout.minimumLineSpacing
-        } else {
-            pageSize.height += layout.minimumLineSpacing
-        }
-        return pageSize
-    }
-        
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none

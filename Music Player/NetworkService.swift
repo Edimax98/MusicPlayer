@@ -165,10 +165,10 @@ extension NetworkService: ImageFetchNetworkService {
         let fetchingQueue = DispatchQueue.global(qos: .utility)
         let group = DispatchGroup()
         let outerGroup = DispatchGroup()
-        var nestedImages = [[Image]]()
+        var nestedImages = [[String:Image]]()
         
         for urls in nestedUrls {
-            var images = [Image]()
+            var images = [String:Image]()
             outerGroup.enter()
             for url in urls {
                 group.enter()
@@ -179,7 +179,7 @@ extension NetworkService: ImageFetchNetworkService {
                             print("Image is nil")
                             return
                         }
-                        images.append(image)
+                        images[url] = image
                         group.leave()
                     }
                 }
@@ -199,7 +199,7 @@ extension NetworkService: ImageFetchNetworkService {
         
         let fetchingQueue = DispatchQueue.global(qos: .utility)
         let group = DispatchGroup()
-        var images = [Image]()
+        var images = [String:Image]()
         
         for url in urls {
             group.enter()
@@ -210,7 +210,7 @@ extension NetworkService: ImageFetchNetworkService {
                         print("Image is nil")
                         return
                     }
-                    images.append(image)
+                    images[url] = image
                     group.leave()
                 }
             }

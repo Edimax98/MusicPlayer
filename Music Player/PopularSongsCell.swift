@@ -16,6 +16,7 @@ class PopularSongsCell: UITableViewCell {
     
     @IBOutlet weak var popularSongsCollectionView: UICollectionView!
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
+    fileprivate let cellHeight: CGFloat = 140
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +30,14 @@ class PopularSongsCell: UITableViewCell {
 }
 
 extension PopularSongsCell: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let padding: CGFloat =  50
+        let collectionViewSize = collectionView.frame.size.width - padding
+        
+        return CGSize(width: collectionViewSize / 3, height: cellHeight)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0

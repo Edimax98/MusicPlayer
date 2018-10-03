@@ -10,9 +10,9 @@ import AlamofireImage
 
 protocol ImageFetchNetworkServiceDelegate: FetchingErrorHandler {
 
-    func imageFetchNetworkSeriviceDidGet(_ images: [Image], with modelType: ModelType)
+    func imageFetchNetworkSeriviceDidGet(_ images: [String : Image], with modelType: ModelType)
     
-    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[Image]])
+    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[String:Image]])
 }
 
 protocol ImageFetchNetworkService {

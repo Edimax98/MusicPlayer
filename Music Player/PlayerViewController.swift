@@ -15,7 +15,9 @@ import Alamofire
 class PlayerViewController: UIViewController, PopupContentViewController {
     
     var closeWithSongPlaying: ((_ currentItem: AVPlayerItem?,_ time: CMTime?) -> Void)?
+    var closeWithSongPaused: ((_ currentItem: AVPlayerItem?,_ time: CMTime?) -> Void)?
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
+    var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeHandler: (() -> Void)?
     
     var audioPlayer = AVPlayer()
@@ -330,16 +332,20 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
         
-        guard audioPlayer.rate != 0 else {
-            closeHandler?()
-            return
-        }
-        
         guard let currentItem = audioPlayer.currentItem else {
             closeHandler?()
             return
         }
         
+        if audioPlayer.rate == 0 {
+            if isAlbum {
+                closeWithAlbumPaused?(playerItems, currentAudioIndex, audioPlayer.currentTime())
+            } else {
+                closeWithSongPaused?(currentItem, audioPlayer.currentTime())
+            }
+            return
+        }
+    
         if isAlbum {
             closeWithAlbumPlaying?(playerItems, currentAudioIndex, audioPlayer.currentTime())
         } else {
@@ -360,7 +366,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
             print("Found index is nil")
             return
         }
-        
         currentAudioIndex = Int(songIndex)
     }
 }

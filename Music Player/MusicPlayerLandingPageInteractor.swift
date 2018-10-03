@@ -82,16 +82,29 @@
         return paths
     }
     
-    fileprivate func setImagesForAlbums(_ images: [Image]) {
+    fileprivate func setImagesForAlbums(_ images: [String:Image]) {
         
-        var i = 0
-        while images.count - 1 >= i {
-            albums[i].image = images[i]
-            i += 1
+        for var album in albums {
+            
+            if images.keys.contains(where: { (url) -> Bool in album.imagePath == url }) {
+                album.image = images[album.imagePath]
+            }
         }
     }
     
-    fileprivate func setImagesForSongsInsidePlaylist(_ nestedImages: [[Image]]) {
+    fileprivate func setImagesForSongs(_ images: [String:Image])  {
+        
+        var i = 0
+        
+        while images.count - 1 >= i {
+            if images.keys.contains(where: { (url) -> Bool in songs[i].imagePath == url }) {
+                songs[i].image = images[songs[i].imagePath]
+            }
+            i += 1
+        }
+    }
+
+    fileprivate func setImagesForSongsInsidePlaylist(_ nestedImages: [[String:Image]]) {
         
         var i = 0
         var j = 0
@@ -99,18 +112,11 @@
         while i <= nestedImages.count - 1 {
             j = 0
             while j <= nestedImages[i].count - 1 {
-                playlists[i].songs[j].image = nestedImages[i][j]
+                if nestedImages[i].keys.contains(where: { (url) -> Bool in playlists[i].songs[j].imagePath == url }) {
+                    playlists[i].songs[j].image = nestedImages[i][playlists[i].songs[j].imagePath]
+                }
                 j += 1
             }
-            i += 1
-        }
-    }
-    
-    fileprivate func setImagesForSongs(_ images: [Image])  {
-        
-        var i = 0
-        while images.count - 1 >= i {
-            songs[i].image = images[i]
             i += 1
         }
     }
@@ -183,7 +189,7 @@
  // MARK: - ImageFetchNetworkServiceDelegate
  extension MusicPlayerLandingPageInteractor: ImageFetchNetworkServiceDelegate {
     
-    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[Image]]) {
+    func imageFetchNetworkSeriviceDidGet(_ nestedImages: [[String:Image]]) {
         
         DispatchQueue.main.async {
             self.setImagesForSongsInsidePlaylist(nestedImages)
@@ -191,7 +197,7 @@
         }
     }
     
-    func imageFetchNetworkSeriviceDidGet(_ images: [Image], with modelType: ModelType) {
+    func imageFetchNetworkSeriviceDidGet(_ images: [String:Image], with modelType: ModelType) {
         
         DispatchQueue.main.async {
             switch modelType {
