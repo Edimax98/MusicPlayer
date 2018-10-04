@@ -36,7 +36,7 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="wjO-yl-1Sa" secondAttribute="bottom" constant="2" id="9WZ-HM-gfb"/>
                 <constraint firstAttribute="trailing" secondItem="wjO-yl-1Sa" secondAttribute="trailing" constant="20" id="HFT-WA-T2T"/>

@@ -26,34 +26,27 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_headphone" translatesAutoresizingMaskIntoConstraints="NO" id="Y0e-VR-FI8">
                         <rect key="frame" x="131" y="2" width="58" height="53"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some text here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCp-xb-V2j">
-                        <rect key="frame" x="16" y="84" width="288" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.99586588144302368" green="1" blue="0.9999271035194397" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5p-M1-XKp">
-                        <rect key="frame" x="16" y="60" width="288" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5p-M1-XKp">
+                        <rect key="frame" x="16" y="65" width="288" height="24.5"/>
+                        <string key="text">Play the moment.
+
+</string>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
                         <color key="textColor" red="0.99586588144302368" green="1" blue="0.9999271035194397" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.16518747486575344" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="esp-wv-tY4" secondAttribute="bottom" constant="47.5" id="1Pt-Ft-Mfh"/>
                     <constraint firstItem="Y0e-VR-FI8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="2uq-mR-Das"/>
                     <constraint firstAttribute="trailing" secondItem="esp-wv-tY4" secondAttribute="trailing" id="5dA-pb-ocX"/>
                     <constraint firstItem="esp-wv-tY4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="B9j-5Z-NSO"/>
-                    <constraint firstAttribute="bottom" secondItem="nCp-xb-V2j" secondAttribute="bottom" constant="2.5" id="FSg-Ai-6RU"/>
-                    <constraint firstItem="nCp-xb-V2j" firstAttribute="top" secondItem="b5p-M1-XKp" secondAttribute="bottom" constant="4" id="Tfp-vf-H9I"/>
-                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="Y0e-VR-FI8" secondAttribute="bottom" constant="5" id="XA2-9L-THR"/>
-                    <constraint firstItem="nCp-xb-V2j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="g3Z-zk-c6D"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="Y0e-VR-FI8" secondAttribute="bottom" constant="10" id="XA2-9L-THR"/>
                     <constraint firstItem="Y0e-VR-FI8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="131" id="lAC-bq-CX0"/>
                     <constraint firstItem="b5p-M1-XKp" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="mLu-ry-qNZ"/>
-                    <constraint firstAttribute="trailing" secondItem="nCp-xb-V2j" secondAttribute="trailing" constant="16" id="mfx-jq-5SH"/>
                     <constraint firstAttribute="trailing" secondItem="Y0e-VR-FI8" secondAttribute="trailing" constant="131" id="rEp-JH-OGy"/>
-                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="esp-wv-tY4" secondAttribute="bottom" constant="5" id="uoZ-BS-GVp"/>
+                    <constraint firstItem="b5p-M1-XKp" firstAttribute="top" secondItem="esp-wv-tY4" secondAttribute="bottom" constant="10" id="uoZ-BS-GVp"/>
                     <constraint firstItem="esp-wv-tY4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="wYN-xG-eCf"/>
                     <constraint firstItem="b5p-M1-XKp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="x5P-2F-iqe"/>
                 </constraints>
@@ -63,7 +56,6 @@
                 <outlet property="backgroundImage" destination="esp-wv-tY4" id="deC-Tq-tlQ"/>
                 <outlet property="containerView" destination="H2p-sc-9uM" id="8EP-kz-gZ1"/>
                 <outlet property="headphoneImage" destination="Y0e-VR-FI8" id="STj-9v-lIR"/>
-                <outlet property="subTitleLabel" destination="nCp-xb-V2j" id="BpL-Sl-nyY"/>
                 <outlet property="titleLabel" destination="b5p-M1-XKp" id="tvq-lI-s72"/>
             </connections>
             <point key="canvasLocation" x="-43" y="2.5"/>

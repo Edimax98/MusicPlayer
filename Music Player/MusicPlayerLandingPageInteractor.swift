@@ -84,11 +84,13 @@
     
     fileprivate func setImagesForAlbums(_ images: [String:Image]) {
         
-        for var album in albums {
-            
-            if images.keys.contains(where: { (url) -> Bool in album.imagePath == url }) {
-                album.image = images[album.imagePath]
+        var i = 0
+        
+        while images.count - 1 >= i {
+            if images.keys.contains(where: { (url) -> Bool in albums[i].imagePath == url }) {
+                albums[i].image = images[albums[i].imagePath]
             }
+            i += 1
         }
     }
     
@@ -180,8 +182,9 @@
  extension MusicPlayerLandingPageInteractor: AlbumNetworkServiceDelegate {
     
     func albumNetworkServiceDidGet(_ albums: [Album]) {
+        
         self.albums = albums
-        let paths = getImagePaths(from: songs)
+        let paths = getImagePaths(from: albums)
         networkService.fetchImages(from: paths, for: .album)
     }
  }
@@ -207,7 +210,8 @@
             case .album:
                 self.setImagesForAlbums(images)
                 self.albumsOutput?.sendAlbums(self.albums)
-            default: break
+            default:
+                break
             }
         }
     }

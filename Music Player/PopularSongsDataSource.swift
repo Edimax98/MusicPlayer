@@ -32,25 +32,13 @@ extension PopularSongsDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var song = songs[indexPath.row]
-        let queue = DispatchQueue.global(qos: .utility)
+        let song = songs[indexPath.row]
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SongCell.identifier, for: indexPath) as? SongCell else {
             print("Could not dequeu cell with identifeir - \(SongCell.identifier)")
             return UICollectionViewCell()
         }
         
-//        queue.async {
-//            request(song.imagePath, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
-//                .responseImage { (response) in
-//                    if let image = response.result.value {
-//                        DispatchQueue.main.async {
-//                            cell.songCoverImageView.image = image
-//                            self.songs[indexPath.row].image = image
-//                        }
-//                    }
-//            }
-//        }
         cell.songCoverImageView.image = song.image
         cell.songNameLabel.text = song.name
         cell.songArtistNameLabel.text = song.artistName

@@ -29,38 +29,6 @@ class NetworkService {
 // MARK: - SongNetworkService
 extension NetworkService: SongNetworkService {
     
-    private func fetchImages(from urls: [String], completionHandler: @escaping ([Image]) -> Void) {
-        
-        var images = [Image]()
-        
-        let workItem = DispatchWorkItem {
-            for url in urls {
-                request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseImage { (response) in
-                    if let image = response.result.value {
-                        images.append(image)
-                    } else {
-                        print("image is nil")
-                    }
-                }
-            }
-        }
-        
-        DispatchQueue.global().async(execute: workItem)
-        
-        workItem.notify(queue: .main) {
-            completionHandler(images)
-        }
-    }
-    
-    private func setImages(for songs: inout [Song], with images: [Image]) {
-        
-        var i = 0
-        while (i <= songs.count - 1) {
-            songs[i].image = images[i]
-            i += 1
-        }
-    }
-    
     func fetchSongs(_ amount: UInt) {
         
         request("https://api.jamendo.com/v3.0/tracks/?client_id=88dda971&limit=10&order=popularity_month", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
@@ -245,7 +213,7 @@ extension NetworkService: TodaysPlaylistsNetworkService {
                     
                     let json = JSON(responseValue)["results"]
                     
-                    let todaysPlaylist = Album(name: genre, artistName: "Ur friend", imagePath: "", songs: (json.array?.map { jsonArr -> Song in
+                    let todaysPlaylist = Album(name: genre, artistName: "Your friend", imagePath: "", songs: (json.array?.map { jsonArr -> Song in
                         Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue,
                              duration: jsonArr["duration"].uIntValue, albumName: genre, audioPath: jsonArr["audio"].stringValue, image: nil)
                         })!)

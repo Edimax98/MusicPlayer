@@ -21,7 +21,7 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xgL-RV-EFj">
                         <rect key="frame" x="0.0" y="181.5" width="320" height="34"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="sa4-EQ-aJW"/>
                         </constraints>
@@ -34,7 +34,7 @@
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="nVr-iT-hD5">
                         <rect key="frame" x="0.0" y="105.5" width="320" height="34"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="bV9-Rt-Ji5"/>
                         </constraints>
@@ -47,7 +47,7 @@
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="deg-XE-H9s">
                         <rect key="frame" x="0.0" y="67.5" width="320" height="34"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="iCU-cD-XPv"/>
                         </constraints>
@@ -60,7 +60,7 @@
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="6Te-W0-qXW">
                         <rect key="frame" x="0.0" y="29.5" width="320" height="34"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="SQe-zo-UxZ"/>
                         </constraints>
@@ -73,7 +73,7 @@
                     </collectionView>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="yAn-MG-6ck">
                         <rect key="frame" x="0.0" y="143.5" width="320" height="34"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="e4G-kO-ag3"/>
                         </constraints>

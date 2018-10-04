@@ -14,6 +14,7 @@ import Alamofire
 
 class PlayerViewController: UIViewController, PopupContentViewController {
     
+    var songWasSelected: ((_ song: Song) -> Void)?
     var closeWithSongPlaying: ((_ currentItem: AVPlayerItem?,_ time: CMTime?) -> Void)?
     var closeWithSongPaused: ((_ currentItem: AVPlayerItem?,_ time: CMTime?) -> Void)?
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
@@ -44,7 +45,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var nextButton: UIButton!
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
+        NotificationCenter.default.removeObserver(self, name: .AVAudioSessionSilenceSecondaryAudioHint, object: AVAudioSession.sharedInstance())
     }
 
     override func remoteControlReceived(with event: UIEvent?) {
@@ -83,12 +85,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         albumArtworkImageView.layer.cornerRadius = 50
         albumArtworkImageView.clipsToBounds = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleSecondaryAudio),
-                                               name: .AVAudioSessionSilenceSecondaryAudioHint,
-                                               object: AVAudioSession.sharedInstance())
-        
+       NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSecondaryAudio), name: .AVAudioSessionSilenceSecondaryAudioHint, object: AVAudioSession.sharedInstance())
         updateLabels()
     }
     
@@ -331,17 +329,12 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
-        
-        guard let currentItem = audioPlayer.currentItem else {
-            closeHandler?()
-            return
-        }
-        
+    
         if audioPlayer.rate == 0 {
             if isAlbum {
-                closeWithAlbumPaused?(playerItems, currentAudioIndex, audioPlayer.currentTime())
+                closeWithAlbumPaused?(playerItems, currentAudioIndex, playerItems[currentAudioIndex].currentTime())
             } else {
-                closeWithSongPaused?(currentItem, audioPlayer.currentTime())
+                closeWithSongPaused?(playerItems[currentAudioIndex], playerItems[currentAudioIndex].currentTime())
             }
             return
         }
@@ -349,7 +342,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         if isAlbum {
             closeWithAlbumPlaying?(playerItems, currentAudioIndex, audioPlayer.currentTime())
         } else {
-            closeWithSongPlaying?(currentItem, audioPlayer.currentTime())
+            closeWithSongPlaying?(playerItems[currentAudioIndex], audioPlayer.currentTime())
         }
     }
     
@@ -374,7 +367,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
 extension PlayerViewController: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
-        
+        songWasSelected?(song)
         if !albumTracks.isEmpty {
             setIndex(for: song)
         } else {

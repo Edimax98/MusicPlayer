@@ -16,6 +16,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var musicTableView: UITableView!
     
     var closeHandler: (() -> Void)?
+    var songWasSelected: ((_ song: Song) -> Void)?
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     
@@ -69,7 +70,7 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let song = dataSource.getSongs()[indexPath.row]
-    
+        songWasSelected?(song)
         let vc = PlayerViewController.instance()
         self.songActionHandler = vc
         self.multipleDataOutput = vc
@@ -89,7 +90,7 @@ extension MusicListViewController: UITableViewDelegate {
                 ]
             )
             .show(vc)
-        
+    
         vc.closeWithSongPlaying = { (_,_) in
             popupController.dismiss()
         }

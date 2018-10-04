@@ -31,24 +31,13 @@ extension NewReleasesDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var album = albums[indexPath.row]
+        let album = albums[indexPath.row]
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewAlbumCell.identifier, for: indexPath) as? NewAlbumCell else {
             return UICollectionViewCell()
         }
-        
-        request(album.imagePath, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseImage { (response) in
-            
-            if let image = response.result.value {
-                DispatchQueue.main.async {
-                    cell.newAlbumCoverImageView.image = image
-                    album.image = image
-                }
-            } else {
-                print("image is nil")
-            }
-        }
-        
+    
+        cell.newAlbumCoverImageView.image = album.image
         cell.albumAuthorNameLabel.text = album.artistName
         cell.albumNameLabel.text = album.name
         

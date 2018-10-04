@@ -9,7 +9,7 @@
 import Foundation
 import AlamofireImage
 
-struct Album: Model {
+struct Album {
     
     var name: String
     var artistName: String

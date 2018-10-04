@@ -22,11 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bED-Nd-gb6">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="605"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <color key="sectionIndexBackgroundColor" red="0.10196078431372549" green="0.10980392156862745" blue="0.34807436459172708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="taM-6A-a2o">
                                 <rect key="frame" x="0.0" y="605" width="375" height="62"/>
                                 <subviews>
@@ -62,8 +57,17 @@
                                             <action selector="playNextSongButtonPressed:" destination="FNU-cT-jE0" eventType="touchUpInside" id="vgA-rt-f0r"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" alpha="0.02" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKb-ZD-VsT">
+                                        <rect key="frame" x="0.0" y="0.0" width="254" height="62"/>
+                                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="nowPlayingViewTapped:" destination="FNU-cT-jE0" eventType="touchUpInside" id="GEd-JV-67e"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10196078431372549" green="0.10980392156862745" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.12053315123561645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="JCV-K7-f9q" firstAttribute="leading" secondItem="7oW-3a-mAd" secondAttribute="trailing" constant="26" id="1V7-WR-bed"/>
                                     <constraint firstItem="NBp-W7-aLP" firstAttribute="leading" secondItem="JCV-K7-f9q" secondAttribute="trailing" constant="28" id="1a8-dZ-3YA"/>
@@ -74,15 +78,25 @@
                                     <constraint firstAttribute="bottom" secondItem="7oW-3a-mAd" secondAttribute="bottom" constant="19" id="JO6-Ym-QSU"/>
                                     <constraint firstAttribute="bottom" secondItem="JCV-K7-f9q" secondAttribute="bottom" constant="19" id="Jw7-WC-Ta4"/>
                                     <constraint firstAttribute="width" secondItem="taM-6A-a2o" secondAttribute="height" multiplier="375:62" id="N4p-07-Oux"/>
+                                    <constraint firstItem="JCV-K7-f9q" firstAttribute="leading" secondItem="UKb-ZD-VsT" secondAttribute="trailing" constant="26" id="PQb-Mt-6tR"/>
+                                    <constraint firstAttribute="bottom" secondItem="UKb-ZD-VsT" secondAttribute="bottom" id="PSb-eo-jiE"/>
                                     <constraint firstItem="FWj-ry-Lcv" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" constant="6" id="Q3t-ff-jUs"/>
                                     <constraint firstItem="NBp-W7-aLP" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" constant="18" id="Qb1-dC-44f"/>
+                                    <constraint firstItem="UKb-ZD-VsT" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" id="S5A-lM-nnO"/>
+                                    <constraint firstItem="UKb-ZD-VsT" firstAttribute="leading" secondItem="taM-6A-a2o" secondAttribute="leading" id="Tiq-kt-bNW"/>
                                     <constraint firstItem="7oW-3a-mAd" firstAttribute="leading" secondItem="FWj-ry-Lcv" secondAttribute="trailing" constant="16" id="pdw-kn-Kl6"/>
                                     <constraint firstAttribute="bottom" secondItem="FWj-ry-Lcv" secondAttribute="bottom" constant="6" id="rLR-iH-tIM"/>
                                     <constraint firstItem="FWj-ry-Lcv" firstAttribute="leading" secondItem="taM-6A-a2o" secondAttribute="leading" constant="8" id="swS-8f-lod"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bED-Nd-gb6">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="605"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="bED-Nd-gb6" secondAttribute="trailing" id="0Hc-ex-Z8o"/>
                             <constraint firstItem="bED-Nd-gb6" firstAttribute="top" secondItem="b43-Du-HF3" secondAttribute="top" id="1hZ-kK-9Ch"/>
