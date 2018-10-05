@@ -139,7 +139,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     func saveCurrentTrackNumber() {
-        
         UserDefaults.standard.set(currentAudioIndex, forKey: "currentAudioIndex")
         UserDefaults.standard.synchronize()
     }
@@ -177,7 +176,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         } catch let error {
             print("Error in audio session - ", error.localizedDescription)
         }
-
+        
         audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0

@@ -66,7 +66,7 @@ open class PopupController: UIViewController {
     fileprivate var dismissWhenTaps: Bool = true {
         didSet {
             if dismissWhenTaps {
-                registerTapGesture()
+              //  registerTapGesture() /// !!!!
             } else {
                 unregisterTapGesture()
             }
