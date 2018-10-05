@@ -9,7 +9,10 @@
 import UIKit
 import AVFoundation
 
-class MusicPlayerLandingPage: UIViewController {
+class MusicPlayerLandingPage: UIViewController, MainPageView {
+    
+    var onSongFlowSelect: ((PopupController) -> Void)?
+    var onAlbumFlowSelect: ((PopupController) -> Void)?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nowPlayingSongCover: UIImageView!

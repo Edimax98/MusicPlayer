@@ -57,7 +57,9 @@ final class RouterImp: NSObject, Router {
     }
     
     func popModule(animated: Bool) {
-        /// Here should be pop but root isnt a navigation controller
+        if let controller = rootController?.popViewController(animated: animated) {
+            runCompletion(for: controller)
+        }
     }
     
     func dismissModule() {
@@ -74,9 +76,24 @@ final class RouterImp: NSObject, Router {
     
     func setRootModule(_ module: Presentable?, hideBar: Bool) {
         
+        guard let controller = module?.toPresent() else { return }
+        rootController?.setViewControllers([controller], animated: false)
+        rootController?.isNavigationBarHidden = hideBar
     }
     
     func popToRootModule(animated: Bool) {
-        <#code#>
+        
+        if let controllers = rootController?.popToRootViewController(animated: animated) {
+            controllers.forEach { (controller) in
+                runCompletion(for: controller)
+            }
+        }
+    }
+    
+    private func runCompletion(for controller: UIViewController) {
+        
+        guard let completion = completions[controller] else { return }
+        completion()
+        completions.removeValue(forKey: controller)
     }
 }

@@ -1,14 +1,29 @@
 //
-//  Extensions.swift
+//  UiIViewExtension.swift
 //  Music Player
 //
-//  Created by Даниил on 20.09.2018.
+//  Created by Даниил on 05/10/2018.
 //  Copyright © 2018 polat. All rights reserved.
 //
 
 import UIKit
 
 extension UIView {
+    
+    private class func viewInNibNamed<T: UIView>(_ nibName: String) -> T {
+        return Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as! T
+    }
+    
+    class func nib() -> Self {
+        return viewInNibNamed(nameOfClass)
+    }
+    
+    class func nib(_ frame: CGRect) -> Self {
+        let view = nib()
+        view.frame = frame
+        view.layoutIfNeeded()
+        return view
+    }
     
     func applyGradient(colours: [UIColor]) -> Void {
         self.applyGradient(colours: colours, locations: nil)
