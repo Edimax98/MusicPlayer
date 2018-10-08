@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class MusicPlayerLandingPage: UIViewController, MainPageView {
+class MusicPlayerLandingPage: UIViewController {
     
     var onSongFlowSelect: ((PopupController) -> Void)?
     var onAlbumFlowSelect: ((PopupController) -> Void)?
@@ -63,7 +63,7 @@ class MusicPlayerLandingPage: UIViewController, MainPageView {
         interactor = MusicPlayerLandingPageInteractor(networkService)
         registerCells(for: tableView)
         fillDataSource()
-        
+        nowPlayingSongName.text = "Not playing".localized
         let audioSession = AVAudioSession()
         do {
             try audioSession.setActive(true)
@@ -231,10 +231,6 @@ class MusicPlayerLandingPage: UIViewController, MainPageView {
         tableView.register(UINib(nibName: "SectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
     }
     
-    @objc func startTrialButtonPressed() {
-        performSegue(withIdentifier: "musicWasSelected", sender: self)
-    }
-    
     private func fillDataSource() {
         
         let brightPink = UIColor(red: 244/255.0, green:64/255.0, blue:113/255.0, alpha:1/1.0)
@@ -242,10 +238,10 @@ class MusicPlayerLandingPage: UIViewController, MainPageView {
         let lightBlue = UIColor(red: 53/255.0, green:181/255.0, blue:214/255.0, alpha:1/1.0)
         let pink = UIColor(red: 226/255.0, green:65/255.0, blue:170/255.0, alpha:1/1.0)
         
-        dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences", dividerColor: lightBlue))
-        dataSource.append(HeaderData(icon: "section2", title: "Playlists for today", dividerColor: lightPurple))
-        dataSource.append(HeaderData(icon: "section3", title: "New Releases", dividerColor: pink))
-        dataSource.append(HeaderData(icon: "section5", title: "Popular Songs", dividerColor: brightPink))
+        dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences".localized, dividerColor: lightBlue))
+        dataSource.append(HeaderData(icon: "section2", title: "Playlists for today".localized, dividerColor: lightPurple))
+        dataSource.append(HeaderData(icon: "section3", title: "New Releases".localized, dividerColor: pink))
+        dataSource.append(HeaderData(icon: "section5", title: "Popular Songs".localized, dividerColor: brightPink))
     }
     
     fileprivate func setIndex(for songToFindIndex: Song) {

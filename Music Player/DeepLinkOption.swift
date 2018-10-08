@@ -9,20 +9,38 @@
 import Foundation
 
 struct DeepLinkURLConstants {
-    // the end of url paths to present views. deeplink://views/login
+    static let player = "player"
+    static let mainView = "main"
+    static let musicList = "list"
 }
 
 enum DeepLinkOption {
+    
+    case player
+    case mainView
+    case musicList
     
     static func build(with userActivity: NSUserActivity) -> DeepLinkOption? {
         
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let url = userActivity.webpageURL,
-            let _ = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+            let host = url.host {
             
-            //TODO: extract string and match with DeepLinkURLConstants
+            var pathComponents = components.path.components(separatedBy: "/")
+            pathComponents.removeFirst()
+            
+            switch host {
+            case DeepLinkURLConstants.player:
+                return .player
+            case DeepLinkURLConstants.mainView:
+                return .mainView
+            case DeepLinkURLConstants.musicList:
+                return .musicList
+            default:
+                break
+            }
         }
         return nil
     }
 }
-

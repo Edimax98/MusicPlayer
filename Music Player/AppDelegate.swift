@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         SubscriptionService.shared.loadSubscriptionOptions()
     //    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -32,6 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        print("DFDGDGG")
+        let option = DeepLinkOption.build(with: userActivity)
+        DeepLinkNavigator.shared.proceed(with: option)
+        return true
+    }
+    
     
     func applicationDidBecomeActive(_ application: UIApplication) {
        // AppEventsLogger.activate(application)
