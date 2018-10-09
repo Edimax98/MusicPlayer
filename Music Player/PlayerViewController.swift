@@ -20,6 +20,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeHandler: (() -> Void)?
+
+    weak var playerDelegate: PlayerViewControllerDelegate?
     
     var audioPlayer = AVPlayer()
     var currentAudioPath: URL!
@@ -46,7 +48,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
-        NotificationCenter.default.removeObserver(self, name: .AVAudioSessionSilenceSecondaryAudioHint, object: AVAudioSession.sharedInstance())
     }
 
     override func remoteControlReceived(with event: UIEvent?) {
@@ -86,7 +87,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         albumArtworkImageView.clipsToBounds = true
         
        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSecondaryAudio), name: .AVAudioSessionSilenceSecondaryAudioHint, object: AVAudioSession.sharedInstance())
         updateLabels()
     }
     
@@ -99,22 +99,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         
         let storyboard = UIStoryboard(name: "PlayerView", bundle: nil)
         return storyboard.instantiateInitialViewController() as! PlayerViewController
-    }
-    
-    @objc private func handleSecondaryAudio(notification: Notification) {
-        
-        guard let userInfo =  notification.userInfo,
-            let typeValue = userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey] as? UInt,
-            let type = AVAudioSessionSilenceSecondaryAudioHintType(rawValue: typeValue) else {
-                return
-        }
-        
-        if type == .begin {
-           // try! AVAudioSession.sharedInstance().setActive(false)
-            // Other app audio started playing - mute secondary audio
-        } else {
-            // Other app audio stopped playing - restart secondary audio
-        }
     }
     
     private func fillPlayerItems(with songs: [Song]) {

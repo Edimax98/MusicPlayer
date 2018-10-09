@@ -11,9 +11,6 @@ import AVFoundation
 
 class MusicPlayerLandingPage: UIViewController {
     
-    var onSongFlowSelect: ((PopupController) -> Void)?
-    var onAlbumFlowSelect: ((PopupController) -> Void)?
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nowPlayingSongCover: UIImageView!
     @IBOutlet weak var nowPlayingSongName: UILabel!
@@ -426,7 +423,8 @@ extension MusicPlayerLandingPage: SongsActionHandler {
                 return
             }
             
-            let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
+            let asset = unwrappedCurrentItem.asset
+            let item = AVPlayerItem(asset: asset)
             item.seek(to: unwrappedTime, completionHandler: nil)
             unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
             unwrappedSelf.audioPlayer.play()
@@ -488,7 +486,8 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
             
             unwrappedSelf.playerItems = unwrappedItems
             unwrappedSelf.currentAudioIndex = index
-            let item = AVPlayerItem(asset: unwrappedSelf.playerItems[index].asset)
+            let asset = unwrappedSelf.playerItems[index].asset
+            let item = AVPlayerItem(asset: asset)
             item.seek(to: unwrappedTime, completionHandler: nil)
             unwrappedSelf.shouldBePlayedFromBegining = false
             unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)

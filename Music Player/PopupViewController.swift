@@ -127,7 +127,7 @@ public extension PopupController {
         controller.defaultConfigure()
         
         parentViewController.addChildViewController(controller)
-//        parentViewController.view.addSubview(controller.view)
+        parentViewController.view.addSubview(controller.view)
         controller.didMove(toParentViewController: parentViewController)
         
         return controller
