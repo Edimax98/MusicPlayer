@@ -85,7 +85,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         albumArtworkImageView.layer.borderWidth = 1
         albumArtworkImageView.layer.cornerRadius = 50
         albumArtworkImageView.clipsToBounds = true
-        
+        setupRemoteCommandCenter()
        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
         updateLabels()
     }
@@ -157,6 +157,12 @@ class PlayerViewController: UIViewController, PopupContentViewController {
 
         do {
             try audioSession.setActive(true)
+        } catch let error {
+            print("Error in audio session - ", error.localizedDescription)
+        }
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
         } catch let error {
             print("Error in audio session - ", error.localizedDescription)
         }
@@ -261,12 +267,60 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         totalLengthOfAudioLabel.text = String(format: "%02i:%02i", time.minutes, time.seconds)
     }
     
-    func updateLabels() {
+    func updateLockScreen(with track: Song?) {
         
+        // Define Now Playing Info
+        var nowPlayingInfo = [String : Any]()
+        if let artist = track?.artistName {
+            nowPlayingInfo[MPMediaItemPropertyArtist] = artist
+        }
+        if let title = track?.name {
+            nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        }
+        if let image = track?.image {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] =
+                MPMediaItemArtwork(boundsSize: image.size) { size in
+                    return image
+            }
+        }
+       // nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playerItems[currentAudioIndex].currentTime().seconds
+       // nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = playerItems[currentAudioIndex].asset.duration.seconds
+       // nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = audioPlayer.rate
+        // Set the metadata
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    func setupRemoteCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        // Add handler for Play Command
+        commandCenter.playCommand.addTarget { event in
+            return .success
+        }
+        
+        // Add handler for Pause Command
+        commandCenter.pauseCommand.addTarget { event in
+            return .success
+        }
+        
+        // Add handler for Next Command
+        commandCenter.nextTrackCommand.addTarget { event in
+            return .success
+        }
+        
+        // Add handler for Previous Command
+        commandCenter.previousTrackCommand.addTarget { event in
+            return .success
+        }
+    }
+    
+    func updateLabels() {
+        //updateLockScreen(with: albumTracks[currentAudioIndex])
         albumNameLabel.text = albumTracks[currentAudioIndex].albumName
         songNameLabel.text = albumTracks[currentAudioIndex].name
         albumArtworkImageView.image = albumTracks[currentAudioIndex].image
     }
+    
     
     @IBAction func play(_ sender : AnyObject) {
         
@@ -289,9 +343,11 @@ class PlayerViewController: UIViewController, PopupContentViewController {
 
         if audioPlayer.rate > 0 {
             pauseAudioPlayer()
+            playerDelegate?.didPressPlayButton()
             audioPlayer.rate > 0 ? playButton.setImage(pause, for: UIControlState()) : playButton.setImage(play , for: UIControlState())
         } else {
             playAudio()
+            playerDelegate?.didPressPlayButton()
             audioPlayer.rate > 0 ? playButton.setImage(pause, for: UIControlState()) : playButton.setImage(play , for: UIControlState())
         }
     }
@@ -351,6 +407,7 @@ extension PlayerViewController: SongsActionHandler {
     
     func musicWasSelected(_ song: Song) {
         songWasSelected?(song)
+        updateLockScreen(with: song)
         if !albumTracks.isEmpty {
             setIndex(for: song)
         } else {

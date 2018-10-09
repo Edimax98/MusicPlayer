@@ -382,8 +382,9 @@ extension MusicPlayerLandingPage: SongsActionHandler {
         setupNowPlayingView()
         
         let vc = PlayerViewController.instance()
+        vc.playerDelegate = self
         self.songActionHandler = vc
-
+        
         if audioPlayer.rate != 0 {
             audioPlayer.pause()
         }
@@ -525,4 +526,18 @@ extension MusicPlayerLandingPage: MusicPlayerActionHandler {
     }
 }
 
-
+// MARK: - PlayerViewControllerDelegate
+extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
+    
+    func didPressPlayButton() {
+        
+    }
+    
+    func didPressNextButton() {
+        
+    }
+    
+    func didPressPreviousButton() {
+        
+    }
+}
