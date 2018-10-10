@@ -37,6 +37,7 @@ open class PopupController: UIViewController {
         case top, center, bottom
         
         func origin(_ view: UIView, size: CGSize = UIScreen.main.bounds.size) -> CGPoint {
+            
             switch self {
             case .top: return CGPoint(x: (size.width - view.frame.width) / 2, y: 0)
             case .center: return CGPoint(x: (size.width - view.frame.width) / 2, y: (size.height - view.frame.height) / 2)
@@ -125,12 +126,28 @@ public extension PopupController {
     public class func create(_ parentViewController: UIViewController) -> PopupController {
         let controller = PopupController()
         controller.defaultConfigure()
-        
         parentViewController.addChildViewController(controller)
         parentViewController.view.addSubview(controller.view)
         controller.didMove(toParentViewController: parentViewController)
         
         return controller
+    }
+    
+    public class func createForRoot(of viewController: UIViewController) -> PopupController {
+        
+        let controller = PopupController()
+        controller.defaultConfigure()
+        var rootVc = viewController
+        
+        if viewController.parent == nil {
+            rootVc = viewController
+        } else {
+            while !(rootVc is MusicPlayerLandingPage) || rootVc.parent != nil {
+                rootVc = rootVc.parent!
+            }
+        }
+        let popupController = create(rootVc)
+        return popupController
     }
     
     public func customize(_ options: [PopupCustomOption]) -> PopupController {
@@ -145,7 +162,7 @@ public extension PopupController {
         configure()
         
         childViewController.didMove(toParentViewController: self)
-        
+        print(childViewController)
         show(layout, animation: animation) {
             self.defaultContentOffset = self.baseScrollView.contentOffset
             self.showedHandler?(self)
@@ -188,7 +205,7 @@ private extension PopupController {
         baseScrollView.frame = view.frame
         view.addSubview(baseScrollView)
         
-        popupView.layer.cornerRadius = 2
+        popupView.layer.cornerRadius = 5
         popupView.layer.masksToBounds = true
         popupView.frame.origin.y = 0
         

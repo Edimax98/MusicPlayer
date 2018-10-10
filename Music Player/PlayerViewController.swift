@@ -83,7 +83,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         }
         
         albumArtworkImageView.layer.borderWidth = 1
-        albumArtworkImageView.layer.cornerRadius = 50
+        albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
         albumArtworkImageView.clipsToBounds = true
         setupRemoteCommandCenter()
        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
@@ -119,7 +119,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        return CGSize(width: 350, height: 500)
+        let margin = self.view.frame.height * 0.1
+        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
     }
     
     func saveCurrentTrackNumber() {
@@ -171,7 +172,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
-        showTotalSongLength()
         updateLabels()
         progressTimerLabel.text = "00:00"
     }
@@ -315,7 +315,8 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     }
     
     func updateLabels() {
-        //updateLockScreen(with: albumTracks[currentAudioIndex])
+        updateLockScreen(with: albumTracks[currentAudioIndex])
+        showTotalSongLength()
         albumNameLabel.text = albumTracks[currentAudioIndex].albumName
         songNameLabel.text = albumTracks[currentAudioIndex].name
         albumArtworkImageView.image = albumTracks[currentAudioIndex].image

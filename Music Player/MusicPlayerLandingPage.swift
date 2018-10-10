@@ -454,7 +454,7 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
         fillPlayerItems(with: album.songs)
         tracks = album.songs
         
-        let vc = MusicListViewController.instance()
+        let vc = MusicListViewController.instance(from: self)
         self.albumActionHandler = vc
         vc.musicActionHandler = self
         albumActionHandler?.albumWasSelected(album)

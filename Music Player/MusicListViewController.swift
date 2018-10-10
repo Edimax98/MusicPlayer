@@ -19,7 +19,6 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     var songWasSelected: ((_ song: Song) -> Void)?
     var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
-    
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
@@ -39,8 +38,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         fillLabels()
     }
         
-    class func instance() -> MusicListViewController {
-        
+    static func instance(from vc: UIViewController) -> MusicListViewController {
         let storyboard = UIStoryboard(name: "MusicList", bundle: nil)
         return storyboard.instantiateInitialViewController() as! MusicListViewController
     }
@@ -56,7 +54,10 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     }
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        return CGSize(width: 350, height: 500)
+        
+        let margin = self.view.frame.height * 0.1
+        
+        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
@@ -80,10 +81,10 @@ extension MusicListViewController: UITableViewDelegate {
         musicActionHandler?.songWasSelectedFromAlbum()
         
         let popupController = PopupController
-            .create(self)
+            .createForRoot(of: self)
             .customize(
                 [
-                    .layout(.top),
+                    .layout(.center),
                     .animation(.fadeIn),
                     .scrollable(false),
                     .backgroundStyle(.blackFilter(alpha: 0.7))
