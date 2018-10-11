@@ -49,7 +49,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: self.audioPlayer.currentItem)
     }
-
+    
     override func remoteControlReceived(with event: UIEvent?) {
         if event!.type == UIEventType.remoteControl {
             switch event!.subtype {
@@ -81,7 +81,7 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         if isAlbum {
             exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
         }
-        
+        setupRemoteCommandCenter()
         albumArtworkImageView.layer.borderWidth = 1
         albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
         albumArtworkImageView.clipsToBounds = true
@@ -118,8 +118,34 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         playNextAudio()
     }
     
+    func setupRemoteTransportControls() {
+        // Get the shared MPRemoteCommandCenter
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        // Add handler for Play Command
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            if self.audioPlayer.rate == 0.0 {
+                self.audioPlayer.play()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        // Add handler for Pause Command
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            if self.audioPlayer.rate == 1.0 {
+                self.audioPlayer.pause()
+                return .success
+            }
+            return .commandFailed
+        }
+    }
+    
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        let margin = self.view.frame.height * 0.1
+        let margin = UIScreen.main.bounds.height * 0.1
+        if UIScreen.main.bounds.height > 700 {
+            return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin * 1.5)
+        }
         return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
     }
     
@@ -167,7 +193,6 @@ class PlayerViewController: UIViewController, PopupContentViewController {
         } catch let error {
             print("Error in audio session - ", error.localizedDescription)
         }
-        
         audioPlayer.replaceCurrentItem(with: playerItems[currentAudioIndex])
         playerProgressSlider.maximumValue = CFloat(albumTracks[currentAudioIndex].duration)
         playerProgressSlider.minimumValue = 0.0
@@ -283,10 +308,13 @@ class PlayerViewController: UIViewController, PopupContentViewController {
                     return image
             }
         }
-       // nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playerItems[currentAudioIndex].currentTime().seconds
-       // nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = playerItems[currentAudioIndex].asset.duration.seconds
-       // nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = audioPlayer.rate
-        // Set the metadata
+    
+        if !playerItems.isEmpty {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playerItems[currentAudioIndex].currentTime().seconds
+            nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = playerItems[currentAudioIndex].asset.duration.seconds
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = audioPlayer.rate
+        }
+        
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     

@@ -54,9 +54,10 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     }
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        
-        let margin = self.view.frame.height * 0.1
-        
+        let margin = UIScreen.main.bounds.height * 0.1
+        if UIScreen.main.bounds.height > 700 {
+            return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin * 1.5)
+        }
         return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
     }
     

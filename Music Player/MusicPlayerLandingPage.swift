@@ -22,6 +22,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var tracks = [Song]()
     fileprivate var shouldBePlayedFromBegining = false
     fileprivate var currentAudioIndex = 0
+    fileprivate var userTappedOnController = false
     
     fileprivate var isPlaying: Bool {
         get {
@@ -76,60 +77,11 @@ class MusicPlayerLandingPage: UIViewController {
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
         
-        let vc = PlayerViewController.instance()
-        vc.actionHanler = self
+        if tracks.isEmpty {
+            return
+        }
+        userTappedOnController = true
         self.musicWasSelected(tracks[currentAudioIndex])
-        
-        let popupController = PopupController
-            .create(self)
-            .customize(
-                [
-                    .animation(.fadeIn),
-                    .scrollable(false),
-                    .backgroundStyle(.blackFilter(alpha: 0.7))
-                ])
-            .show(vc)
-        
-        vc.closeWithSongPaused = { [weak self] (currentItem, time) in
-            
-            guard let unwrappedSelf = self, let unwrappedCurrentItem = currentItem, let unwrappedTime = time else {
-                popupController.dismiss()
-                return
-            }
-            
-            let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
-            item.seek(to: unwrappedTime, completionHandler: nil)
-            unwrappedSelf.shouldBePlayedFromBegining = true
-            unwrappedSelf.playerItems.append(item)
-            
-            popupController.dismiss()
-        }
-        
-        vc.closeWithSongPlaying = { [weak self] (currentItem, time) in
-            
-            guard let unwrappedSelf = self, let unwrappedCurrentItem = currentItem, let unwrappedTime = time else {
-                popupController.dismiss()
-                return
-            }
-            
-            let item = AVPlayerItem(asset: unwrappedCurrentItem.asset)
-            item.seek(to: unwrappedTime, completionHandler: nil)
-            unwrappedSelf.audioPlayer.replaceCurrentItem(with: item)
-            unwrappedSelf.audioPlayer.play()
-            unwrappedSelf.shouldBePlayedFromBegining = false
-            unwrappedSelf.setupNowPlayingView()
-            popupController.dismiss()
-        }
-        
-        vc.closeHandler = { [weak self] in
-            guard let unwrappedSelf = self else {
-                popupController.dismiss()
-                return
-            }
-            unwrappedSelf.shouldBePlayedFromBegining = true
-            popupController.dismiss()
-        }
-        
     }
     
     @IBAction func playNowPlayingSongButtonPressed(_ sender: Any) {
