@@ -17,13 +17,13 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     
     var closeHandler: (() -> Void)?
     var songWasSelected: ((_ song: Song) -> Void)?
-    var closeWithAlbumPlaying: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
-    var closeWithAlbumPaused: ((_ items: [AVPlayerItem]?,_ currentItemIndex: Int,_ time: CMTime?) -> Void)?
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
-    fileprivate weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
-    fileprivate weak var songActionHandler: SongsActionHandler?
+    weak var playerDelegate: PlayerViewControllerDelegate?
+    weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
+    weak var songActionHandler: SongActionHandler?
     weak var musicActionHandler: MusicPlayerActionHandler?
+    weak var playerViewController: PlayerViewController?
     
     deinit {
         print("List VC deinited")
@@ -72,10 +72,11 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let song = dataSource.getSongs()[indexPath.row]
+        playerViewController = PlayerViewController.instance()
         songWasSelected?(song)
-        let vc = PlayerViewController.instance()
-        self.songActionHandler = vc
-        self.multipleDataOutput = vc
+        
+        self.songActionHandler = playerViewController
+        self.multipleDataOutput = playerViewController
         
         multipleDataOutput?.sendSongs(album!.songs)
         songActionHandler?.musicWasSelected(song)
@@ -91,25 +92,8 @@ extension MusicListViewController: UITableViewDelegate {
                     .backgroundStyle(.blackFilter(alpha: 0.7))
                 ]
             )
-            .show(vc)
-    
-        vc.closeWithSongPlaying = { (_,_) in
-            popupController.dismiss()
-        }
-        
-        vc.closeWithAlbumPaused = { [weak self] (items, index, time) in
-            guard let unwrappedSelf = self else { return }
-            unwrappedSelf.closeWithAlbumPaused?(items,index,time)
-            popupController.dismiss()
-        }
-        
-        vc.closeWithAlbumPlaying = { [weak self] (items, index, time) in
-            guard let unwrappedSelf = self else { return }
-            unwrappedSelf.closeWithAlbumPlaying?(items,index,time)
-            popupController.dismiss()
-        }
-        
-        vc.closeHandler = {
+            .show(playerViewController!)
+        playerViewController!.closeHandler = {
             popupController.dismiss()
         }
     }
@@ -121,5 +105,24 @@ extension MusicListViewController: AlbumsActionHandler {
     func albumWasSelected(_ album: Album) {
         dataSource.setSongs(album.songs)
         self.album = album
+    }
+}
+
+extension MusicListViewController: PlayerViewControllerDelegate {
+    
+    func didPressPlayButton() {
+        playerDelegate?.didPressPlayButton()
+    }
+    
+    func didPressNextButton() {
+        playerDelegate?.didPressNextButton()
+    }
+    
+    func didPressPreviousButton() {
+        playerDelegate?.didPressPreviousButton()
+    }
+    
+    func didChangeTime(to newTime: TimeInterval) {
+       playerDelegate?.didChangeTime(to: newTime)
     }
 }

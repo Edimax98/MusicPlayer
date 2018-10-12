@@ -15,4 +15,6 @@ protocol PlayerViewControllerDelegate: class {
     func didPressNextButton()
     
     func didPressPreviousButton()
+    
+    func didChangeTime(to newTime: TimeInterval)
 }

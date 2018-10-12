@@ -20,7 +20,7 @@
     fileprivate var albumNetworkService: AlbumNetworkService
     fileprivate var imageFetcherNetworkService: ImageFetchNetworkService
     fileprivate var todayPlaylistNetworkService: TodaysPlaylistsNetworkService
-
+    
     fileprivate let genres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country",
                         "Art Pop", "Rock", "Classical", "Trap", "Pop", "RNB",
                         "Modern Rock", "Chill", "Bass Trap", "Dance Pop",

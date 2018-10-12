@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SongsActionHandler: class {
+protocol SongActionHandler: class {
     
     func musicWasSelected(_ song: Song)
 }

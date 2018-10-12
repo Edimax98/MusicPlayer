@@ -6,4 +6,5 @@ target 'Music Player' do
     pod 'Alamofire', '~> 4.7'
     pod 'SwiftyJSON', '~> 4.0'
     pod 'AlamofireImage'
+    pod 'KDEAudioPlayer'
 end
