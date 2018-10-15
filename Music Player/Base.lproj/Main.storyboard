@@ -36,17 +36,6 @@
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" alpha="0.02" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKb-ZD-VsT">
-                                        <rect key="frame" x="0.0" y="0.0" width="211" height="62"/>
-                                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="211" id="ffG-DW-UGs"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="nowPlayingViewTapped:" destination="FNU-cT-jE0" eventType="touchUpInside" id="GEd-JV-67e"/>
-                                        </connections>
-                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="frT-eJ-Rbj">
                                         <rect key="frame" x="267" y="18" width="85" height="25"/>
                                         <subviews>
@@ -74,25 +63,38 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="luB-Sf-ECE">
+                                        <rect key="frame" x="23" y="21" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <button opaque="NO" alpha="0.019999999552965164" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bd0-1q-UUR">
+                                        <rect key="frame" x="0.0" y="0.0" width="211" height="62"/>
+                                        <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="nowPlayingViewTapped:" destination="FNU-cT-jE0" eventType="touchUpInside" id="Gpd-pb-A4f"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.12053315123561645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="frT-eJ-Rbj" secondAttribute="trailing" constant="23" id="0YO-08-nAx"/>
                                     <constraint firstItem="7oW-3a-mAd" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" constant="20" id="2pp-DW-Am1"/>
+                                    <constraint firstItem="bd0-1q-UUR" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" id="Hm9-uO-j72"/>
                                     <constraint firstAttribute="bottom" secondItem="7oW-3a-mAd" secondAttribute="bottom" constant="19" id="JO6-Ym-QSU"/>
                                     <constraint firstAttribute="width" secondItem="taM-6A-a2o" secondAttribute="height" multiplier="375:62" id="N4p-07-Oux"/>
-                                    <constraint firstAttribute="bottom" secondItem="UKb-ZD-VsT" secondAttribute="bottom" id="PSb-eo-jiE"/>
+                                    <constraint firstItem="luB-Sf-ECE" firstAttribute="centerY" secondItem="FWj-ry-Lcv" secondAttribute="centerY" id="O5x-e9-xY7"/>
                                     <constraint firstItem="FWj-ry-Lcv" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" constant="6" id="Q3t-ff-jUs"/>
-                                    <constraint firstItem="UKb-ZD-VsT" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" id="S5A-lM-nnO"/>
-                                    <constraint firstItem="UKb-ZD-VsT" firstAttribute="leading" secondItem="taM-6A-a2o" secondAttribute="leading" id="Tiq-kt-bNW"/>
-                                    <constraint firstItem="frT-eJ-Rbj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UKb-ZD-VsT" secondAttribute="trailing" constant="8" symbolic="YES" id="TwO-wk-4oa"/>
                                     <constraint firstItem="frT-eJ-Rbj" firstAttribute="top" secondItem="taM-6A-a2o" secondAttribute="top" constant="18" id="bKG-aI-COV"/>
                                     <constraint firstItem="frT-eJ-Rbj" firstAttribute="leading" secondItem="7oW-3a-mAd" secondAttribute="trailing" constant="21" id="ewM-Z2-aOU"/>
+                                    <constraint firstItem="luB-Sf-ECE" firstAttribute="centerX" secondItem="FWj-ry-Lcv" secondAttribute="centerX" id="g7b-EN-694"/>
+                                    <constraint firstAttribute="bottom" secondItem="bd0-1q-UUR" secondAttribute="bottom" id="mok-rK-yox"/>
                                     <constraint firstItem="7oW-3a-mAd" firstAttribute="leading" secondItem="FWj-ry-Lcv" secondAttribute="trailing" constant="8" symbolic="YES" id="pdw-kn-Kl6"/>
                                     <constraint firstAttribute="bottom" secondItem="FWj-ry-Lcv" secondAttribute="bottom" constant="6" id="rLR-iH-tIM"/>
                                     <constraint firstAttribute="bottom" secondItem="frT-eJ-Rbj" secondAttribute="bottom" constant="19" id="suq-Mu-08A"/>
                                     <constraint firstItem="FWj-ry-Lcv" firstAttribute="leading" secondItem="taM-6A-a2o" secondAttribute="leading" constant="8" id="swS-8f-lod"/>
+                                    <constraint firstItem="bd0-1q-UUR" firstAttribute="leading" secondItem="taM-6A-a2o" secondAttribute="leading" id="xQE-YM-M04"/>
+                                    <constraint firstItem="frT-eJ-Rbj" firstAttribute="leading" secondItem="bd0-1q-UUR" secondAttribute="trailing" constant="56" id="zC2-GF-6gj"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bED-Nd-gb6">
@@ -116,6 +118,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="LgO-Ei-atN"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="luB-Sf-ECE" id="VMg-9f-j0q"/>
                         <outlet property="nowPlayingSongCover" destination="FWj-ry-Lcv" id="RWx-4E-rYd"/>
                         <outlet property="nowPlayingSongName" destination="7oW-3a-mAd" id="cNm-zT-Q9T"/>
                         <outlet property="playButton" destination="JCV-K7-f9q" id="erj-z2-Zie"/>

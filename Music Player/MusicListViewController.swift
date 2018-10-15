@@ -2,12 +2,12 @@
 //  MusicListViewController.swift
 //  Music Player
 //
-//  Created by Даниил on 20.09.2018.
+//  Created by Даниил on 15/10/2018.
 //  Copyright © 2018 polat. All rights reserved.
 //
 
 import UIKit
-import AVFoundation
+import KDEAudioPlayer
 
 class MusicListViewController: UIViewController, PopupContentViewController {
     
@@ -23,12 +23,8 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
     weak var songActionHandler: SongActionHandler?
     weak var musicActionHandler: MusicPlayerActionHandler?
-    weak var playerViewController: PlayerViewController?
-    
-    deinit {
-        print("List VC deinited")
-    }
-    
+    weak var audioPlayerDelegate: AudioPlayerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +33,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         musicTableView.register(UINib(nibName: "TrackCell", bundle: nil), forCellReuseIdentifier: TrackCell.identifier)
         fillLabels()
     }
-        
+    
     static func instance(from vc: UIViewController) -> MusicListViewController {
         let storyboard = UIStoryboard(name: "MusicList", bundle: nil)
         return storyboard.instantiateInitialViewController() as! MusicListViewController
@@ -72,30 +68,16 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let song = dataSource.getSongs()[indexPath.row]
-        playerViewController = PlayerViewController.instance()
+        let playerViewController = PlayerViewController.instance()
         songWasSelected?(song)
         
-        self.songActionHandler = playerViewController
         self.multipleDataOutput = playerViewController
+        self.audioPlayerDelegate = playerViewController
+        playerViewController.playerDelegate = self
         
         multipleDataOutput?.sendSongs(album!.songs)
-        songActionHandler?.musicWasSelected(song)
         musicActionHandler?.songWasSelectedFromAlbum()
-        
-        let popupController = PopupController
-            .createForRoot(of: self)
-            .customize(
-                [
-                    .layout(.center),
-                    .animation(.fadeIn),
-                    .scrollable(false),
-                    .backgroundStyle(.blackFilter(alpha: 0.7))
-                ]
-            )
-            .show(playerViewController!)
-        playerViewController!.closeHandler = {
-            popupController.dismiss()
-        }
+        songActionHandler?.musicWasSelected(song)
     }
 }
 
@@ -108,21 +90,36 @@ extension MusicListViewController: AlbumsActionHandler {
     }
 }
 
+extension MusicListViewController: AudioPlayerDelegate {
+    
+    func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
+        audioPlayerDelegate?.audioPlayer(audioPlayer, didUpdateProgressionTo: time, percentageRead: percentageRead)
+    }
+}
+
 extension MusicListViewController: PlayerViewControllerDelegate {
+    
+    func didChangeVolume(to newVolume: Float) {
+        playerDelegate?.didChangeVolume(to: newVolume)
+    }
+    
+    func didPressPreviousButton(completion: @escaping (Song) -> Void) {
+        playerDelegate?.didPressPreviousButton{ newSong in
+            completion(newSong)
+        }
+    }
+    
+    func didPressNextButton(completion: @escaping (Song) -> Void) {
+        playerDelegate?.didPressNextButton { newSong in
+            completion(newSong)
+        }
+    }
     
     func didPressPlayButton() {
         playerDelegate?.didPressPlayButton()
     }
     
-    func didPressNextButton() {
-        playerDelegate?.didPressNextButton()
-    }
-    
-    func didPressPreviousButton() {
-        playerDelegate?.didPressPreviousButton()
-    }
-    
     func didChangeTime(to newTime: TimeInterval) {
-       playerDelegate?.didChangeTime(to: newTime)
+        playerDelegate?.didChangeTime(to: newTime)
     }
 }

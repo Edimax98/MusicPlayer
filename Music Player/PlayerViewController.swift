@@ -7,7 +7,6 @@
 // contact  bpolat@live.com
 
 import UIKit
-import FBSDKCoreKit
 import KDEAudioPlayer
 
 class PlayerViewController: UIViewController {
@@ -16,11 +15,12 @@ class PlayerViewController: UIViewController {
     var closeHandler: (() -> Void)?
 
     weak var playerDelegate: PlayerViewControllerDelegate?
-    weak var actionHanler: MusicPlayerActionHandler?
     
     private(set) var song: Song?
     private var isAlbum = false
     
+    @IBOutlet weak var volumeSlider: UISlider!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var albumNameLabel: UILabel!
@@ -44,7 +44,7 @@ class PlayerViewController: UIViewController {
         }
         
         playButton.setImage(UIImage(named: "pause"), for: .selected)
-        
+        activityIndicator.isHidden = true
         albumArtworkImageView.layer.borderWidth = 1
         albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
         albumArtworkImageView.clipsToBounds = true
@@ -92,18 +92,31 @@ class PlayerViewController: UIViewController {
         songNameLabel.text = unwrappedSong.name
         albumArtworkImageView.image = unwrappedSong.image
     }
+	
+	fileprivate func resetSlider() {
+		progressTimerLabel.text = "00:00"
+		playerProgressSlider.setValue(0, animated: true)
+	}
 
-    @IBAction func play(_ sender : AnyObject) {
+    @IBAction func play(_ sender: AnyObject) {
         playButton.isSelected = !playButton.isSelected
         playerDelegate?.didPressPlayButton()
     }
     
     @IBAction func next(_ sender : AnyObject) {
-        playerDelegate?.didPressNextButton()
+		playerDelegate?.didPressNextButton { [weak self] newSong in
+			self?.song = newSong
+			self?.resetSlider()
+			self?.updateLabels()
+		}
     }
     
     @IBAction func previous(_ sender : AnyObject) {
-        playerDelegate?.didPressPreviousButton()
+		playerDelegate?.didPressPreviousButton { [weak self] newSong in
+			self?.song = newSong
+			self?.resetSlider()
+			self?.updateLabels()
+		}
     }
     
     @IBAction func changeAudioLocationSlider(_ sender : UISlider) {
@@ -114,12 +127,28 @@ class PlayerViewController: UIViewController {
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
         closeHandler?()
     }
+    
+    @IBAction func volumeSliderValueChanged(_ sender: Any) {
+        guard let slider = sender as? UISlider else { return }
+        playerDelegate?.didChangeVolume(to: slider.value)
+    }
 }
 
 // MARK: - AudioPlayerDelegate
 extension PlayerViewController: AudioPlayerDelegate {
     
+    func audioPlayer(_ audioPlayer: AudioPlayer, didLoad range: TimeRange, for item: AudioItem) {
+        if audioPlayer.state == .buffering || audioPlayer.state == .waitingForConnection {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
+        }
+    }
+    
     func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
+        volumeSlider.setValue(audioPlayer.volume, animated: true)
         playerProgressSlider.setValue(Float(time).rounded(), animated: true)
         let secondsAndMinutes = secondsToMinutesSeconds(seconds: UInt(time))
         progressTimerLabel.text = String(format: "%02i:%02i", secondsAndMinutes.minutes, secondsAndMinutes.seconds)
@@ -152,7 +181,7 @@ extension PlayerViewController: PopupContentViewController {
         if UIScreen.main.bounds.height > 700 {
             return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin * 1.5)
         }
-        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
+        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin + 20)
     }
 }
 

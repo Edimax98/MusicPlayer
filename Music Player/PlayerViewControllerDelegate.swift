@@ -12,9 +12,11 @@ protocol PlayerViewControllerDelegate: class {
     
     func didPressPlayButton()
     
-    func didPressNextButton()
+	func didPressNextButton(completion: @escaping (_ newSong: Song) -> Void)
     
-    func didPressPreviousButton()
+    func didPressPreviousButton(completion: @escaping (_ newSong: Song) -> Void)
     
     func didChangeTime(to newTime: TimeInterval)
+    
+    func didChangeVolume(to newVolume: Float)
 }
