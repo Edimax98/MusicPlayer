@@ -333,14 +333,14 @@ extension MusicPlayerLandingPage: AlbumsActionHandler {
 // MARK: - MusicPlayerActionHandler
 extension MusicPlayerLandingPage: MusicPlayerActionHandler {
     
-    func songWasSelectedFromAlbum() {
+    func songWasSelectedFromAlbum(_ song: Song) {
         
         if audioPlayer.items != nil {
             audioPlayer.stop()
         }
-    
+        setCurrentIndex(from: song)
         guard let items = createItems(with: tracks.map { $0.audioPath }) else { return }
-        audioPlayer.add(items: items)
+        audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
     }
 }
 
@@ -358,7 +358,7 @@ extension MusicPlayerLandingPage: LandingPageViewOutputSingleValue {
         }
         
         userTappedOnController = false
-        audioPlayer.add(item: item)
+        audioPlayer.play(item: item)
         tracks.append(song)
         setCurrentIndex(from: song)
         let playerVc = PlayerViewController.instance()
@@ -420,7 +420,6 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         if audioPlayer.state != .playing {
             playButton.isSelected = false
         }
-        
         if let index = audioPlayer.currentItemIndexInQueue {
             completion(tracks[index])
         } else {

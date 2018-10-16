@@ -76,7 +76,7 @@ extension MusicListViewController: UITableViewDelegate {
         playerViewController.playerDelegate = self
         
         multipleDataOutput?.sendSongs(album!.songs)
-        musicActionHandler?.songWasSelectedFromAlbum()
+        musicActionHandler?.songWasSelectedFromAlbum(song)
         songActionHandler?.musicWasSelected(song)
     }
 }

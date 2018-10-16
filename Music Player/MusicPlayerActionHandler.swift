@@ -10,5 +10,5 @@ import Foundation
 
 protocol MusicPlayerActionHandler: class {
     
-    func songWasSelectedFromAlbum()
+    func songWasSelectedFromAlbum(_ song: Song)
 }
