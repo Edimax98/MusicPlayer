@@ -9,7 +9,7 @@
 import Foundation
 import AlamofireImage
 
-struct Song: Equatable {
+struct Song: Equatable, Model {
     var name: String
     var imagePath: String
     var artistName: String
