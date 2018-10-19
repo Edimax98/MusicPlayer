@@ -9,10 +9,10 @@
 import Foundation
 
 protocol Sender {
-    associatedtype MessageType: Model
-    associatedtype ReceiverType: Reciever
     
-    var recipients: [ReceiverType] { get }
+    var recipients: [Reciever] { get }
     
-    func send(message: MessageType)
+    func send(album: Album)
+    
+    func send(song: Song)
 }

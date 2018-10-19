@@ -56,14 +56,10 @@ class SubscriptionService: NSObject {
     func loadSubscriptionOptions() {
         
         let productIDPrefix = Bundle.main.bundleIdentifier! + ".sub."
+        // this month word was entered by mistake inside app store connect.
+        let oneAWeekAllAccess = productIDPrefix + "month.allaccess"
         
-        let allAccess = productIDPrefix + "allaccess"
-        let oneAWeek  = productIDPrefix + "oneaweek"
-        
-        let allAccessMonthly = productIDPrefix + "allaccess.monthly"
-        let oneAWeekMonthly  = productIDPrefix + "oneaweek.monthly"
-        
-        let productIDs = Set([allAccess, oneAWeek, allAccessMonthly, oneAWeekMonthly])
+        let productIDs = Set([oneAWeekAllAccess])
         
         let request = SKProductsRequest(productIdentifiers: productIDs)
         request.delegate = self
@@ -97,7 +93,10 @@ class SubscriptionService: NSObject {
 
 extension SubscriptionService: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        
+        print(response.products)
         options = response.products.map { Subscription(product: $0) }
+        
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {

@@ -134,6 +134,15 @@ class PlayerViewController: UIViewController {
     }
 }
 
+// MARK: - SongReceiver
+extension PlayerViewController: SongReceiver {
+    
+    func receive(model: Song) {
+//        print(model.name + "HGHDGGDGD")
+//        self.song = model
+    }
+}
+
 // MARK: - AudioPlayerDelegate
 extension PlayerViewController: AudioPlayerDelegate {
     

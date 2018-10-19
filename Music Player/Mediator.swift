@@ -6,44 +6,30 @@
 //  Copyright © 2018 polat. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol Mediator {
-    func add(recipient: ViewReciever)
-}
+class Mediator: Sender {
 
-class SongMediator: Sender, Mediator {
+    var recipients: [Reciever] = []
     
-    typealias MessageType = Song
-    typealias ReceiverType = ViewReciever
-    
-    var recipients: [ViewReciever] = []
-    
-    func add(recipient: ViewReciever) {
+    func add(recipient: Reciever) {
        self.recipients.append(recipient)
     }
     
-    func send(message: Song) {
+    func send(album: Album) {
         for recipient in recipients {
-            recipient.recieve(message: message)
+            if let r = recipient as? AlbumReceiver {
+                r.receive(model: album)
+            }
+        }
+    }
+    
+    func send(song: Song) {
+        for recipient in recipients {
+            if let r = recipient as? SongReceiver {
+                r.receive(model: song)
+            }
         }
     }
 }
 
-class AlbumMediator: Sender, Mediator {
-    
-    typealias MessageType = Album
-    typealias ReceiverType = ViewReciever
-    
-    var recipients: [ViewReciever] = []
-    
-    func add(recipient: ViewReciever) {
-        recipients.append(recipient)
-    }
-    
-    func send(message: Album) {
-        for recipient in recipients {
-            recipient.recieve(message: message)
-        }
-    }
-}

@@ -25,7 +25,7 @@ enum SubscriptionServiceError {
 
 class SubscriptionNetworkService {
     
-    let itcAccountSecret = "PASWORD" //!!!
+    let itcAccountSecret = "82969ff46d4343c4974ed1f724749d1c"
     
     public static let shared = SubscriptionNetworkService()
     let simulatedStartDate: Date

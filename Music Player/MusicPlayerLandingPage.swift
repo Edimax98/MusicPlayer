@@ -10,6 +10,11 @@ import UIKit
 import AVFoundation
 import KDEAudioPlayer
 
+enum AccessStatus {
+    case available
+    case denied
+}
+
 class MusicPlayerLandingPage: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -22,7 +27,8 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-
+    fileprivate var accessStatus = AccessStatus.denied
+    fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
     fileprivate var dataSource = [HeaderData]()
     fileprivate var currentAudioIndex = 0
@@ -31,6 +37,8 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 5
 
+    fileprivate let playerVc = PlayerViewController.instance()
+    
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
     fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
     fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
@@ -43,6 +51,16 @@ class MusicPlayerLandingPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleOptionsLoaded(notification:)),
+                                               name: SubscriptionService.optionsLoadedNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handlePurchaseSuccessfull(notification:)),
+                                               name: SubscriptionService.purchaseSuccessfulNotification,
+                                               object: nil)
     
         tableView.separatorStyle = .none
         tableView.delegate = self
@@ -57,7 +75,19 @@ class MusicPlayerLandingPage: UIViewController {
         fillDataSource()
         nowPlayingSongName.text = "Not playing".localized
     }
-	
+    
+    @objc func handleOptionsLoaded(notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+           // self?.option = SubscriptionService.shared.options?.first!
+        }
+    }
+    
+    @objc func handlePurchaseSuccessfull(notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.accessStatus = .available
+        }
+    }
+
 	private func registerCells(for tableView: UITableView) {
 		
 		tableView.register(UINib(nibName: "UpperCell", bundle: nil), forCellReuseIdentifier: UpperCell.identifier)
@@ -192,6 +222,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
                 return UITableViewCell()
             }
             self.interactor?.songsOutput = cell
+            //cell.mediator.add(recipient: playerVc)
             cell.songWasTapped = self
             interactor?.fetchSong(10)
             return cell
@@ -271,7 +302,6 @@ extension MusicPlayerLandingPage: SongActionHandler {
     func musicWasSelected(_ song: Song) {
         
 		setCurrentIndex(from: song)
-        let playerVc = PlayerViewController.instance()
         self.songActionHandler = playerVc
         playerVc.playerDelegate = self
         audioPlayer.delegate = playerVc
@@ -298,6 +328,13 @@ extension MusicPlayerLandingPage: SongActionHandler {
 extension MusicPlayerLandingPage: AlbumsActionHandler {
     
     func albumWasSelected(_ album: Album) {
+    
+//         guard let subOption = option else { return }
+//        SubscriptionService.shared.purchase(subscription: subOption)
+//
+//        if accessStatus == .available {
+//            print("AVAILABLE")
+//        }
         
         tracks = album.songs
         let musicListVc = MusicListViewController.instance(from: self)

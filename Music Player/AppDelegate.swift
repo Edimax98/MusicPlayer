@@ -21,36 +21,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SubscriptionService.shared.loadSubscriptionOptions()
-    //    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         let audioSession = AVAudioSession.sharedInstance()
-        
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
         } catch let error {
             print(error.localizedDescription)
         }
-        
         return true
     }
     
-
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        print("DFDGDGG")
+
         let option = DeepLinkOption.build(with: userActivity)
         DeepLinkNavigator.shared.proceed(with: option)
         return true
     }
     
-    
     func applicationDidBecomeActive(_ application: UIApplication) {
-       // AppEventsLogger.activate(application)
+        AppEventsLogger.activate(application)
     }
     
-//    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-//        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-//        return handled
-//    }
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        return handled
+    }
 }
 
 extension AppDelegate: SKPaymentTransactionObserver {

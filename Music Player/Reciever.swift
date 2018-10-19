@@ -8,9 +8,12 @@
 
 import Foundation
 
-protocol Reciever {
-    
-    associatedtype MessageType = Model
-    
-    func recieve(message: MessageType)
+protocol Reciever { }
+
+protocol AlbumReceiver: Reciever {
+    func receive(model: Album)
+}
+
+protocol SongReceiver: Reciever {
+    func receive(model: Song)
 }
