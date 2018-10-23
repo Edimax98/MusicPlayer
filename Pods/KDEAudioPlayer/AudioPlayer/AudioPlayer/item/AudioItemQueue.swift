@@ -38,7 +38,7 @@ class AudioItemQueue {
     var nextPosition = 0
 
     /// The player mode. It will affect the queue.
-    var mode: AudioPlayerMode {
+    var mode: AudioPlayerMode = AudioPlayerMode.normal {
         didSet {
             adaptQueue(oldMode: oldValue)
         }
@@ -159,8 +159,9 @@ class AudioItemQueue {
 
     /// A boolean value indicating whether the queue has a previous item to play or not.
     var hasPreviousItem: Bool {
+        
         if !queue.isEmpty &&
-            (nextPosition > 0 || mode.contains(.repeat) || mode.contains(.repeatAll)) {
+            (nextPosition - 1 > 0 || mode.contains(.repeat) || mode.contains(.repeatAll)) {
             return true
         }
         return false

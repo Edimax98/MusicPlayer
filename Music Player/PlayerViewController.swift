@@ -146,6 +146,17 @@ extension PlayerViewController: SongReceiver {
 // MARK: - AudioPlayerDelegate
 extension PlayerViewController: AudioPlayerDelegate {
     
+    func audioPlayer(_ audioPlayer: AudioPlayer, didChangeStateFrom from: AudioPlayerState, to state: AudioPlayerState) {
+        
+        if state == .paused || state == .stopped {
+            playButton.isSelected = false
+        }
+        
+        if state == .playing || state == .buffering {
+            playButton.isSelected = true
+        }
+    }
+    
     func audioPlayer(_ audioPlayer: AudioPlayer, didLoad range: TimeRange, for item: AudioItem) {
         if audioPlayer.state == .buffering || audioPlayer.state == .waitingForConnection {
             activityIndicator.isHidden = false

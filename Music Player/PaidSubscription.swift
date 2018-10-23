@@ -21,9 +21,10 @@ struct PaidSubscription {
         case all
         
         init?(productId: String) {
-            if productId.contains("oneaweek") {
-                self = .one
-            } else if productId.contains("allaccess") {
+            //if productId.contains("week") {
+                //self = .one
+           // } else
+            if productId.contains("allaccess") {
                 self = .all
             } else {
                 return nil
@@ -37,7 +38,6 @@ struct PaidSubscription {
     public let level: Level
     
     public var isActive: Bool {
-        // is current date between purchaseDate and expiresDate?
         return (purchaseDate...expiresDate).contains(Date())
     }
     

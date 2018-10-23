@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        SKPaymentQueue.default().add(self)
         SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -62,6 +63,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
             case .restored:
                 handleRestoredState(for: transaction, in: queue)
             case .failed:
+                print(transaction.error)
                 handleFailedState(for: transaction, in: queue)
             case .deferred:
                 handleDeferredState(for: transaction, in: queue)

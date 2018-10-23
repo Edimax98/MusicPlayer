@@ -51,16 +51,6 @@ class MusicPlayerLandingPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleOptionsLoaded(notification:)),
-                                               name: SubscriptionService.optionsLoadedNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handlePurchaseSuccessfull(notification:)),
-                                               name: SubscriptionService.purchaseSuccessfulNotification,
-                                               object: nil)
     
         tableView.separatorStyle = .none
         tableView.delegate = self
@@ -76,18 +66,6 @@ class MusicPlayerLandingPage: UIViewController {
         nowPlayingSongName.text = "Not playing".localized
     }
     
-    @objc func handleOptionsLoaded(notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-           // self?.option = SubscriptionService.shared.options?.first!
-        }
-    }
-    
-    @objc func handlePurchaseSuccessfull(notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            self?.accessStatus = .available
-        }
-    }
-
 	private func registerCells(for tableView: UITableView) {
 		
 		tableView.register(UINib(nibName: "UpperCell", bundle: nil), forCellReuseIdentifier: UpperCell.identifier)
@@ -113,6 +91,9 @@ class MusicPlayerLandingPage: UIViewController {
 	}
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
+        
+        performSegue(withIdentifier: "toSub", sender: self)
+        return
         
         if tracks.isEmpty {
             return
@@ -453,10 +434,14 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
     
 	func didPressNextButton(completion: @escaping (_ newSong: Song) -> Void) {
         
-		audioPlayer.next()
-        if audioPlayer.state != .playing {
-            playButton.isSelected = false
+        if audioPlayer.items?.count == 1 {
+            audioPlayer.pause()
+            audioPlayer.seek(to: 0)
+            return
         }
+        
+		audioPlayer.next()
+        
         if let index = audioPlayer.currentItemIndexInQueue {
             completion(tracks[index])
         } else {
@@ -465,11 +450,15 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
     }
 	
 	func didPressPreviousButton(completion: @escaping (Song) -> Void) {
-        
-		audioPlayer.previous()
-        if audioPlayer.state != .playing {
-            playButton.isSelected = false
+
+        if audioPlayer.items?.count == 1 {
+            audioPlayer.pause()
+            audioPlayer.seek(to: 0)
+            return
         }
+        
+        audioPlayer.previous()
+        
         if let index = audioPlayer.currentItemIndexInQueue {
             completion(tracks[index])
         } else {

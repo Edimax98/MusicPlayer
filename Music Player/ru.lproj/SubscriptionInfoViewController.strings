@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "Full access to 400 000 songs"; ObjectID = "2sS-cl-2JW"; */
+"2sS-cl-2JW.text" = "Полный доступ к 400 000 песен";
+
+/* Class = "UILabel"; text = "The best indie authors"; ObjectID = "48P-z1-5sP"; */
+"48P-z1-5sP.text" = "Лучшие инди исполнители";
+
+/* Class = "UILabel"; text = "Terms of Service"; ObjectID = "AkK-wV-bO8"; */
+"AkK-wV-bO8.text" = "Terms of Service";
+
+/* Class = "UILabel"; text = "3 days for FREE"; ObjectID = "Hvc-ou-EpY"; */
+"Hvc-ou-EpY.text" = "3 дня БЕСПЛАТНО";
+
+/* Class = "UILabel"; text = "Unlimited listening time"; ObjectID = "J5J-c2-vQc"; */
+"J5J-c2-vQc.text" = "Неограниченное прослушивание";
+
+/* Class = "UIButton"; normalTitle = "START"; ObjectID = "Jp6-zU-JXQ"; */
+"Jp6-zU-JXQ.normalTitle" = "НАЧАТЬ";
+
+/* Class = "UILabel"; text = "3 days free trial. Subscription price - $4.99/week"; ObjectID = "TE4-lE-Mas"; */
+"TE4-lE-Mas.text" = "3 дня пробная версия. Цена подписки - $4.99/week";
+
+/* Class = "UILabel"; text = "Privacy Policy"; ObjectID = "Y3v-wf-Nh3"; */
+"Y3v-wf-Nh3.text" = "Политика конфиденциальности";
+
+/* Class = "UIButton"; normalTitle = "restore purchases"; ObjectID = "ak5-ga-sj9"; */
+"ak5-ga-sj9.normalTitle" = "восстановить покупки";
+
+/* Class = "UILabel"; text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription."; ObjectID = "baV-TM-w2z"; */
+"baV-TM-w2z.text" = "Оплата будет взята с вашего iTunes аккаунта после подтверждения покупки. Подписка будет автоматически продлена, если она не будет отменена в течение 24 часов до окончания текущего периода. Вы можете отменить подписку в любое время в настройках аккаунта iTunes. Любая не использованная часть пробной версии будет изъята, если вы оплатите подписку.";
+
+/* Class = "UILabel"; text = "&"; ObjectID = "cEa-AY-Msp"; */
+"cEa-AY-Msp.text" = "&";
+
+/* Class = "UIButton"; normalTitle = "skip"; ObjectID = "fAH-5b-BIc"; */
+"fAH-5b-BIc.normalTitle" = "закрыть";
+
+/* Class = "UILabel"; text = "Features"; ObjectID = "gXE-Df-ez9"; */
+"gXE-Df-ez9.text" = "Особенности";

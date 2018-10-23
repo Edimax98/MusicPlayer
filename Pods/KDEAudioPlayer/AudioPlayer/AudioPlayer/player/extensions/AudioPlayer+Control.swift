@@ -54,7 +54,7 @@ extension AudioPlayer {
             currentItem = queue?.nextItem()
         }
     }
-
+    
     /// Plays the next item in the queue and if there isn't, the player will stop.
     public func nextOrStop() {
         if hasNext {

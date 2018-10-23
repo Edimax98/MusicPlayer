@@ -56,8 +56,7 @@ class SubscriptionService: NSObject {
     func loadSubscriptionOptions() {
         
         let productIDPrefix = Bundle.main.bundleIdentifier! + ".sub."
-        // this month word was entered by mistake inside app store connect.
-        let oneAWeekAllAccess = productIDPrefix + "month.allaccess"
+        let oneAWeekAllAccess = productIDPrefix + "week.allaccess"
         
         let productIDs = Set([oneAWeekAllAccess])
         
@@ -91,12 +90,19 @@ class SubscriptionService: NSObject {
     }
 }
 
+extension SubscriptionService: SKPaymentTransactionObserver {
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        
+    }
+}
+
 extension SubscriptionService: SKProductsRequestDelegate {
+    
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        
-        print(response.products)
+        print("Product: ",response.products)
         options = response.products.map { Subscription(product: $0) }
-        
+        print(options?.first?.formattedPrice)
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {

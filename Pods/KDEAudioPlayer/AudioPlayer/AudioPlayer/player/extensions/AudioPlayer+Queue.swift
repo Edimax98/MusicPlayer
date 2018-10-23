@@ -25,6 +25,7 @@ extension AudioPlayer {
     /// A boolean value indicating whether there is a previous item to play or not.
     public var hasPrevious: Bool {
         return queue?.hasPreviousItem ?? false
+        
     }
 
     /// Plays an item.

@@ -123,11 +123,20 @@
                         <outlet property="nowPlayingSongName" destination="7oW-3a-mAd" id="cNm-zT-Q9T"/>
                         <outlet property="playButton" destination="JCV-K7-f9q" id="erj-z2-Zie"/>
                         <outlet property="tableView" destination="bED-Nd-gb6" id="ET2-RV-4pX"/>
+                        <segue destination="w78-on-r5H" kind="show" identifier="toSub" id="WTe-5M-ZCJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oR4-zS-aZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="616.79999999999995" y="-145.27736131934034"/>
+        </scene>
+        <!--SubscriptionInfoViewController-->
+        <scene sceneID="nsp-CN-1GD">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SubscriptionInfoViewController" referencedIdentifier="SubscriptionInfoViewController" id="w78-on-r5H" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a3M-df-g4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1321" y="-371"/>
         </scene>
     </scenes>
     <resources>
