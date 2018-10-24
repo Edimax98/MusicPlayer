@@ -8,6 +8,8 @@
 
 import Foundation
 
+private let itcAccountSecret = "82969ff46d4343c4974ed1f724749d1c"
+
 enum Result<T> {
     case failure(SubscriptionServiceError)
     case success(T)
@@ -24,8 +26,6 @@ enum SubscriptionServiceError {
 }
 
 class SubscriptionNetworkService {
-    
-    let itcAccountSecret = "82969ff46d4343c4974ed1f724749d1c"
     
     public static let shared = SubscriptionNetworkService()
     let simulatedStartDate: Date
@@ -61,7 +61,6 @@ class SubscriptionNetworkService {
                 completion(.failure(.other(error)))
             } else if let responseData = responseData {
                 let json = try! JSONSerialization.jsonObject(with: responseData, options: []) as! Dictionary<String, Any>
-                print(json)
                 let session = Session(receiptData: data, parsedReceipt: json)
                 self.sessions[session.id] = session
                 let result = (sessionId: session.id, currentSubscription: session.currentSubscription)

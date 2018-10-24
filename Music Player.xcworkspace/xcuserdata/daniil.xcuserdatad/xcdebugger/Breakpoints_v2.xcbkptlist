@@ -92,13 +92,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.949387"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.3605829"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "init(json:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -108,13 +108,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.949789"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.360707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "init(json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.360764"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "init(productId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -124,13 +140,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.950027"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.360805"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "init(productId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -140,61 +156,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.950263"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.360865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "init(json:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.9504991"
+            filePath = "Music Player/PaidSubscription.swift"
+            timestampString = "562088502.360904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Music Player/AppDelegate.swift"
-            timestampString = "562006171.950742"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "paymentQueue(_:updatedTransactions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Music Player/SubscriptionService.swift"
-            timestampString = "562006171.950992"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "request(_:didFailWithError:)"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "init(json:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

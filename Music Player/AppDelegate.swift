@@ -24,12 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        let root = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
+        window?.rootViewController = root
+        
         return true
     }
     
@@ -48,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
         return handled
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        SKPaymentQueue.default().remove(self)
+    }
 }
 
 extension AppDelegate: SKPaymentTransactionObserver {
@@ -63,7 +64,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
             case .restored:
                 handleRestoredState(for: transaction, in: queue)
             case .failed:
-                print(transaction.error)
+                print(transaction.error?.localizedDescription ?? "")
                 handleFailedState(for: transaction, in: queue)
             case .deferred:
                 handleDeferredState(for: transaction, in: queue)
@@ -98,10 +99,12 @@ extension AppDelegate: SKPaymentTransactionObserver {
     
     func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
+        queue.finishTransaction(transaction)
     }
     
     func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
+        queue.finishTransaction(transaction)
     }
 }
 

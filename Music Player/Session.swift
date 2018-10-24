@@ -27,7 +27,7 @@ struct Session {
         id = UUID().uuidString
         self.receiptData = receiptData
         self.parsedReceipt = parsedReceipt
-        
+        print(parsedReceipt)
         if let receipt = parsedReceipt["receipt"] as? [String: Any], let purchases = receipt["in_app"] as? Array<[String: Any]> {
             var subscriptions = [PaidSubscription]()
             for purchase in purchases {

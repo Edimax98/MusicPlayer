@@ -18,13 +18,13 @@
 "Jp6-zU-JXQ.normalTitle" = "НАЧАТЬ";
 
 /* Class = "UILabel"; text = "3 days free trial. Subscription price - $4.99/week"; ObjectID = "TE4-lE-Mas"; */
-"TE4-lE-Mas.text" = "3 дня пробная версия. Цена подписки - $4.99/week";
+"TE4-lE-Mas.text" = "3 дня пробная версия. Далее - ";
 
 /* Class = "UILabel"; text = "Privacy Policy"; ObjectID = "Y3v-wf-Nh3"; */
 "Y3v-wf-Nh3.text" = "Политика конфиденциальности";
 
 /* Class = "UIButton"; normalTitle = "restore purchases"; ObjectID = "ak5-ga-sj9"; */
-"ak5-ga-sj9.normalTitle" = "восстановить покупки";
+"ak5-ga-sj9.normalTitle" = "восстановить";
 
 /* Class = "UILabel"; text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription."; ObjectID = "baV-TM-w2z"; */
 "baV-TM-w2z.text" = "Оплата будет взята с вашего iTunes аккаунта после подтверждения покупки. Подписка будет автоматически продлена, если она не будет отменена в течение 24 часов до окончания текущего периода. Вы можете отменить подписку в любое время в настройках аккаунта iTunes. Любая не использованная часть пробной версии будет изъята, если вы оплатите подписку.";
