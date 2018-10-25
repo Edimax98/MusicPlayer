@@ -26,23 +26,75 @@ class SubscriptionInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleOptionsLoaded(notification:)),
-                                               name: SubscriptionService.optionsLoadedNotification,
+                                               selector: #selector(handleRestoreSuccessfull(notification:)),
+                                               name: SubscriptionService.restoreSuccessfulNotification,
                                                object: nil)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handlePurchaseSuccessfull(notification:)),
                                                name: SubscriptionService.purchaseSuccessfulNotification,
                                                object: nil)
-//        /NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(handleRestoreSuccessfull(notification:)),
-//                                               name: SubscriptionService.restoreSuccessfulNotification,
-//                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleOptionsLoaded(notification:)),
+                                               name: SubscriptionService.optionsLoadedNotification,
+                                               object: nil)
+        
+        guard SubscriptionService.shared.currentSessionId != nil,
+            SubscriptionService.shared.hasReceiptData else {
+                showRestoreAlert()
+                return
+        }
+        
+        guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
+        self.priceLabel.text = "3 days free trial. Subscription price ".localized + price
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "openMainPage" {
+            
+            if let destinationVc = segue.destination as? MusicPlayerLandingPage {
+                destinationVc.wasSubscriptionSkipped = true
+                if self.status == .available {
+                    destinationVc.accessStatus = .available
+                }
+            }
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func showErrorAlert(for error: SubscriptionServiceError) {
+        let title: String
+        let message: String
+        switch error {
+        case .missingAccountSecret, .invalidSession, .internalError:
+            title = "Internal error".localized
+            message = "Please try again.".localized
+        case .noActiveSubscription:
+            title = "No Active Subscription".localized
+            message = "Please verify that you have an active subscription".localized
+        case .other(let otherError):
+            title = "Unexpected Error".localized
+            message = otherError.localizedDescription
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let backAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(backAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func showRestoreAlert() {
+        let alert = UIAlertController(title: "Subscription Issue", message: "We are having a hard time finding your subscription. If you've recently reinstalled the app or got a new device please restore your purchase. Otherwise press subscribe".localized, preferredStyle: .alert)
+        
+        let backAction = UIAlertAction(title: "Back".localized, style: .cancel)
+        alert.addAction(backAction)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func restorePurchasesButtonPressed(_ sender: Any) {
@@ -50,12 +102,15 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func skipButtonPressed(_ sender: Any) {
-    
+        
     }
 
     @IBAction func startSubscriptionButtonPressed(_ sender: Any) {
         subscription = SubscriptionService.shared.options?.first
-        guard let option = subscription else { return }
+        guard let option = subscription else {
+            showErrorAlert(for: .internalError)
+            return
+        }
         SubscriptionService.shared.purchase(subscription: option)
     }
     
@@ -67,32 +122,38 @@ class SubscriptionInfoViewController: UIViewController {
     
     }
     
-    @objc func handleOptionsLoaded(notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-      
-        }
-    }
-    
     @objc func handlePurchaseSuccessfull(notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            self?.status = .available
+        
+        if SubscriptionService.shared.currentSubscription != nil {
+            status = .available
+        } else {
+            showErrorAlert(for: .noActiveSubscription)
         }
         
-        print(SubscriptionService.shared.currentSubscription)
-        self.priceLabel.text = "3 days free trial. Subscription price ".localized + SubscriptionService.shared.options!.first!.formattedPrice
-        if let currentSub = SubscriptionService.shared.currentSubscription {
-            print(currentSub)
-//            if !currentSub.isTrial {
-//                self.trialLabel.text = "All access".localized
-//            }
+        if let currentSub = SubscriptionService.shared.currentSubscription, currentSub.isEligibleForTrial == false {
+            self.trialLabel.text = "All access".localized
         }
     }
     
     @objc func handleRestoreSuccessfull(notification: Notification) {
         
-        let alert = UIAlertController(title: "You have successfully restored your purchases".localized, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
+        if SubscriptionService.shared.currentSubscription != nil {
+            let alert = UIAlertController(title: "You have successfully restored your purchases".localized, message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            status = .available
+        } else {
+            showErrorAlert(for: .noActiveSubscription)
+        }
+    }
+    
+    @objc func handleOptionsLoaded(notification: Notification) {
+        guard let sub = SubscriptionService.shared.options?.first else {
+            showErrorAlert(for: .internalError)
+            return
+        }
+        self.subscription = sub
+        self.priceLabel.text = "3 days free trial. Subscription price ".localized + sub.formattedPrice
     }
 }

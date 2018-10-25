@@ -24,9 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        let root = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
-        window?.rootViewController = root
-        
         return true
     }
     

@@ -27,7 +27,8 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    fileprivate var accessStatus = AccessStatus.denied
+    var accessStatus = AccessStatus.denied
+    var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
     fileprivate var dataSource = [HeaderData]()
@@ -64,6 +65,17 @@ class MusicPlayerLandingPage: UIViewController {
         registerCells(for: tableView)
         fillDataSource()
         nowPlayingSongName.text = "Not playing".localized
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let _ = SubscriptionService.shared.currentSubscription {
+            accessStatus = .available
+        } else if !wasSubscriptionSkipped {
+            performSegue(withIdentifier: "toSub", sender: self)
+        }
     }
     
 	private func registerCells(for tableView: UITableView) {
@@ -92,12 +104,15 @@ class MusicPlayerLandingPage: UIViewController {
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
         
-        performSegue(withIdentifier: "toSub", sender: self)
-        return
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
         
         if tracks.isEmpty {
             return
         }
+        
         userTappedOnController = true
         guard let index = audioPlayer.currentItemIndexInQueue else { return }
         
@@ -282,6 +297,11 @@ extension MusicPlayerLandingPage: SongActionHandler {
 
     func musicWasSelected(_ song: Song) {
         
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
+        
 		setCurrentIndex(from: song)
         self.songActionHandler = playerVc
         playerVc.playerDelegate = self
@@ -309,13 +329,11 @@ extension MusicPlayerLandingPage: SongActionHandler {
 extension MusicPlayerLandingPage: AlbumsActionHandler {
     
     func albumWasSelected(_ album: Album) {
-    
-//         guard let subOption = option else { return }
-//        SubscriptionService.shared.purchase(subscription: subOption)
-//
-//        if accessStatus == .available {
-//            print("AVAILABLE")
-//        }
+        
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
         
         tracks = album.songs
         let musicListVc = MusicListViewController.instance(from: self)

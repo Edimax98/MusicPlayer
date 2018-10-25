@@ -10,6 +10,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--MusicPlayerLandingPage-->
+        <scene sceneID="2jr-Zn-MWB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="MusicPlayerLandingPage" id="rJW-zo-Zx7" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yqZ-yp-p5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="524" y="-736"/>
+        </scene>
         <!--Subscription Info View Controller-->
         <scene sceneID="y6i-sP-DG6">
             <objects>
@@ -135,37 +143,6 @@
                                     <constraint firstAttribute="width" constant="326" id="fUr-SD-u8U"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hSQ-Gf-zRi">
-                                <rect key="frame" x="37" y="395" width="309" height="46"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days for FREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hvc-ou-EpY">
-                                        <rect key="frame" x="0.0" y="0.0" width="191" height="46"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="es6-mS-OZy"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="191" id="x2S-CC-UWW"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jp6-zU-JXQ">
-                                        <rect key="frame" x="199" y="0.0" width="110" height="46"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="iyD-XD-8nD"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
-                                        <state key="normal" title="START" backgroundImage="start_buy_back">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="startSubscriptionButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="OEp-5f-uz6"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="309" id="Ued-Kx-dQA"/>
-                                </constraints>
-                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days free trial. Subscription price" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TE4-lE-Mas">
                                 <rect key="frame" x="33" y="452" width="309" height="31"/>
                                 <constraints>
@@ -198,44 +175,72 @@
                                 </state>
                                 <connections>
                                     <action selector="skipButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="sVY-DN-X4C"/>
+                                    <segue destination="rJW-zo-Zx7" kind="show" identifier="openMainPage" id="a2m-3l-PPP"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="58" translatesAutoresizingMaskIntoConstraints="NO" id="him-aD-GJQ">
-                                <rect key="frame" x="7" y="580" width="358" height="15"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSQ-Gf-zRi">
+                                <rect key="frame" x="40" y="395" width="309" height="46"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijb-mF-kTu">
-                                        <rect key="frame" x="0.0" y="0.0" width="130" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days for FREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hvc-ou-EpY">
+                                        <rect key="frame" x="0.0" y="0.0" width="199" height="46"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="62Y-mv-Bop"/>
-                                            <constraint firstAttribute="height" constant="15" id="TpR-Mv-CEv"/>
+                                            <constraint firstAttribute="height" constant="46" id="es6-mS-OZy"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="x2S-CC-UWW"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
-                                        <state key="normal" title="Terms of Service"/>
-                                        <connections>
-                                            <action selector="termOfServiceButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="UWy-fH-Lbc"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F43-4L-E5I">
-                                        <rect key="frame" x="228" y="0.0" width="130" height="15"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jp6-zU-JXQ">
+                                        <rect key="frame" x="199" y="0.0" width="110" height="46"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="Zj5-Xj-YrU"/>
-                                            <constraint firstAttribute="height" constant="15" id="nIV-lF-UP2"/>
+                                            <constraint firstAttribute="width" constant="110" id="iyD-XD-8nD"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
-                                        <state key="normal" title="Privacy Policy"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                                        <state key="normal" title="START" backgroundImage="start_buy_back">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
-                                            <action selector="privacyPolicyButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="P8I-XD-VCp"/>
+                                            <action selector="startSubscriptionButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="OEp-5f-uz6"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="309" id="Ued-Kx-dQA"/>
+                                </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijb-mF-kTu">
+                                <rect key="frame" x="96" y="581" width="103" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="TpR-Mv-CEv"/>
+                                    <constraint firstAttribute="width" constant="103" id="hcI-L1-zgb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <state key="normal" title="Terms of Service"/>
+                                <connections>
+                                    <action selector="termOfServiceButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="UWy-fH-Lbc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F43-4L-E5I">
+                                <rect key="frame" x="205" y="581" width="75" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="RJF-1f-q0L"/>
+                                    <constraint firstAttribute="height" constant="15" id="nIV-lF-UP2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                <state key="normal" title="Privacy Policy"/>
+                                <connections>
+                                    <action selector="privacyPolicyButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="P8I-XD-VCp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.10196078431372549" green="0.10980392156862745" blue="0.14509803921568626" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TE4-lE-Mas" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="33" id="1eV-hM-Zo0"/>
+                            <constraint firstItem="7zp-5m-OEG" firstAttribute="bottom" secondItem="ijb-mF-kTu" secondAttribute="bottom" priority="999" constant="182" id="1iO-gn-dJj"/>
+                            <constraint firstItem="F43-4L-E5I" firstAttribute="top" secondItem="TE4-lE-Mas" secondAttribute="bottom" constant="98" id="2Gm-bo-8pD"/>
                             <constraint firstItem="baV-TM-w2z" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Pz1-Ng-tkO" secondAttribute="bottom" constant="-2" id="2WZ-qP-6rc"/>
-                            <constraint firstItem="7zp-5m-OEG" firstAttribute="bottom" secondItem="him-aD-GJQ" secondAttribute="bottom" priority="999" constant="183" id="3Ml-Dc-EbB"/>
-                            <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="hSQ-Gf-zRi" secondAttribute="trailing" constant="29" id="56v-Tr-rJT"/>
+                            <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="hSQ-Gf-zRi" secondAttribute="trailing" constant="26" id="56v-Tr-rJT"/>
                             <constraint firstItem="Pz1-Ng-tkO" firstAttribute="top" secondItem="7zp-5m-OEG" secondAttribute="top" id="5X7-93-tNj"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="gXE-Df-ez9" secondAttribute="trailing" constant="23" id="8FT-u3-bqD"/>
                             <constraint firstItem="SvP-vp-Mam" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="26" id="9dI-LW-QaY"/>
@@ -244,28 +249,30 @@
                             <constraint firstItem="baV-TM-w2z" firstAttribute="top" secondItem="Pz1-Ng-tkO" secondAttribute="bottom" id="Cti-Tm-H6e"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="9DX-nH-icv" secondAttribute="trailing" constant="29" id="EeX-Gg-aG3"/>
                             <constraint firstItem="gXE-Df-ez9" firstAttribute="top" secondItem="mja-HN-8aK" secondAttribute="bottom" constant="12" id="FcJ-nj-FIB"/>
+                            <constraint firstItem="ijb-mF-kTu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7zp-5m-OEG" secondAttribute="leading" priority="998" constant="96" id="H39-WL-E3g"/>
                             <constraint firstItem="hSQ-Gf-zRi" firstAttribute="top" secondItem="9DX-nH-icv" secondAttribute="bottom" constant="5" id="J1y-Dv-rpu"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="TE4-lE-Mas" secondAttribute="trailing" constant="33" id="MhV-ih-WJX"/>
+                            <constraint firstItem="7zp-5m-OEG" firstAttribute="bottom" secondItem="F43-4L-E5I" secondAttribute="bottom" priority="999" constant="182" id="OlF-75-CQg"/>
+                            <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F43-4L-E5I" secondAttribute="trailing" priority="999" constant="95" id="P6S-Yd-QmO"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="SvP-vp-Mam" secondAttribute="trailing" constant="23" id="SoW-oO-R0h"/>
                             <constraint firstItem="baV-TM-w2z" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="14" id="UXH-W4-l5i"/>
                             <constraint firstItem="fAH-5b-BIc" firstAttribute="top" secondItem="7zp-5m-OEG" secondAttribute="top" constant="5" id="YDj-H9-gbf"/>
+                            <constraint firstItem="ijb-mF-kTu" firstAttribute="top" secondItem="Pz1-Ng-tkO" secondAttribute="bottom" constant="96" id="aZZ-tJ-qaK"/>
                             <constraint firstItem="hSQ-Gf-zRi" firstAttribute="centerY" secondItem="SvP-vp-Mam" secondAttribute="centerY" id="bNr-M3-yc9"/>
-                            <constraint firstItem="him-aD-GJQ" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="7" id="ch0-eb-nwm"/>
                             <constraint firstItem="9DX-nH-icv" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="28" id="ecJ-ne-jpZ"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="ak5-ga-sj9" secondAttribute="trailing" constant="16" id="exC-ZL-NUg"/>
-                            <constraint firstItem="him-aD-GJQ" firstAttribute="top" secondItem="Pz1-Ng-tkO" secondAttribute="bottom" constant="95" id="fm2-DL-3QC"/>
                             <constraint firstItem="gXE-Df-ez9" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="26" id="g7O-XX-OH8"/>
-                            <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="him-aD-GJQ" secondAttribute="trailing" constant="10" id="hgh-ld-Ujm"/>
                             <constraint firstItem="ak5-ga-sj9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fAH-5b-BIc" secondAttribute="trailing" constant="8" symbolic="YES" id="hoN-ot-rcs"/>
                             <constraint firstItem="fAH-5b-BIc" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="16" id="jFB-7K-4PJ"/>
                             <constraint firstItem="TE4-lE-Mas" firstAttribute="top" secondItem="SvP-vp-Mam" secondAttribute="bottom" constant="4" id="nBx-vX-JSv"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="Pz1-Ng-tkO" secondAttribute="trailing" constant="8" id="nLe-PN-jCU"/>
-                            <constraint firstItem="hSQ-Gf-zRi" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="37" id="rL7-q0-xbV"/>
+                            <constraint firstItem="hSQ-Gf-zRi" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="40" id="rL7-q0-xbV"/>
                             <constraint firstItem="Pz1-Ng-tkO" firstAttribute="leading" secondItem="7zp-5m-OEG" secondAttribute="leading" constant="10" id="sUH-iw-B8p"/>
                             <constraint firstItem="9DX-nH-icv" firstAttribute="top" secondItem="gXE-Df-ez9" secondAttribute="bottom" constant="8" id="u0W-da-JeR"/>
                             <constraint firstItem="mja-HN-8aK" firstAttribute="centerX" secondItem="Pz1-Ng-tkO" secondAttribute="centerX" id="v1X-b2-5ga"/>
                             <constraint firstItem="ak5-ga-sj9" firstAttribute="top" secondItem="7zp-5m-OEG" secondAttribute="top" constant="5" id="w7x-sz-rJH"/>
                             <constraint firstItem="7zp-5m-OEG" firstAttribute="trailing" secondItem="baV-TM-w2z" secondAttribute="trailing" constant="10" id="whw-br-8ZC"/>
+                            <constraint firstItem="F43-4L-E5I" firstAttribute="leading" secondItem="ijb-mF-kTu" secondAttribute="trailing" constant="6" id="xpW-5l-Du5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7zp-5m-OEG"/>
                     </view>

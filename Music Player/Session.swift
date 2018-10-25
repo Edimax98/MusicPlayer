@@ -15,9 +15,14 @@ struct Session {
     
     public var currentSubscription: PaidSubscription? {
         let activeSubscriptions = paidSubscriptions.filter { $0.isActive && $0.purchaseDate >= SubscriptionNetworkService.shared.simulatedStartDate }
-        let sortedByMostRecentPurchase = activeSubscriptions.sorted { $0.purchaseDate > $1.purchaseDate }
+        var current = activeSubscriptions.last
         
-        return sortedByMostRecentPurchase.first
+        paidSubscriptions.forEach {
+            if $0.isTrial == "true" {
+                current?.isEligibleForTrial = false
+            }
+        }
+        return current
     }
     
     public var receiptData: Data
@@ -27,10 +32,11 @@ struct Session {
         id = UUID().uuidString
         self.receiptData = receiptData
         self.parsedReceipt = parsedReceipt
-        print(parsedReceipt)
-        if let receipt = parsedReceipt["receipt"] as? [String: Any], let purchases = receipt["in_app"] as? Array<[String: Any]> {
+        if let purchases = parsedReceipt["latest_receipt_info"] as? Array<[String: Any]> {
             var subscriptions = [PaidSubscription]()
             for purchase in purchases {
+                print(purchase)
+                print("---------")
                 if let paidSubscription = PaidSubscription(json: purchase) {
                     subscriptions.append(paidSubscription)
                 }

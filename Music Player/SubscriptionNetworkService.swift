@@ -19,6 +19,7 @@ typealias UploadReceiptCompletion = (_ result: Result<(sessionId: String, curren
 typealias SessionId = String
 
 enum SubscriptionServiceError {
+    case internalError
     case missingAccountSecret
     case invalidSession
     case noActiveSubscription

@@ -12,7 +12,7 @@
         <!--Music Player Landing Page-->
         <scene sceneID="BTe-Ph-W1h">
             <objects>
-                <viewController id="FNU-cT-jE0" customClass="MusicPlayerLandingPage" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MusicPlayerLandingPage" id="FNU-cT-jE0" customClass="MusicPlayerLandingPage" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="osA-ds-3dU"/>
                         <viewControllerLayoutGuide type="bottom" id="xnw-dZ-1TN"/>
