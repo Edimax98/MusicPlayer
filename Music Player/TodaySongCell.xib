@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,17 +19,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="144" height="150"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" image="playlist1" translatesAutoresizingMaskIntoConstraints="NO" id="sCp-yY-o1Q">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="playlist1" translatesAutoresizingMaskIntoConstraints="NO" id="sCp-yY-o1Q">
                         <rect key="frame" x="0.0" y="0.0" width="144" height="112"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="112" id="FFY-n7-Glg"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type of playlist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObS-hB-lA5">
-                        <rect key="frame" x="2" y="112" width="122" height="18.5"/>
+                        <rect key="frame" x="4" y="112" width="122" height="18.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18.5" id="KL0-Ny-17F"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="some info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wjO-yl-1Sa">
-                        <rect key="frame" x="2" y="131.5" width="122" height="16.5"/>
+                        <rect key="frame" x="6" y="131.5" width="122" height="16.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16.5" id="5iD-rc-OFf"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -39,15 +48,15 @@
             <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="wjO-yl-1Sa" secondAttribute="bottom" constant="2" id="9WZ-HM-gfb"/>
-                <constraint firstAttribute="trailing" secondItem="wjO-yl-1Sa" secondAttribute="trailing" constant="20" id="HFT-WA-T2T"/>
+                <constraint firstAttribute="trailing" secondItem="wjO-yl-1Sa" secondAttribute="trailing" constant="16" id="HFT-WA-T2T"/>
                 <constraint firstItem="ObS-hB-lA5" firstAttribute="top" secondItem="sCp-yY-o1Q" secondAttribute="bottom" id="NVh-u8-UWv"/>
-                <constraint firstItem="ObS-hB-lA5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="QBP-e9-qHv"/>
+                <constraint firstItem="ObS-hB-lA5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="QBP-e9-qHv"/>
                 <constraint firstItem="wjO-yl-1Sa" firstAttribute="top" secondItem="ObS-hB-lA5" secondAttribute="bottom" constant="1" id="Zjx-Sa-cAN"/>
                 <constraint firstItem="wjO-yl-1Sa" firstAttribute="top" secondItem="ObS-hB-lA5" secondAttribute="bottom" constant="1" id="dua-ii-2Zo"/>
-                <constraint firstAttribute="trailing" secondItem="ObS-hB-lA5" secondAttribute="trailing" constant="20" id="gMW-PD-rHI"/>
+                <constraint firstAttribute="trailing" secondItem="ObS-hB-lA5" secondAttribute="trailing" constant="18" id="gMW-PD-rHI"/>
                 <constraint firstItem="ObS-hB-lA5" firstAttribute="top" secondItem="sCp-yY-o1Q" secondAttribute="bottom" id="gzq-yd-gMx"/>
                 <constraint firstAttribute="trailing" secondItem="sCp-yY-o1Q" secondAttribute="trailing" id="mXO-31-Q28"/>
-                <constraint firstItem="wjO-yl-1Sa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="tlY-mS-P39"/>
+                <constraint firstItem="wjO-yl-1Sa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="tlY-mS-P39"/>
                 <constraint firstItem="sCp-yY-o1Q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vzF-y1-KG8"/>
                 <constraint firstItem="sCp-yY-o1Q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yAt-3g-fhA"/>
             </constraints>
@@ -62,6 +71,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="playlist1" width="144" height="100"/>
+        <image name="playlist1" width="200" height="150"/>
     </resources>
 </document>

@@ -34,6 +34,8 @@ class SubscriptionService: NSObject {
         }
     }
     
+    var isEligibleForTrial = true
+    
     var currentSubscription: PaidSubscription?
     
     func uploadReceipt(completion: ((_ success: Bool) -> Void)? = nil) {
@@ -42,8 +44,9 @@ class SubscriptionService: NSObject {
                 guard let strongSelf = self else { return }
                 switch result {
                 case .success(let result):
-                    strongSelf.currentSessionId = result.sessionId
+                    strongSelf.currentSessionId = result.id
                     strongSelf.currentSubscription = result.currentSubscription
+                    strongSelf.isEligibleForTrial = result.isEligibleForTrial
                     completion?(true)
                 case .failure(let error):
                     print("Receipt Upload Failed: \(error)")

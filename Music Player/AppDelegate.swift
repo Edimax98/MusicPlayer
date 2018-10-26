@@ -50,6 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: SKPaymentTransactionObserver {
     
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        
+        
+        
+    }
+    
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
         for transaction in transactions {
@@ -75,7 +81,6 @@ extension AppDelegate: SKPaymentTransactionObserver {
     
     func handlePurchasedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("User purchased product id: \(transaction.payment.productIdentifier)")
-        
         queue.finishTransaction(transaction)
         SubscriptionService.shared.uploadReceipt { (success) in
             DispatchQueue.main.async {

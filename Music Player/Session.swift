@@ -25,6 +25,16 @@ struct Session {
         return current
     }
     
+    public var isEligibleForTrial: Bool {
+        
+        for sub in paidSubscriptions {
+            if sub.isTrial == "true" {
+                return false
+            }
+        }
+        return true
+    }
+    
     public var receiptData: Data
     public var parsedReceipt: [String: Any]
     
@@ -32,6 +42,7 @@ struct Session {
         id = UUID().uuidString
         self.receiptData = receiptData
         self.parsedReceipt = parsedReceipt
+        print(parsedReceipt)
         if let purchases = parsedReceipt["latest_receipt_info"] as? Array<[String: Any]> {
             var subscriptions = [PaidSubscription]()
             for purchase in purchases {

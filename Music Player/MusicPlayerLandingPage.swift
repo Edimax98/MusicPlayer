@@ -37,7 +37,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var userTappedOnController = false
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 5
-
+    fileprivate let currentSubscription = SubscriptionService.shared.currentSubscription
     fileprivate let playerVc = PlayerViewController.instance()
     
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
@@ -48,6 +48,10 @@ class MusicPlayerLandingPage: UIViewController {
 
 	override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -65,15 +69,42 @@ class MusicPlayerLandingPage: UIViewController {
         registerCells(for: tableView)
         fillDataSource()
         nowPlayingSongName.text = "Not playing".localized
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        cantFindPurchases()
+    }
+    
+    private func cantFindPurchases() {
+    
+        guard SubscriptionService.shared.currentSessionId != nil,
+            SubscriptionService.shared.hasReceiptData
+            else {
+                showRestoreAlert()
+                return
+        }
+    }
+    
+    private func showRestoreAlert() {
+        if wasSubscriptionSkipped == false {
+            performSegue(withIdentifier: "toSub", sender: self)
+        }
+    }
+    
+    private func showRestoreInProgressAlert() {
+        let alert = UIAlertController(title: "Please wait.Restoring Purchase...", message: nil, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRestoreSuccessfull(notification:)), name:                       SubscriptionService.restoreSuccessfulNotification, object: nil)
+    }
+    
+    @objc func handleRestoreSuccessfull(notification: Notification) {
         
-        if let _ = SubscriptionService.shared.currentSubscription {
+        if currentSubscription != nil {
             accessStatus = .available
-        } else if !wasSubscriptionSkipped {
+        }
+        
+        if !wasSubscriptionSkipped  && currentSubscription == nil {
             performSegue(withIdentifier: "toSub", sender: self)
         }
     }
@@ -103,7 +134,7 @@ class MusicPlayerLandingPage: UIViewController {
 	}
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
-        
+
         guard accessStatus == .available else {
             performSegue(withIdentifier: "toSub", sender: self)
             return

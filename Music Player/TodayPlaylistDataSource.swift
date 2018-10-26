@@ -11,7 +11,7 @@ import UIKit
 class TodaysPlaylistDataSource: NSObject {
     
     fileprivate var playlists = [Album]()
-    fileprivate let playlistsCoverNames = ["playlist1","playlist2","playlist3","playlist4"]
+    fileprivate let playlistsCoverNames = ["playlist1","playlist2","playlist3","playlist4","playlist5", "playlist6"]
 
     func setPlaylists(_ playlists: [Album]) {
         self.playlists = playlists
@@ -40,9 +40,13 @@ extension TodaysPlaylistDataSource: UICollectionViewDataSource {
         
         cell.typeOfPlaylistLabel.text = playlist.name + " Collection"
         cell.infoAboutPlaylistLabel.text = playlist.artistName
-        let index = Int(arc4random_uniform(UInt32(playlistsCoverNames.count)))
-        cell.playlistCoverImageView.image = UIImage(named: playlistsCoverNames[index])
+        let indexForImage = indexPath.row
         
+        if indexForImage <= playlistsCoverNames.count - 1 {
+            cell.playlistCoverImageView.image = UIImage(named: playlistsCoverNames[indexForImage])
+        } else {
+            cell.playlistCoverImageView.image = UIImage(named: playlistsCoverNames.first!)
+        }
         return cell
     }
 }

@@ -40,13 +40,7 @@ class SubscriptionInfoViewController: UIViewController {
                                                selector: #selector(handleOptionsLoaded(notification:)),
                                                name: SubscriptionService.optionsLoadedNotification,
                                                object: nil)
-        
-        guard SubscriptionService.shared.currentSessionId != nil,
-            SubscriptionService.shared.hasReceiptData else {
-                showRestoreAlert()
-                return
-        }
-        
+    
         guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
         self.priceLabel.text = "3 days free trial. Subscription price ".localized + price
     }
@@ -124,22 +118,27 @@ class SubscriptionInfoViewController: UIViewController {
     
     @objc func handlePurchaseSuccessfull(notification: Notification) {
         
-        if SubscriptionService.shared.currentSubscription != nil {
+        if let currentSub = SubscriptionService.shared.currentSubscription {
+            if currentSub.isEligibleForTrial {
+                self.trialLabel.text = "All access".localized
+            }
             status = .available
         } else {
             showErrorAlert(for: .noActiveSubscription)
-        }
-        
-        if let currentSub = SubscriptionService.shared.currentSubscription, currentSub.isEligibleForTrial == false {
-            self.trialLabel.text = "All access".localized
         }
     }
     
     @objc func handleRestoreSuccessfull(notification: Notification) {
         
+        if !SubscriptionService.shared.isEligibleForTrial {
+            trialLabel.text = "All access".localized
+        }
+        
         if SubscriptionService.shared.currentSubscription != nil {
-            let alert = UIAlertController(title: "You have successfully restored your purchases".localized, message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let alert = UIAlertController(title: "Successfull".localized, message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                self.performSegue(withIdentifier: "openMainPage", sender: self)
+            }
             alert.addAction(okAction)
             present(alert, animated: true, completion: nil)
             status = .available

@@ -15,12 +15,13 @@ class TodaySongCell: UICollectionViewCell {
 	@IBOutlet weak var infoAboutPlaylistLabel: UILabel!
     
 	static var identifier = "TodaySongCell"
-    fileprivate let cornerRadius: CGFloat = 7
+    fileprivate let cornerRadius: CGFloat = 13
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
 	override func awakeFromNib() {
         super.awakeFromNib()
         playlistCoverImageView.layer.cornerRadius = cornerRadius
+        playlistCoverImageView.clipsToBounds = true
         self.backgroundColor = defaultBackgroundColor
     }
 }

@@ -106,10 +106,12 @@ extension PreferencesCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        
         if collectionView === preferencesCollectionView {
             cell.preferedGenreLabel.text = preferedGenres[indexPath.row]
             let randomNumber = Int(arc4random() % 4)
             cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+            collectionView.setContentOffset(CGPoint(x: collectionView.frame.width / 5, y: 0), animated: true)
             return cell
         }
         
@@ -117,6 +119,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             cell.preferedGenreLabel.text = preferedGenresSecondLine[indexPath.row]
             let randomNumber = Int(arc4random() % 4)
             cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+            collectionView.setContentOffset(CGPoint(x: collectionView.frame.width / 10, y: 0), animated: true)
             return cell
         }
         
@@ -124,6 +127,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             cell.preferedGenreLabel.text = preferedGenresThirdLine[indexPath.row]
             let randomNumber = Int(arc4random() % 4)
             cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+            collectionView.setContentOffset(CGPoint(x: collectionView.frame.width / 5, y: 0), animated: true)
             return cell
         }
         
@@ -131,6 +135,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             cell.preferedGenreLabel.text = preferedGenresFourthLine[indexPath.row]
             let randomNumber = Int(arc4random() % 4)
             cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+            collectionView.setContentOffset(CGPoint(x: collectionView.frame.width / 10, y: 0), animated: true)
             return cell
         }
         
@@ -138,6 +143,7 @@ extension PreferencesCell: UICollectionViewDataSource {
             cell.preferedGenreLabel.text = preferedGenresFifthLine[indexPath.row]
             let randomNumber = Int(arc4random() % 4)
             cell.preferedGenreImageView.image = UIImage(named: genresImages[randomNumber])
+            collectionView.setContentOffset(CGPoint(x: collectionView.frame.width / 5, y: 0), animated: true)
             return cell
         }
         return cell

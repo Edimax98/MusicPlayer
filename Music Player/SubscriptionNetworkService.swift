@@ -15,7 +15,7 @@ enum Result<T> {
     case success(T)
 }
 
-typealias UploadReceiptCompletion = (_ result: Result<(sessionId: String, currentSubscription: PaidSubscription?)>) -> Void
+typealias UploadReceiptCompletion = (_ result: Result<Session>) -> Void
 typealias SessionId = String
 
 enum SubscriptionServiceError {
@@ -64,8 +64,7 @@ class SubscriptionNetworkService {
                 let json = try! JSONSerialization.jsonObject(with: responseData, options: []) as! Dictionary<String, Any>
                 let session = Session(receiptData: data, parsedReceipt: json)
                 self.sessions[session.id] = session
-                let result = (sessionId: session.id, currentSubscription: session.currentSubscription)
-                completion(.success(result))
+                completion(.success(session))
             }
         }
         task.resume()
