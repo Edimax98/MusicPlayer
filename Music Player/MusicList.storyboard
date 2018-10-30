@@ -13,7 +13,7 @@
         <!--Music List View Controller-->
         <scene sceneID="hwd-uN-Pax">
             <objects>
-                <viewController id="wmj-wM-e7i" customClass="MusicListViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MusicListViewController" id="wmj-wM-e7i" customClass="MusicListViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jut-oh-zHa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

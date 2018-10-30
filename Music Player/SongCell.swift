@@ -20,6 +20,8 @@ class SongCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        songCoverImageView.layer.cornerRadius = 4
+        songCoverImageView.clipsToBounds = true
         self.backgroundColor = defaultBackgroundColor
     }
 }

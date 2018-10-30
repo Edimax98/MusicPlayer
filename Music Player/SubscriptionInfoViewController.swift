@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import SafariServices
 
 class SubscriptionInfoViewController: UIViewController {
     
@@ -15,6 +17,7 @@ class SubscriptionInfoViewController: UIViewController {
     @IBOutlet weak var featuresTitleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var trialLabel: UILabel!
+    @IBOutlet weak var trialTermsLabel: UILabel!
     
     var subscription: Subscription?
     var status = AccessStatus.denied
@@ -42,7 +45,7 @@ class SubscriptionInfoViewController: UIViewController {
                                                object: nil)
     
         guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-        self.priceLabel.text = "3 days free trial. Subscription price ".localized + price
+        self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + price
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -109,18 +112,34 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func termOfServiceButtonPressed(_ sender: Any) {
-    
+        guard let url = URL(string: "http://indiesound.org/terms") else { return }
+        let webView = SFSafariViewController(url: url)
+        present(webView, animated: true, completion: nil)
     }
     
     @IBAction func privacyPolicyButtonPressed(_ sender: Any) {
-    
+        guard let url = URL(string: "http://indiesound.org/policy") else { return }
+        let webView = SFSafariViewController(url: url)
+        present(webView, animated: true, completion: nil)
     }
     
     @objc func handlePurchaseSuccessfull(notification: Notification) {
         
-        if let currentSub = SubscriptionService.shared.currentSubscription {
-            if currentSub.isEligibleForTrial {
+        guard let subscription = subscription else { return }
+        
+        if let _ = SubscriptionService.shared.currentSubscription {
+            if !SubscriptionService.shared.isEligibleForTrial {
                 self.trialLabel.text = "All access".localized
+                self.priceLabel.text = "Your trial period has expired".localized
+    
+                FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
+                                           parameters: [FBSDKAppEventParameterNameContentType : "Weekly subscription",
+                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
+                                                        "Subscription period": subscription.product.subscriptionPeriod ?? ""])
+            } else {
+                FBSDKAppEvents.logPurchase(0.0, currency: "",
+                                           parameters: [FBSDKAppEventParameterNameContentType : "3 days trial",
+                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier])
             }
             status = .available
         } else {
@@ -132,6 +151,7 @@ class SubscriptionInfoViewController: UIViewController {
         
         if !SubscriptionService.shared.isEligibleForTrial {
             trialLabel.text = "All access".localized
+            priceLabel.text = "Your trial period has expired".localized
         }
         
         if SubscriptionService.shared.currentSubscription != nil {
@@ -153,6 +173,6 @@ class SubscriptionInfoViewController: UIViewController {
             return
         }
         self.subscription = sub
-        self.priceLabel.text = "3 days free trial. Subscription price ".localized + sub.formattedPrice
+        self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + sub.formattedPrice
     }
 }

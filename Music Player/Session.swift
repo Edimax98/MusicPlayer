@@ -28,7 +28,7 @@ struct Session {
     public var isEligibleForTrial: Bool {
         
         for sub in paidSubscriptions {
-            if sub.isTrial == "true" {
+            if sub.isTrial == "true" && paidSubscriptions.count != 1 {
                 return false
             }
         }

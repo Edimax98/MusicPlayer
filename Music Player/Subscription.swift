@@ -21,6 +21,8 @@ struct Subscription {
 
     var product: SKProduct
     var formattedPrice: String
+    var currencyCode: String
+    var priceWithoutCurrency: Double
     
     init(product: SKProduct) {
         
@@ -29,7 +31,8 @@ struct Subscription {
         if formatter.locale != self.product.priceLocale {
             formatter.locale = self.product.priceLocale
         }
-        
+        currencyCode = self.product.priceLocale.currencyCode ?? ""
+        priceWithoutCurrency = self.product.price.doubleValue
         formattedPrice = formatter.string(from: product.price) ?? "\(product.price)"
     }
 }

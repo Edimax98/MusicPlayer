@@ -22,6 +22,5 @@ class UpperCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
         containerView.backgroundColor = defaultBackgroundColor
-        titleLabel.text = "Play the moment".localized
     }
 }

@@ -16,7 +16,7 @@ class PlayerViewController: UIViewController {
 
     weak var playerDelegate: PlayerViewControllerDelegate?
     
-    private(set) var song: Song?
+    fileprivate var song: Song?
     private var isAlbum = false
     
     @IBOutlet weak var volumeSlider: UISlider!
@@ -48,7 +48,6 @@ class PlayerViewController: UIViewController {
         albumArtworkImageView.layer.borderWidth = 1
         albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
         albumArtworkImageView.clipsToBounds = true
-        prepareAudio()
     }
     
     class func instance() -> PlayerViewController {
@@ -59,7 +58,7 @@ class PlayerViewController: UIViewController {
     
     fileprivate func prepareAudio() {
     
-        guard let unwrappedSong = song else { print("Song is nil"); return }
+        guard let unwrappedSong = self.song else { print("Song is nil"); return }
         
         playerProgressSlider.maximumValue = CFloat(unwrappedSong.duration)
         playerProgressSlider.minimumValue = 0.0
@@ -138,8 +137,16 @@ class PlayerViewController: UIViewController {
 extension PlayerViewController: SongReceiver {
     
     func receive(model: Song) {
-//        print(model.name + "HGHDGGDGD")
-//        self.song = model
+        self.song = model
+        prepareAudio()
+    }
+}
+
+// MARK: - AlbumReciever
+extension PlayerViewController: AlbumReceiver {
+    
+    func receive(model: Album) {
+        isAlbum = true
     }
 }
 
@@ -168,27 +175,11 @@ extension PlayerViewController: AudioPlayerDelegate {
     }
     
     func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
+        
         volumeSlider.setValue(audioPlayer.volume, animated: true)
         playerProgressSlider.setValue(Float(time).rounded(), animated: true)
         let secondsAndMinutes = secondsToMinutesSeconds(seconds: UInt(time))
         progressTimerLabel.text = String(format: "%02i:%02i", secondsAndMinutes.minutes, secondsAndMinutes.seconds)
-    }
-}
-
-// MARK: - SongsActionHandler
-extension PlayerViewController: SongActionHandler {
-    
-    func musicWasSelected(_ song: Song) {
-        songWasSelected?(song)
-        self.song = song
-    }
-}
-
-// MARK: - LandingPageViewOutputMultipleValues
-extension PlayerViewController: LandingPageViewOutputMultipleValues {
-    
-    func sendSongs(_ songs: [Song]) {
-        isAlbum = true
     }
 }
 
@@ -197,11 +188,13 @@ extension PlayerViewController: PopupContentViewController {
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
         
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
         let margin = UIScreen.main.bounds.height * 0.1
-        if UIScreen.main.bounds.height > 700 {
-            return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin * 1.5)
+        if screenHeight > 700 {
+            return CGSize(width: screenWidth - 20, height: screenHeight - margin * 1.5)
         }
-        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin + 20)
+        return CGSize(width: screenWidth - 20, height: screenHeight - margin + 20)
     }
 }
 

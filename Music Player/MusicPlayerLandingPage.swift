@@ -31,20 +31,17 @@ class MusicPlayerLandingPage: UIViewController {
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
+    fileprivate var currentSong: Song?
     fileprivate var dataSource = [HeaderData]()
     fileprivate var currentAudioIndex = 0
-    fileprivate var songSelectedFromAlbum = false
     fileprivate var userTappedOnController = false
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 5
     fileprivate let currentSubscription = SubscriptionService.shared.currentSubscription
-    fileprivate let playerVc = PlayerViewController.instance()
+    fileprivate let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
+    fileprivate let musicListVc = MusicListViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
     
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
-    fileprivate weak var outputSingleValue: LandingPageViewOutputSingleValue?
-    fileprivate weak var outputMultipleValue: LandingPageViewOutputMultipleValues?
-    fileprivate weak var songActionHandler: SongActionHandler?
-    fileprivate weak var albumActionHandler: AlbumsActionHandler?
 
 	override var prefersStatusBarHidden: Bool {
         return true
@@ -69,6 +66,8 @@ class MusicPlayerLandingPage: UIViewController {
         registerCells(for: tableView)
         fillDataSource()
         nowPlayingSongName.text = "Not playing".localized
+        musicListVc.mediator.add(recipient: self)
+        musicListVc.mediator.add(recipient: playerVc)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,13 +76,17 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     private func cantFindPurchases() {
-    
+        
         guard SubscriptionService.shared.currentSessionId != nil,
             SubscriptionService.shared.hasReceiptData
             else {
                 showRestoreAlert()
                 return
         }
+    }
+    
+    fileprivate func checkIfSongPartOfAlbum(_ song: Song) -> Bool {
+        return tracks.contains(song)
     }
     
     private func showRestoreAlert() {
@@ -104,7 +107,7 @@ class MusicPlayerLandingPage: UIViewController {
             accessStatus = .available
         }
         
-        if !wasSubscriptionSkipped  && currentSubscription == nil {
+        if !wasSubscriptionSkipped && currentSubscription == nil {
             performSegue(withIdentifier: "toSub", sender: self)
         }
     }
@@ -140,19 +143,34 @@ class MusicPlayerLandingPage: UIViewController {
             return
         }
         
-        if tracks.isEmpty {
-            return
-        }
-        
+        guard let song = self.currentSong else { return }
         userTappedOnController = true
-        guard let index = audioPlayer.currentItemIndexInQueue else { return }
+        receive(model: song)
+
+//        if audioPlayer.state == .paused {
+//            audioPlayer.resume()
+//            return
+//        }
+    }
+    
+    @IBAction func playNextSongButtonPressed(_ sender: Any) {
         
-        if audioPlayer.state == .paused {
-            audioPlayer.resume()
-            self.sendSong(tracks[index])
+        if audioPlayer.items?.count == 1 {
+            audioPlayer.pause()
+            audioPlayer.seek(to: 0)
             return
         }
-        self.sendSong(tracks[index])
+        
+        audioPlayer.next()
+        
+        guard let index = audioPlayer.currentItemIndexInQueue else {
+            audioPlayer.pause()
+            audioPlayer.seek(to: 0)
+            return
+        }
+        
+        let nextSong = tracks[index]
+        setupNowPlayingView(with: nextSong)
     }
     
     @IBAction func playNowPlayingSongButtonPressed(_ sender: Any) {
@@ -175,12 +193,7 @@ class MusicPlayerLandingPage: UIViewController {
         }
     }
     
-    @IBAction func playNextSongButtonPressed(_ sender: Any) {
-		audioPlayer.nextOrStop()
-        setupNowPlayingView()
-    }
-    
-    fileprivate func setupNowPlayingView() {
+    fileprivate func setupNowPlayingView(with song: Song) {
         
         if audioPlayer.state == .paused || audioPlayer.state == .stopped {
             playButton.isSelected = false
@@ -188,9 +201,8 @@ class MusicPlayerLandingPage: UIViewController {
             playButton.isSelected = true
         }
         
-        guard let index = audioPlayer.currentItemIndexInQueue else { return }
-        nowPlayingSongCover.image = tracks[index].image
-        nowPlayingSongName.text = tracks[index].name
+        nowPlayingSongCover.image = song.image
+        nowPlayingSongName.text = song.name
     }
     
     fileprivate func createItem(with audioPath: String) -> AudioItem? {
@@ -231,27 +243,31 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TodaysPlaylistCell.identifier, for: indexPath) as? TodaysPlaylistCell else {
                 return UITableViewCell()
             }
-            cell.albumHandler = self
             self.interactor?.playlistOutput = cell
             interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
+            cell.mediator.removeAllRecipients()
+            cell.mediator.add(recipient: self)
+            cell.mediator.add(recipient: musicListVc)
             return cell
-            
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewReleasesCell.identifier, for: indexPath) as? NewReleasesCell else {
                 return UITableViewCell()
             }
-            cell.handler = self
             self.interactor?.albumsOutput = cell
             interactor?.fetchNewAlbums(amount: 10)
+            cell.mediator.removeAllRecipients()
+            cell.mediator.add(recipient: self)
+            cell.mediator.add(recipient: musicListVc)
             return cell
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularSongsCell.identifier, for: indexPath) as? PopularSongsCell else {
                 return UITableViewCell()
             }
             self.interactor?.songsOutput = cell
-            //cell.mediator.add(recipient: playerVc)
-            cell.songWasTapped = self
             interactor?.fetchSong(10)
+            cell.mediator.removeAllRecipients()
+            cell.mediator.add(recipient: self)
+            cell.mediator.add(recipient: playerVc)
             return cell
         default:
             break
@@ -321,118 +337,50 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         }
 		currentAudioIndex = index
 	}
-}
-
-// MARK: - SongsActionHandler
-extension MusicPlayerLandingPage: SongActionHandler {
-
-    func musicWasSelected(_ song: Song) {
-        
-        guard accessStatus == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
-        }
-        
-		setCurrentIndex(from: song)
-        self.songActionHandler = playerVc
-        playerVc.playerDelegate = self
-        audioPlayer.delegate = playerVc
-        self.songActionHandler?.musicWasSelected(song)
-        
-        let popup = PopupController
-            .create(self)
-            .customize(
-                [
-                    .animation(.slideDown),
-                    .scrollable(false),
-                    .backgroundStyle(.blackFilter(alpha: 0.7))
-                ])
-            .show(playerVc)
-        
-        playerVc.closeHandler = {
-            self.setupNowPlayingView()
-            popup.dismiss()
-        }
-    }
-}
-
-// MARK: - AlbumsActionHandler
-extension MusicPlayerLandingPage: AlbumsActionHandler {
     
-    func albumWasSelected(_ album: Album) {
+    func playSong(_ song: Song) {
         
-        guard accessStatus == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
-        }
+        guard let item = createItem(with: song.audioPath) else { print("item is nil"); return }
         
-        tracks = album.songs
-        let musicListVc = MusicListViewController.instance(from: self)
-        self.albumActionHandler = musicListVc
-        audioPlayer.delegate = musicListVc
-        musicListVc.songActionHandler = self
-        musicListVc.musicActionHandler = self
-		musicListVc.playerDelegate = self
-		albumActionHandler?.albumWasSelected(album)
-
-        let popup = PopupController
-                        .create(self)
-                        .customize(
-                            [
-                                .animation(.slideDown),
-                                .scrollable(false),
-                                .backgroundStyle(.blackFilter(alpha: 0.7))
-                            ])
-                        .show(musicListVc)
-		
-        musicListVc.songWasSelected = { [weak self] (song) in
-            guard let unwrappedSelf = self else { return }
-            unwrappedSelf.nowPlayingSongCover.image = song.image
-            unwrappedSelf.nowPlayingSongName.text = song.name
-        }
-
-        musicListVc.closeHandler = {
-            popup.dismiss()
-        }
-    }
-}
-
-// MARK: - MusicPlayerActionHandler
-extension MusicPlayerLandingPage: MusicPlayerActionHandler {
-    
-    func songWasSelectedFromAlbum(_ song: Song) {
-        
-        if audioPlayer.items != nil {
+        if audioPlayer.items != nil && userTappedOnController == false {
             audioPlayer.stop()
         }
-        setCurrentIndex(from: song)
-        guard let items = createItems(with: tracks.map { $0.audioPath }) else { return }
+
+        if checkIfSongPartOfAlbum(song) == false {
+            audioPlayer.play(item: item)
+        } else {
+            playAlbum(tracks, startSong: song)
+        }
+    }
+    
+    func playAlbum(_ album: [Song], startSong: Song) {
+        
+        guard let items = createItems(with: album.map { $0.audioPath }) else { print("items are nil"); return }
+        
+        if audioPlayer.items != nil && userTappedOnController == false {
+            audioPlayer.stop()
+        }
+        setCurrentIndex(from: startSong)
         audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
     }
 }
 
-extension MusicPlayerLandingPage: LandingPageViewOutputSingleValue {
+extension MusicPlayerLandingPage: SongReceiver {
     
-    func sendSong(_ song: Song) {
-
-        guard let item = createItem(with: song.audioPath) else {
-            print("item is nil")
+    func receive(model: Song) {
+    
+        self.currentSong = model
+        userTappedOnController = false
+        playerVc.playerDelegate = self
+        
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
             return
         }
         
-        if audioPlayer.items != nil && userTappedOnController == false {
-           audioPlayer.stop()
-        }
-        
-        userTappedOnController = false
-        audioPlayer.play(item: item)
-        tracks.append(song)
-        setCurrentIndex(from: song)
-        let playerVc = PlayerViewController.instance()
-        self.songActionHandler = playerVc
-        playerVc.playerDelegate = self
+        playSong(model)
         audioPlayer.delegate = playerVc
-        self.songActionHandler?.musicWasSelected(song)
+        setupNowPlayingView(with: model)
         
         let popup = PopupController
             .create(self)
@@ -445,7 +393,36 @@ extension MusicPlayerLandingPage: LandingPageViewOutputSingleValue {
             .show(playerVc)
         
         playerVc.closeHandler = {
-            self.setupNowPlayingView()
+            popup.dismiss()
+        }
+    }
+}
+
+extension MusicPlayerLandingPage: AlbumReceiver {
+ 
+    func receive(model: Album) {
+        
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
+        
+        self.tracks = model.songs
+        audioPlayer.delegate = musicListVc
+        musicListVc.playerDelegate = self
+        
+        let popup = PopupController
+            .create(self)
+            .customize(
+                [
+                    .animation(.slideDown),
+                    .scrollable(false),
+                    .backgroundStyle(.blackFilter(alpha: 0.7))
+                ])
+            
+            .show(musicListVc)
+        
+        musicListVc.closeHandler = {
             popup.dismiss()
         }
     }
@@ -493,6 +470,7 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         
         if let index = audioPlayer.currentItemIndexInQueue {
             completion(tracks[index])
+            setupNowPlayingView(with: tracks[index])
         } else {
             completion(tracks[0])
         }
@@ -510,6 +488,7 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         
         if let index = audioPlayer.currentItemIndexInQueue {
             completion(tracks[index])
+            setupNowPlayingView(with: tracks[index])
         } else {
             completion(tracks[0])
         }

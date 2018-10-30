@@ -22,7 +22,6 @@ class PopularSongsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.selectionStyle = .none
         popularSongsCollectionView.backgroundColor = defaultBackgroundColor
         popularSongsCollectionView.dataSource = songsDataSource
@@ -55,9 +54,9 @@ extension PopularSongsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let song = songsDataSource.getSongs()[indexPath.row]
-        //mediator.send(song: song)
-        songWasTapped?.sendSong(song)
-        hanlder?.musicWasSelected(song)
+        mediator.send(song: song)
+//        songWasTapped?.sendSong(song)
+//        hanlder?.musicWasSelected(song)
     }
 }
 

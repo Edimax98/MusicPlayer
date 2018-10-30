@@ -17,6 +17,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     
     var closeHandler: (() -> Void)?
     var songWasSelected: ((_ song: Song) -> Void)?
+    let mediator = Mediator()
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     weak var playerDelegate: PlayerViewControllerDelegate?
@@ -24,6 +25,10 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     weak var songActionHandler: SongActionHandler?
     weak var musicActionHandler: MusicPlayerActionHandler?
     weak var audioPlayerDelegate: AudioPlayerDelegate?
+    
+    deinit {
+        print("deinited ", self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,30 +36,25 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         musicTableView.dataSource = dataSource
         musicTableView.delegate = self
         musicTableView.register(UINib(nibName: "TrackCell", bundle: nil), forCellReuseIdentifier: TrackCell.identifier)
-        fillLabels()
-    }
-    
-    static func instance(from vc: UIViewController) -> MusicListViewController {
-        let storyboard = UIStoryboard(name: "MusicList", bundle: nil)
-        return storyboard.instantiateInitialViewController() as! MusicListViewController
     }
     
     private func fillLabels() {
         
-        guard let album = self.album else {
-            print("Album is nil")
-            return
-        }
+        guard let album = self.album else { print("Album is nil"); return }
         artistNameLabel.text = album.artistName
         albumNameLabel.text = album.name
     }
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
+        
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
         let margin = UIScreen.main.bounds.height * 0.1
-        if UIScreen.main.bounds.height > 700 {
-            return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin * 1.5)
+        
+        if screenHeight > 700 {
+            return CGSize(width: screenWidth - 20, height: screenHeight - margin * 1.5)
         }
-        return CGSize(width: self.view.frame.width - 20, height: self.view.frame.height - margin)
+        return CGSize(width: screenWidth - 20, height: screenHeight - margin + 20)
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
@@ -68,25 +68,17 @@ extension MusicListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let song = dataSource.getSongs()[indexPath.row]
-        let playerViewController = PlayerViewController.instance()
-        songWasSelected?(song)
-        
-        self.multipleDataOutput = playerViewController
-        self.audioPlayerDelegate = playerViewController
-        playerViewController.playerDelegate = self
-        
-        multipleDataOutput?.sendSongs(album!.songs)
-        musicActionHandler?.songWasSelectedFromAlbum(song)
-        songActionHandler?.musicWasSelected(song)
+        mediator.send(song: song)
     }
 }
 
-// MARK: - LandingPageViewOutputMultipleValues
-extension MusicListViewController: AlbumsActionHandler {
+extension MusicListViewController: AlbumReceiver {
     
-    func albumWasSelected(_ album: Album) {
-        dataSource.setSongs(album.songs)
-        self.album = album
+    func receive(model: Album) {
+        dataSource.setSongs(model.songs)
+        self.album = model
+        fillLabels()
+        musicTableView.reloadData()
     }
 }
 

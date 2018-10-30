@@ -13,7 +13,7 @@
         <!--Player View Controller-->
         <scene sceneID="S6P-Kn-5bg">
             <objects>
-                <viewController id="aQQ-q3-Epd" customClass="PlayerViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayerViewController" id="aQQ-q3-Epd" customClass="PlayerViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Q8O-Lu-JFe"/>
                         <viewControllerLayoutGuide type="bottom" id="xF8-4d-e2m"/>
@@ -249,7 +249,7 @@
         <image name="exit_player" width="98" height="98"/>
         <image name="next_track" width="114" height="116"/>
         <image name="play_track" width="141" height="141"/>
-        <image name="playlist2" width="144" height="100"/>
+        <image name="playlist2" width="200" height="150"/>
         <image name="prev_track" width="114" height="116"/>
         <image name="speaker_low" width="18" height="18"/>
         <image name="speaker_up" width="18" height="18"/>

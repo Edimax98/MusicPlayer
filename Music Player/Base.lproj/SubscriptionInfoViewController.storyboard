@@ -143,7 +143,7 @@
                                     <constraint firstAttribute="width" constant="326" id="fUr-SD-u8U"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days free trial. Subscription price" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TE4-lE-Mas">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days free trial." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TE4-lE-Mas">
                                 <rect key="frame" x="33" y="452" width="309" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="309" id="IOT-s8-bvi"/>
@@ -159,12 +159,12 @@
                                     <constraint firstAttribute="width" constant="351" id="Eqi-4V-8OP"/>
                                     <constraint firstAttribute="height" constant="101" id="SOW-s1-Tjg"/>
                                 </constraints>
-                                <string key="text">Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.</string>
+                                <string key="text">Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - </string>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 <color key="textColor" red="0.46274509803921571" green="0.4823529411764706" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAH-5b-BIc">
+                            <button opaque="NO" alpha="0.25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAH-5b-BIc">
                                 <rect key="frame" x="16" y="54" width="50" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="dxg-qY-VJx"/>
@@ -213,7 +213,7 @@
                                 <rect key="frame" x="96" y="581" width="103" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="TpR-Mv-CEv"/>
-                                    <constraint firstAttribute="width" constant="103" id="hcI-L1-zgb"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="103" id="hcI-L1-zgb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 <state key="normal" title="Terms of Service"/>
@@ -224,7 +224,7 @@
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F43-4L-E5I">
                                 <rect key="frame" x="205" y="581" width="75" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="RJF-1f-q0L"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="RJF-1f-q0L"/>
                                     <constraint firstAttribute="height" constant="15" id="nIV-lF-UP2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
@@ -282,6 +282,7 @@
                         <outlet property="restorePurchaseButton" destination="ak5-ga-sj9" id="Eqb-2y-Kpb"/>
                         <outlet property="skipButton" destination="fAH-5b-BIc" id="0y4-tz-jcl"/>
                         <outlet property="trialLabel" destination="Hvc-ou-EpY" id="33Y-kX-VOR"/>
+                        <outlet property="trialTermsLabel" destination="baV-TM-w2z" id="q0G-2e-m0v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xco-Sd-yNb" userLabel="First Responder" sceneMemberID="firstResponder"/>

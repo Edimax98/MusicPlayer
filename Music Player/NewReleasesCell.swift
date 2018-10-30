@@ -15,6 +15,7 @@ class NewReleasesCell: UITableViewCell {
     
     weak var handler: AlbumsActionHandler?
     var dataSource = NewReleasesDataSource()
+    let mediator = Mediator()
     
     static var identifier: String {
         return "NewReleasesCell"
@@ -60,8 +61,7 @@ extension NewReleasesCell: UICollectionViewDelegate {
             album.songs[i].image = selectedCell.newAlbumCoverImageView.image
             i += 1
         }
-        
-        handler?.albumWasSelected(album)
+        mediator.send(album: album)
     }
 }
 

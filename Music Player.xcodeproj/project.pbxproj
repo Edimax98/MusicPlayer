@@ -143,7 +143,6 @@
 		A57C7AFB21762C37008DA476 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A58747E4217F3FAB00A7C2B2 /* SubscriptionInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoViewController.swift; sourceTree = "<group>"; };
 		A58747F1217F776400A7C2B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SubscriptionInfoViewController.storyboard; sourceTree = "<group>"; };
-		A58747F4217F777200A7C2B2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/SubscriptionInfoViewController.strings; sourceTree = "<group>"; };
 		A5931347214B9D3C0071C75B /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5931349214B9D410071C75B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A593134B214B9DB00071C75B /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -794,7 +793,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				A58747F1217F776400A7C2B2 /* Base */,
-				A58747F4217F777200A7C2B2 /* ru */,
 			);
 			name = SubscriptionInfoViewController.storyboard;
 			sourceTree = "<group>";

@@ -22,7 +22,7 @@ class NetworkService {
     weak var todaysPlaylistDelegate: TodaysPlaylistsNetworkServiceDelegate?
     
     init() {
-        apiKey = "88dda971"
+        apiKey = "af79529f"
     }
 }
 
@@ -31,7 +31,7 @@ extension NetworkService: SongNetworkService {
     
     func fetchSongs(_ amount: UInt) {
         
-        request("https://api.jamendo.com/v3.0/tracks/?client_id=88dda971&limit=10&order=popularity_month", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
+        request("https://api.jamendo.com/v3.0/tracks/?client_id=af79529f&limit=10&order=popularity_month", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
             .validate()
             .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
                 

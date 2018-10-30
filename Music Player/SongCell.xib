@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,8 +19,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="100" height="140"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="nosong" translatesAutoresizingMaskIntoConstraints="NO" id="mW0-74-zKl">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="105.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" image="nosong" translatesAutoresizingMaskIntoConstraints="NO" id="mW0-74-zKl">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="106"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMd-mF-UpW">
                         <rect key="frame" x="2" y="108" width="95" height="14"/>
@@ -39,11 +39,9 @@
             <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="34Y-x6-0GY" secondAttribute="trailing" constant="3" id="5qA-nE-EOa"/>
-                <constraint firstItem="JMd-mF-UpW" firstAttribute="top" secondItem="mW0-74-zKl" secondAttribute="bottom" constant="2" id="BBe-33-Ver"/>
                 <constraint firstItem="34Y-x6-0GY" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" constant="3" id="MMP-nl-JhN"/>
                 <constraint firstItem="mW0-74-zKl" firstAttribute="top" secondItem="lxL-Ke-tUb" secondAttribute="top" id="NFa-Au-9BT"/>
                 <constraint firstAttribute="bottom" secondItem="34Y-x6-0GY" secondAttribute="bottom" constant="3" id="Nyu-Gp-sR3"/>
-                <constraint firstItem="34Y-x6-0GY" firstAttribute="top" secondItem="JMd-mF-UpW" secondAttribute="bottom" constant="3" id="P6s-G3-0FS"/>
                 <constraint firstItem="mW0-74-zKl" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" id="YE4-jh-8FI"/>
                 <constraint firstItem="JMd-mF-UpW" firstAttribute="leading" secondItem="lxL-Ke-tUb" secondAttribute="leading" constant="2" id="fBY-bY-HMZ"/>
                 <constraint firstAttribute="trailing" secondItem="mW0-74-zKl" secondAttribute="trailing" id="l9N-XA-n2s"/>
@@ -62,6 +60,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="nosong" width="64" height="64"/>
+        <image name="nosong" width="150" height="150"/>
     </resources>
 </document>

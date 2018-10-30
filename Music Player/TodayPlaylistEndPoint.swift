@@ -29,7 +29,7 @@ enum TodayPlaylistApi {
 extension TodayPlaylistApi: EndPointType {
     
     static var baseUrl: String {
-        return "https://api.jamendo.com/v3.0/tracks?client_id=88dda971"
+        return "https://api.jamendo.com/v3.0/tracks?client_id=af79529f"
     }
     
     var parameters: [String : Any] {

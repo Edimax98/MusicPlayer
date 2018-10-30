@@ -12,6 +12,10 @@ class Mediator: Sender {
 
     var recipients: [Reciever] = []
     
+    func removeAllRecipients() {
+        recipients.removeAll()
+    }
+    
     func add(recipient: Reciever) {
        self.recipients.append(recipient)
     }
