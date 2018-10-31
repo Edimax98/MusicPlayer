@@ -10,8 +10,6 @@ import UIKit
 
 class PopularSongsCell: UITableViewCell {
     
-    weak var hanlder: SongActionHandler?
-    weak var songWasTapped: LandingPageViewOutputSingleValue?
     var songsDataSource = PopularSongsDataSource()
     static var identifier = "PopularSongsCell"
     
@@ -54,9 +52,8 @@ extension PopularSongsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let song = songsDataSource.getSongs()[indexPath.row]
+        guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
         mediator.send(song: song)
-//        songWasTapped?.sendSong(song)
-//        hanlder?.musicWasSelected(song)
     }
 }
 

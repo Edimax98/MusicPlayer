@@ -77,9 +77,14 @@ class SubscriptionNetworkService {
                 self.sessions[session.id] = session
                 
                 if let status = json["status"] as? Int {
-                    self.reuploadAfterWrongEnviroment(status: status)
+                    if status == 21007 {
+                        self.url = URL(string: "https://sandbox.itunes.apple.com/verifyReceipt")!
+                        SubscriptionService.shared.uploadReceipt()
+                    }
+                    if status == 0 {
+                        completion(.success(session))
+                    }
                 }
-                completion(.success(session))
             }
         }
         task.resume()

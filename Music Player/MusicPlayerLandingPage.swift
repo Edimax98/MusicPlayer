@@ -137,16 +137,16 @@ class MusicPlayerLandingPage: UIViewController {
 	}
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
-
-        guard accessStatus == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
-        }
-        
-        guard let song = self.currentSong else { return }
-        userTappedOnController = true
-        receive(model: song)
-
+//
+//        guard accessStatus == .available else {
+//            performSegue(withIdentifier: "toSub", sender: self)
+//            return
+//        }
+//
+//        guard let song = self.currentSong else { return }
+//        userTappedOnController = true
+//        receive(model: song)
+//
 //        if audioPlayer.state == .paused {
 //            audioPlayer.resume()
 //            return
@@ -247,6 +247,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
+            guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 3:
@@ -257,6 +258,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchNewAlbums(amount: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
+            guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 4:
@@ -267,6 +269,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchSong(10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
+            guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: playerVc)
             return cell
         default:
@@ -395,6 +398,13 @@ extension MusicPlayerLandingPage: SongReceiver {
         playerVc.closeHandler = {
             popup.dismiss()
         }
+    }
+}
+
+extension MusicPlayerLandingPage: Reciever {
+    
+    func accessDenied() {
+        performSegue(withIdentifier: "toSub", sender: self)
     }
 }
 

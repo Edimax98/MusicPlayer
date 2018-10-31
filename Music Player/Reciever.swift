@@ -8,7 +8,13 @@
 
 import Foundation
 
-protocol Reciever { }
+protocol Reciever {
+    func accessDenied()
+}
+
+extension Reciever {
+    func accessDenied() {}
+}
 
 protocol AlbumReceiver: Reciever {
     func receive(model: Album)

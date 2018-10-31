@@ -20,6 +20,12 @@ class Mediator: Sender {
        self.recipients.append(recipient)
     }
     
+    func denyAccess() {
+        for recipient in recipients {
+            recipient.accessDenied()
+        }
+    }
+    
     func send(album: Album) {
         for recipient in recipients {
             if let r = recipient as? AlbumReceiver {

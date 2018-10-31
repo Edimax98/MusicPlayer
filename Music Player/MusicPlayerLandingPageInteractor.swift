@@ -114,7 +114,7 @@
         while i <= nestedImages.count - 1 {
             j = 0
             while j <= nestedImages[i].count - 1 {
-                if j > nestedImages[i].count - 1 || i > playlists.count - 1 { return }
+                if i > nestedImages.count - 1 || j > nestedImages[i].count - 1 || i > playlists.count - 1 { return }
                 if nestedImages[i].keys.contains(where: { (url) -> Bool in playlists[i].songs[j].imagePath == url }) {
                     playlists[i].songs[j].image = nestedImages[i][playlists[i].songs[j].imagePath]
                 }

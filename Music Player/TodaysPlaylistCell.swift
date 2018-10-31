@@ -38,6 +38,9 @@ class TodaysPlaylistCell: UITableViewCell {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let album = dataSource.getPlaylists()[indexPath.row]
+        
+        guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
+        
         mediator.send(album: album)
     }
  }
@@ -59,7 +62,6 @@ extension TodaysPlaylistCell: UICollectionViewDelegateFlowLayout {
     }
  }
  
-
 
 
 

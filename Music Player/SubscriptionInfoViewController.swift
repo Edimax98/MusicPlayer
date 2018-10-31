@@ -133,12 +133,12 @@ class SubscriptionInfoViewController: UIViewController {
                 self.priceLabel.text = "Your trial period has expired".localized
     
                 FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
-                                           parameters: [FBSDKAppEventParameterNameContentType : "Weekly subscription",
+                                           parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
                                                         FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
                                                         "Subscription period": subscription.product.subscriptionPeriod ?? ""])
             } else {
                 FBSDKAppEvents.logPurchase(0.0, currency: "",
-                                           parameters: [FBSDKAppEventParameterNameContentType : "3 days trial",
+                                           parameters: [FBSDKAppEventParameterNameContentType: "3 days trial",
                                                         FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier])
             }
             status = .available
