@@ -43,7 +43,7 @@ class SubscriptionInfoViewController: UIViewController {
                                                selector: #selector(handleOptionsLoaded(notification:)),
                                                name: SubscriptionService.optionsLoadedNotification,
                                                object: nil)
-    
+        
         guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + price
     }
@@ -134,8 +134,7 @@ class SubscriptionInfoViewController: UIViewController {
     
                 FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
                                            parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
-                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
-                                                        "Subscription period": subscription.product.subscriptionPeriod ?? ""])
+                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier])
             } else {
                 FBSDKAppEvents.logPurchase(0.0, currency: "",
                                            parameters: [FBSDKAppEventParameterNameContentType: "3 days trial",

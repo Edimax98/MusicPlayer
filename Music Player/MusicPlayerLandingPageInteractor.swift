@@ -24,7 +24,7 @@
     fileprivate let genres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country",
                         "Art Pop", "Rock", "Classical", "Trap", "Pop", "RNB",
                         "Modern Rock", "Chill", "Bass Trap", "Dance Pop",
-                        "Blues","Pop Rock", "K-Pop", "Bass Trap",
+                        "Blues","Pop Rock", "Bass Trap",
                         "Beats","EDM", "DeepHouse", "Trance", "Techno"]
     
     fileprivate var songs = [Song]()
@@ -114,7 +114,8 @@
         while i <= nestedImages.count - 1 {
             j = 0
             while j <= nestedImages[i].count - 1 {
-                if i > nestedImages.count - 1 || j > nestedImages[i].count - 1 || i > playlists.count - 1 { return }
+                if playlists.count - 1 < i { return }
+                if playlists[i].songs.count - 1 < j { return }
                 if nestedImages[i].keys.contains(where: { (url) -> Bool in playlists[i].songs[j].imagePath == url }) {
                     playlists[i].songs[j].image = nestedImages[i][playlists[i].songs[j].imagePath]
                 }

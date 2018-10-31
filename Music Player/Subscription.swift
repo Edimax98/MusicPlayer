@@ -25,7 +25,7 @@ struct Subscription {
     var priceWithoutCurrency: Double
     
     init(product: SKProduct) {
-        
+                
         self.product = product
         
         if formatter.locale != self.product.priceLocale {

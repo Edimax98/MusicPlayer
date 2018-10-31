@@ -27,7 +27,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessStatus = AccessStatus.denied
+    var accessStatus = AccessStatus.available
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
@@ -68,6 +68,7 @@ class MusicPlayerLandingPage: UIViewController {
         nowPlayingSongName.text = "Not playing".localized
         musicListVc.mediator.add(recipient: self)
         musicListVc.mediator.add(recipient: playerVc)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,16 +138,16 @@ class MusicPlayerLandingPage: UIViewController {
 	}
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
-//
-//        guard accessStatus == .available else {
-//            performSegue(withIdentifier: "toSub", sender: self)
-//            return
-//        }
-//
-//        guard let song = self.currentSong else { return }
-//        userTappedOnController = true
-//        receive(model: song)
-//
+
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
+
+        guard let song = self.currentSong else { return }
+        userTappedOnController = true
+        receive(model: song)
+
 //        if audioPlayer.state == .paused {
 //            audioPlayer.resume()
 //            return
