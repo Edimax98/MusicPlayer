@@ -43,6 +43,11 @@ class SubscriptionInfoViewController: UIViewController {
                                                selector: #selector(handleOptionsLoaded(notification:)),
                                                name: SubscriptionService.optionsLoadedNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(nothingToRestore(notification:)),
+                                               name: SubscriptionService.nothingToRestoreNotification,
+                                               object: nil)
     
         guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + price
@@ -68,6 +73,7 @@ class SubscriptionInfoViewController: UIViewController {
     private func showErrorAlert(for error: SubscriptionServiceError) {
         let title: String
         let message: String
+        
         switch error {
         case .missingAccountSecret, .invalidSession, .internalError:
             title = "Internal error".localized
@@ -78,6 +84,7 @@ class SubscriptionInfoViewController: UIViewController {
         case .other(let otherError):
             title = "Unexpected Error".localized
             message = otherError.localizedDescription
+        case .wrongEnviroment: return
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -172,7 +179,18 @@ class SubscriptionInfoViewController: UIViewController {
             showErrorAlert(for: .internalError)
             return
         }
+        
+        print(SubscriptionService.shared.currentSessionId)
+        
         self.subscription = sub
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + sub.formattedPrice
+    }
+    
+    @objc func nothingToRestore(notification: Notification) {
+        
+        let alert = UIAlertController(title: "Nothing to restore".localized, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 }

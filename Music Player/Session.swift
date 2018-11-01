@@ -7,18 +7,21 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct Session {
     
     let id: SessionId
     let paidSubscriptions: [PaidSubscription]
+    public var receiptData: Data
+    public var parsedReceipt: [String: Any]
     
     public var currentSubscription: PaidSubscription? {
         let activeSubscriptions = paidSubscriptions.filter { $0.isActive && $0.purchaseDate >= SubscriptionNetworkService.shared.simulatedStartDate }
         var current = activeSubscriptions.last
         
         paidSubscriptions.forEach {
-            if $0.isTrial == "true" {
+            if $0.isTrial == true {
                 current?.isEligibleForTrial = false
             }
         }
@@ -28,29 +31,26 @@ struct Session {
     public var isEligibleForTrial: Bool {
         
         for sub in paidSubscriptions {
-            if sub.isTrial == "true" && paidSubscriptions.count != 1 {
+            if sub.isTrial == true && paidSubscriptions.count != 1 {
                 return false
             }
         }
         return true
     }
     
-    public var receiptData: Data
-    public var parsedReceipt: [String: Any]
-    
     init(receiptData: Data, parsedReceipt: [String: Any]) {
         id = UUID().uuidString
         self.receiptData = receiptData
         self.parsedReceipt = parsedReceipt
-        print(parsedReceipt)
-        if let purchases = parsedReceipt["latest_receipt_info"] as? Array<[String: Any]> {
+        
+        if let purchases = JSON(parsedReceipt)["latest_receipt_info"].array {
             var subscriptions = [PaidSubscription]()
             for purchase in purchases {
-                print(purchase)
-                print("---------")
-                if let paidSubscription = PaidSubscription(json: purchase) {
+                    print(purchase)
+                    print("------------")
+                    let paidSubscription = PaidSubscription(productId: purchase["product_id"].stringValue, purchaseDateString: purchase["purchase_date"].stringValue,
+                                                           expiresDateString: purchase["expires_date"].stringValue, isTrial: purchase["is_trial_period"].stringValue)
                     subscriptions.append(paidSubscription)
-                }
             }
             paidSubscriptions = subscriptions
         } else {

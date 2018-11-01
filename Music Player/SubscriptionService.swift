@@ -15,6 +15,7 @@ class SubscriptionService: NSObject {
     static let optionsLoadedNotification = Notification.Name("SubscriptionServiceOptionsLoadedNotification")
     static let restoreSuccessfulNotification = Notification.Name("SubscriptionServiceRestoreSuccessfulNotification")
     static let purchaseSuccessfulNotification = Notification.Name("SubscriptionServiceRestoreSuccessfulNotification")
+    static let nothingToRestoreNotification = Notification.Name("SubscriptionServiceNoTransactionsToRestore")
 
     static let shared = SubscriptionService()
     
@@ -38,7 +39,7 @@ class SubscriptionService: NSObject {
     
     var currentSubscription: PaidSubscription?
     
-    func uploadReceipt(completion: ((_ success: Bool) -> Void)? = nil) {
+    func uploadReceipt(completion: ((_ success: Bool, _ shoudRetry: Bool) -> Void)? = nil) {
         if let receiptData = loadReceipt() {
             SubscriptionNetworkService.shared.upload(receipt: receiptData) { [weak self] (result) in
                 guard let strongSelf = self else { return }
@@ -47,10 +48,15 @@ class SubscriptionService: NSObject {
                     strongSelf.currentSessionId = result.id
                     strongSelf.currentSubscription = result.currentSubscription
                     strongSelf.isEligibleForTrial = result.isEligibleForTrial
-                    completion?(true)
+                    completion?(true,false)
                 case .failure(let error):
                     print("Receipt Upload Failed: \(error)")
-                    completion?(false)
+                    switch error {
+                    case .wrongEnviroment:
+                        completion?(false, true)
+                    default:
+                        completion?(false, false)
+                    }
                 }
             }
         }

@@ -49,6 +49,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: SKPaymentTransactionObserver {
+    
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        
+        if queue.transactions.isEmpty {
+            NotificationCenter.default.post(name: SubscriptionService.nothingToRestoreNotification, object: nil)
+        }
+    }
  
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
@@ -76,9 +84,17 @@ extension AppDelegate: SKPaymentTransactionObserver {
     func handlePurchasedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("User purchased product id: \(transaction.payment.productIdentifier)")
         queue.finishTransaction(transaction)
-        SubscriptionService.shared.uploadReceipt { (success) in
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+        SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+            if success == false, shouldRetry == true {
+                SubscriptionService.shared.uploadReceipt { (_, _) in
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+                }
             }
         }
     }
@@ -86,9 +102,17 @@ extension AppDelegate: SKPaymentTransactionObserver {
     func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
         queue.finishTransaction(transaction)
-        SubscriptionService.shared.uploadReceipt { (success) in
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
+        SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+            if success {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
+                }
+            } else if shouldRetry {
+                SubscriptionService.shared.uploadReceipt { (_, _) in
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
+                    }
+                }
             }
         }
     }

@@ -32,43 +32,26 @@ struct PaidSubscription {
     public let productId: String
     public let purchaseDate: Date
     public let expiresDate: Date
-    public var isTrial: String
+    public var isTrial: Bool
     public var isEligibleForTrial = true
-    public let level: Level
+    public let level: Level = .all
     
     public var isActive: Bool {
         return (purchaseDate...expiresDate).contains(Date())
     }
-
-    init?(json: [String: Any]) {
-       
-        guard let productId = json["product_id"] as? String else {
-            return nil
-        }
+    
+    init(productId: String, purchaseDateString: String, expiresDateString: String, isTrial: String) {
         
-        guard let purchaseDateString = json["purchase_date"] as? String else {
-            return nil
+        if let purchaseDate = dateFormatter.date(from: purchaseDateString),
+            let expiresDate = dateFormatter.date(from: expiresDateString) {
+            self.purchaseDate = purchaseDate
+            self.expiresDate = expiresDate
+        } else {
+            self.purchaseDate = Date()
+            self.expiresDate = Date()
         }
-
-        guard let expiresDateString = json["expires_date"] as? String else {
-            return nil
-        }
-
-        guard let isTrial = json["is_trial_period"] as? String else {
-            return nil
-        }
-        
-        guard
-            let purchaseDate = dateFormatter.date(from: purchaseDateString),
-             let expiresDate = dateFormatter.date(from: expiresDateString)
-            else {
-                return nil
-            }
         
         self.productId = productId
-        self.isTrial = isTrial
-        self.purchaseDate = purchaseDate //purchaseDate
-        self.expiresDate = expiresDate //expiresDate
-        self.level = Level(productId: productId) ?? .all // if we've botched the productId give them all access :]
+        self.isTrial = (isTrial == "true") ? true : false
     }
 }
