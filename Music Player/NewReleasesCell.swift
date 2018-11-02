@@ -13,7 +13,6 @@ class NewReleasesCell: UITableViewCell {
     @IBOutlet weak var collectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var releasesCollectionVeiw: UICollectionView!
     
-    weak var handler: AlbumsActionHandler?
     var dataSource = NewReleasesDataSource()
     let mediator = Mediator()
     

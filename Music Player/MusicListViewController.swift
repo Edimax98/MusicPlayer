@@ -21,9 +21,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     weak var playerDelegate: PlayerViewControllerDelegate?
-    weak var multipleDataOutput: LandingPageViewOutputMultipleValues?
-    weak var songActionHandler: SongActionHandler?
-    weak var musicActionHandler: MusicPlayerActionHandler?
+
     weak var audioPlayerDelegate: AudioPlayerDelegate?
     
     deinit {
@@ -49,12 +47,13 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
-        let margin = UIScreen.main.bounds.height * 0.1
+        let marginForBigScreens = UIScreen.main.bounds.height * 0.125 * 2
+        let marginForSmallScreens = UIScreen.main.bounds.height * 0.05 * 2
         
         if screenHeight > 700 {
-            return CGSize(width: screenWidth - 20, height: screenHeight - margin * 1.5)
+            return CGSize(width: screenWidth - 30, height: screenHeight - marginForBigScreens)
         }
-        return CGSize(width: screenWidth - 20, height: screenHeight - margin + 20)
+        return CGSize(width: screenWidth - 20, height: screenHeight - marginForSmallScreens)
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
