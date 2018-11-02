@@ -31,7 +31,9 @@
                                 <color key="minimumTrackTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="maximumTrackTintColor" red="0.47058823529411764" green="0.29803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <action selector="changeAudioLocationSlider:" destination="aQQ-q3-Epd" eventType="valueChanged" id="qiC-YR-oGx"/>
+                                    <action selector="audioLocationSliderEditingDidEnd:" destination="aQQ-q3-Epd" eventType="valueChanged" id="BXd-tP-diK"/>
+                                    <action selector="editingEnded:" destination="aQQ-q3-Epd" eventType="touchUpOutside" id="Yd6-Zh-dGc"/>
+                                    <action selector="editingStarted:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="CGS-Zj-vN3"/>
                                 </connections>
                             </slider>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vinyl" translatesAutoresizingMaskIntoConstraints="NO" id="i6A-Jl-x93">

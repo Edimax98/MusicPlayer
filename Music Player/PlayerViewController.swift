@@ -18,6 +18,7 @@ class PlayerViewController: UIViewController {
     
     fileprivate var song: Song?
     private var isAlbum = false
+    private var isTimeEditing = false
     
     @IBOutlet weak var volumeSlider: UISlider!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -60,6 +61,7 @@ class PlayerViewController: UIViewController {
     
         guard let unwrappedSong = self.song else { print("Song is nil"); return }
         
+        isTimeEditing = false
         playerProgressSlider.maximumValue = CFloat(unwrappedSong.duration)
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
@@ -118,9 +120,18 @@ class PlayerViewController: UIViewController {
 		}
     }
     
-    @IBAction func changeAudioLocationSlider(_ sender : UISlider) {
-        let targetTime = TimeInterval(sender.value)
-        playerDelegate?.didChangeTime(to: targetTime)
+    @IBAction func editingStarted(_ sender: Any) {
+        isTimeEditing = true
+    }
+
+    @IBAction func editingEnded(_ sender: Any) {
+        isTimeEditing = false
+    }
+    
+    @IBAction func audioLocationSliderEditingDidEnd(_ sender: Any) {
+        guard let slider = sender as? UISlider else { return }
+        let targetTime = TimeInterval(slider.value)
+        self.playerDelegate?.didChangeTime(to: targetTime)
     }
     
     @IBAction func hidePlayerButtonPressed(_ sender: Any) {
@@ -129,7 +140,7 @@ class PlayerViewController: UIViewController {
     
     @IBAction func volumeSliderValueChanged(_ sender: Any) {
         guard let slider = sender as? UISlider else { return }
-        playerDelegate?.didChangeVolume(to: slider.value)
+        self.playerDelegate?.didChangeVolume(to: slider.value)
     }
 }
 
@@ -177,7 +188,9 @@ extension PlayerViewController: AudioPlayerDelegate {
     func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
         
         volumeSlider.setValue(audioPlayer.volume, animated: true)
-        playerProgressSlider.setValue(Float(time).rounded(), animated: true)
+        if !isTimeEditing {
+            playerProgressSlider.setValue(Float(time).rounded(), animated: false)
+        }
         let secondsAndMinutes = secondsToMinutesSeconds(seconds: UInt(time))
         progressTimerLabel.text = String(format: "%02i:%02i", secondsAndMinutes.minutes, secondsAndMinutes.seconds)
     }
@@ -190,11 +203,13 @@ extension PlayerViewController: PopupContentViewController {
         
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
-        let margin = UIScreen.main.bounds.height * 0.1
+        let marginForBigScreens = UIScreen.main.bounds.height * 0.125 * 2
+        let marginForSmallScreens = UIScreen.main.bounds.height * 0.05 * 2
+        
         if screenHeight > 700 {
-            return CGSize(width: screenWidth - 20, height: screenHeight - margin * 1.5)
+            return CGSize(width: screenWidth - 30, height: screenHeight - marginForBigScreens)
         }
-        return CGSize(width: screenWidth - 20, height: screenHeight - margin + 20)
+        return CGSize(width: screenWidth - 20, height: screenHeight - marginForSmallScreens)
     }
 }
 

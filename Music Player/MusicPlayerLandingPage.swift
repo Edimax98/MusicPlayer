@@ -57,6 +57,7 @@ class MusicPlayerLandingPage: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
+        playerVc.playerDelegate = self
         tableView.backgroundColor = defaultBackgroundColor
         activityIndicator.isHidden = true
         playButton.setImage(UIImage(named: "pause_nowPlaying"), for: .selected)
@@ -137,20 +138,33 @@ class MusicPlayerLandingPage: UIViewController {
 	}
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
-//
-//        guard accessStatus == .available else {
-//            performSegue(withIdentifier: "toSub", sender: self)
-//            return
-//        }
-//
-//        guard let song = self.currentSong else { return }
-//        userTappedOnController = true
-//        receive(model: song)
-//
-//        if audioPlayer.state == .paused {
-//            audioPlayer.resume()
-//            return
-//        }
+
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
+
+        guard let song = self.currentSong else { return }
+        userTappedOnController = true
+        
+        let mediator = Mediator()
+        mediator.removeAllRecipients()
+        mediator.add(recipient: playerVc)
+        mediator.send(song: song)
+        
+        let popup = PopupController
+            .create(self)
+            .customize(
+                [
+                    .animation(.slideDown),
+                    .scrollable(false),
+                    .backgroundStyle(.blackFilter(alpha: 0.7))
+                ])
+            .show(playerVc)
+        
+        playerVc.closeHandler = {
+            popup.dismiss()
+        }
     }
     
     @IBAction func playNextSongButtonPressed(_ sender: Any) {
@@ -374,8 +388,7 @@ extension MusicPlayerLandingPage: SongReceiver {
     
         self.currentSong = model
         userTappedOnController = false
-        playerVc.playerDelegate = self
-        
+
         guard accessStatus == .available else {
             performSegue(withIdentifier: "toSub", sender: self)
             return
@@ -446,7 +459,9 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
     }
 	
     func didChangeTime(to newTime: TimeInterval) {
-        audioPlayer.seek(to: newTime)
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.audioPlayer.seek(to: newTime)
+        }
     }
     
     func didPressPlayButton() {

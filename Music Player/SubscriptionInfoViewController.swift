@@ -93,14 +93,6 @@ class SubscriptionInfoViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func showRestoreAlert() {
-        let alert = UIAlertController(title: "Subscription Issue", message: "We are having a hard time finding your subscription. If you've recently reinstalled the app or got a new device please restore your purchase. Otherwise press subscribe".localized, preferredStyle: .alert)
-        
-        let backAction = UIAlertAction(title: "Back".localized, style: .cancel)
-        alert.addAction(backAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
     @IBAction func restorePurchasesButtonPressed(_ sender: Any) {
         SubscriptionService.shared.restorePurchases()
     }
@@ -180,17 +172,11 @@ class SubscriptionInfoViewController: UIViewController {
             return
         }
         
-        print(SubscriptionService.shared.currentSessionId)
-        
         self.subscription = sub
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription. Subscription price - ".localized + sub.formattedPrice
     }
     
     @objc func nothingToRestore(notification: Notification) {
-        
-        let alert = UIAlertController(title: "Nothing to restore".localized, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
+        showErrorAlert(for: .noActiveSubscription)
     }
 }
