@@ -46,8 +46,8 @@ struct Session {
         if let purchases = JSON(parsedReceipt)["latest_receipt_info"].array {
             var subscriptions = [PaidSubscription]()
             for purchase in purchases {
-                    print(purchase)
-                    print("------------")
+                    //print(purchase)
+                    //print("------------")
                     let paidSubscription = PaidSubscription(productId: purchase["product_id"].stringValue, purchaseDateString: purchase["purchase_date"].stringValue,
                                                            expiresDateString: purchase["expires_date"].stringValue, isTrial: purchase["is_trial_period"].stringValue)
                     subscriptions.append(paidSubscription)

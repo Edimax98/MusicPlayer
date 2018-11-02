@@ -29,7 +29,7 @@
                                     <constraint firstAttribute="width" constant="326" id="xPW-Hl-qnq"/>
                                 </constraints>
                                 <color key="minimumTrackTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="maximumTrackTintColor" red="0.47058823529411764" green="0.29803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="maximumTrackTintColor" red="0.32156862745098036" green="0.20000000000000001" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="audioLocationSliderEditingDidEnd:" destination="aQQ-q3-Epd" eventType="valueChanged" id="BXd-tP-diK"/>
                                     <action selector="editingEnded:" destination="aQQ-q3-Epd" eventType="touchUpOutside" id="Yd6-Zh-dGc"/>
@@ -105,7 +105,7 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="LWx-BJ-yyj">
                                 <rect key="frame" x="177" y="233" width="20" height="20"/>
                             </activityIndicatorView>
-                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9W5-3B-gRs">
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9W5-3B-gRs" userLabel="Player Buttons Stack View ">
                                 <rect key="frame" x="32.5" y="445" width="310" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="st3-9S-Cfa" userLabel="Button previous">
@@ -155,8 +155,8 @@
                                     <constraint firstAttribute="height" constant="100" id="RdD-48-pX7"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="K39-t3-4sT">
-                                <rect key="frame" x="29" y="568" width="320" height="25"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sua-4h-lzZ">
+                                <rect key="frame" x="19" y="573" width="337" height="25"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker_low" translatesAutoresizingMaskIntoConstraints="NO" id="8xN-gW-5v7">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -165,19 +165,16 @@
                                             <constraint firstAttribute="height" constant="25" id="Rbu-PV-Ln5"/>
                                         </constraints>
                                     </imageView>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cok-5I-Uci">
-                                        <rect key="frame" x="33" y="0.0" width="254" height="26"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZvS-hZ-xfh">
+                                        <rect key="frame" x="37" y="0.0" width="263" height="25"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="250" id="ap4-1k-iQK"/>
+                                            <constraint firstAttribute="height" constant="25" id="2bD-Kc-RDA"/>
+                                            <constraint firstAttribute="width" constant="263" id="4l0-Pu-Dkl"/>
                                         </constraints>
-                                        <color key="minimumTrackTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="maximumTrackTintColor" red="0.47058823529999999" green="0.29803921570000003" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <action selector="volumeSliderValueChanged:" destination="aQQ-q3-Epd" eventType="valueChanged" id="QID-bH-bvC"/>
-                                        </connections>
-                                    </slider>
+                                    </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker_up" translatesAutoresizingMaskIntoConstraints="NO" id="BXR-Ig-mac">
-                                        <rect key="frame" x="295" y="0.0" width="25" height="25"/>
+                                        <rect key="frame" x="312" y="0.0" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="9Za-Dt-qlH"/>
                                             <constraint firstAttribute="width" constant="25" id="Kdp-z9-KUb"/>
@@ -188,17 +185,16 @@
                         </subviews>
                         <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xF8-4d-e2m" firstAttribute="top" secondItem="K39-t3-4sT" secondAttribute="bottom" priority="999" constant="74" id="1aA-JD-ww8"/>
                             <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="X6u-8Q-6DM" secondAttribute="trailing" constant="-7" id="4Eh-y7-ecD"/>
                             <constraint firstItem="fFq-To-7ex" firstAttribute="leading" secondItem="GF2-g4-Q37" secondAttribute="leading" id="4Kt-Xw-cWs"/>
                             <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="OAy-qB-yT2" secondAttribute="trailing" constant="26" id="6yf-Zm-KvV"/>
                             <constraint firstItem="CVC-So-yHc" firstAttribute="top" secondItem="4Og-O4-tMM" secondAttribute="bottom" constant="3" id="7XF-KO-vYm"/>
-                            <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="K39-t3-4sT" secondAttribute="trailing" constant="26" id="9hu-X8-13p"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="trailing" secondItem="OAy-qB-yT2" secondAttribute="trailing" constant="1" id="AVv-xE-3xj"/>
+                            <constraint firstItem="sua-4h-lzZ" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="19" id="AkJ-yo-Rbo"/>
                             <constraint firstItem="bqM-Yj-3pT" firstAttribute="centerX" secondItem="i6A-Jl-x93" secondAttribute="centerX" id="DMZ-9H-0bU"/>
                             <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="-7" id="E5X-KS-xqD"/>
                             <constraint firstItem="i6A-Jl-x93" firstAttribute="top" secondItem="EGP-Ip-Fb1" secondAttribute="bottom" constant="30" id="Fbg-zy-HxF"/>
-                            <constraint firstItem="K39-t3-4sT" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="29" id="H5V-h9-GHC"/>
+                            <constraint firstItem="sua-4h-lzZ" firstAttribute="top" secondItem="9W5-3B-gRs" secondAttribute="bottom" constant="28" id="HAW-fL-Z2n"/>
                             <constraint firstItem="EGP-Ip-Fb1" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="63" id="Ir9-Sr-70f"/>
                             <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" id="LN8-Mf-6Ej"/>
                             <constraint firstItem="LWx-BJ-yyj" firstAttribute="centerX" secondItem="bqM-Yj-3pT" secondAttribute="centerX" id="MVM-K0-DG6"/>
@@ -213,8 +209,9 @@
                             <constraint firstItem="9W5-3B-gRs" firstAttribute="top" secondItem="4Og-O4-tMM" secondAttribute="bottom" constant="26" id="cMy-XT-bqV"/>
                             <constraint firstItem="LWx-BJ-yyj" firstAttribute="centerY" secondItem="bqM-Yj-3pT" secondAttribute="centerY" id="dLY-bH-9F2"/>
                             <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="4Og-O4-tMM" secondAttribute="trailing" constant="25" id="f2Y-7g-X9p"/>
-                            <constraint firstItem="K39-t3-4sT" firstAttribute="top" secondItem="9W5-3B-gRs" secondAttribute="bottom" constant="23" id="fOT-Yu-Wdc"/>
+                            <constraint firstItem="xF8-4d-e2m" firstAttribute="top" secondItem="sua-4h-lzZ" secondAttribute="bottom" priority="999" constant="69" id="ihD-ev-g79"/>
                             <constraint firstItem="EGP-Ip-Fb1" firstAttribute="top" secondItem="Q8O-Lu-JFe" secondAttribute="bottom" constant="20" id="jHn-Rz-HeR"/>
+                            <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="sua-4h-lzZ" secondAttribute="trailing" constant="19" id="ldQ-WN-dWU"/>
                             <constraint firstItem="bqM-Yj-3pT" firstAttribute="centerY" secondItem="i6A-Jl-x93" secondAttribute="centerY" id="mmO-xJ-hwt"/>
                             <constraint firstItem="9W5-3B-gRs" firstAttribute="centerX" secondItem="Iqf-Jw-cSt" secondAttribute="centerX" id="qRa-qB-hOk"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="24" id="qRq-bP-Npz"/>
@@ -229,6 +226,7 @@
                         <outlet property="activityIndicator" destination="LWx-BJ-yyj" id="iwx-qM-8iu"/>
                         <outlet property="albumArtworkImageView" destination="bqM-Yj-3pT" id="EBM-qR-WWH"/>
                         <outlet property="albumNameLabel" destination="EGP-Ip-Fb1" id="Uw1-0t-A3B"/>
+                        <outlet property="contanerForVolumeSlider" destination="ZvS-hZ-xfh" id="le9-AZ-vUk"/>
                         <outlet property="exitButton" destination="q6U-y1-izL" id="u5Y-Pm-oye"/>
                         <outlet property="nextButton" destination="BEv-Jl-D7n" id="Rx4-8b-kpb"/>
                         <outlet property="playButton" destination="q1f-cw-thb" id="6AK-Sk-E1E"/>
@@ -237,7 +235,6 @@
                         <outlet property="progressTimerLabel" destination="CVC-So-yHc" id="Jh5-6e-h0a"/>
                         <outlet property="songNameLabel" destination="X6u-8Q-6DM" id="xAn-uE-UHA"/>
                         <outlet property="totalLengthOfAudioLabel" destination="OAy-qB-yT2" id="iPo-1A-ckJ"/>
-                        <outlet property="volumeSlider" destination="cok-5I-Uci" id="jtS-GW-JDN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nCL-tZ-i5r" sceneMemberID="firstResponder"/>

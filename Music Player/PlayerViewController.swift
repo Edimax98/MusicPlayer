@@ -8,6 +8,7 @@
 
 import UIKit
 import KDEAudioPlayer
+import MediaPlayer
 
 class PlayerViewController: UIViewController {
     
@@ -20,7 +21,7 @@ class PlayerViewController: UIViewController {
     private var isAlbum = false
     private var isTimeEditing = false
     
-    @IBOutlet weak var volumeSlider: UISlider!
+    //@IBOutlet weak var volumeSlider: UISlider!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
@@ -32,6 +33,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var contanerForVolumeSlider: UIView!
     
     override var prefersStatusBarHidden : Bool {
         return true
@@ -49,6 +51,22 @@ class PlayerViewController: UIViewController {
         albumArtworkImageView.layer.borderWidth = 1
         albumArtworkImageView.layer.cornerRadius = albumArtworkImageView.frame.width / 2
         albumArtworkImageView.clipsToBounds = true
+        
+        contanerForVolumeSlider.backgroundColor = UIColor.clear
+        let myVolumeView = MPVolumeView(frame: CGRect(x: 0, y: 6.125,
+                                                      width: contanerForVolumeSlider.bounds.width, height: contanerForVolumeSlider.bounds.height))
+        myVolumeView.showsRouteButton = false
+        myVolumeView.autoresizingMask = .flexibleWidth
+        
+        let temp = myVolumeView.subviews
+        for current in temp {
+            if current.isKind(of: UISlider.self) {
+                let tempSlider = current as! UISlider
+                tempSlider.minimumTrackTintColor = .white
+                tempSlider.maximumTrackTintColor = UIColor(red: 82 / 255, green: 51 / 255, blue: 138 / 255, alpha: 1)
+            }
+        }
+        contanerForVolumeSlider.addSubview(myVolumeView)
     }
     
     class func instance() -> PlayerViewController {
@@ -187,7 +205,7 @@ extension PlayerViewController: AudioPlayerDelegate {
     
     func audioPlayer(_ audioPlayer: AudioPlayer, didUpdateProgressionTo time: TimeInterval, percentageRead: Float) {
         
-        volumeSlider.setValue(audioPlayer.volume, animated: true)
+       //volumeSlider.setValue(audioPlayer.volume, animated: true)
         if !isTimeEditing {
             playerProgressSlider.setValue(Float(time).rounded(), animated: false)
         }

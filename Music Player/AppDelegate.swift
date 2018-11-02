@@ -85,17 +85,19 @@ extension AppDelegate: SKPaymentTransactionObserver {
         print("User purchased product id: \(transaction.payment.productIdentifier)")
         queue.finishTransaction(transaction)
         SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
-            if success == false, shouldRetry == true {
-                SubscriptionService.shared.uploadReceipt { (_, _) in
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
-                    }
-                }
-            } else {
+            if success {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
                 }
             }
+//            } else if shouldRetry {
+//                SubscriptionService.shared.uploadReceipt { (success, _) in
+//                    guard success else { return }
+//                    DispatchQueue.main.async {
+//                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+//                    }
+//                }
+//            }
         }
     }
     
@@ -107,13 +109,15 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
                 }
-            } else if shouldRetry {
-                SubscriptionService.shared.uploadReceipt { (_, _) in
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
-                    }
-                }
             }
+//            } else if shouldRetry {
+//                SubscriptionService.shared.uploadReceipt { (success, _) in
+//                    guard success else { return }
+//                    DispatchQueue.main.async {
+//                        NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
+//                    }
+//                }
+//            }
         }
     }
     

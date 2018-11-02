@@ -12,7 +12,6 @@ class TodaysPlaylistCell: UITableViewCell {
     
     @IBOutlet weak var todaysPlaylistCollectionView: UICollectionView!
     
-    weak var albumHandler: AlbumsActionHandler?
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     fileprivate let cellWidth: CGFloat = 144
     fileprivate let cellHeight: CGFloat = 140

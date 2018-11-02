@@ -35,24 +35,17 @@ typealias SessionId = String
 
 class SubscriptionNetworkService {
     
-    let enviromentChangedToSandbox = Notification.Name("EnviromentChangeToSandbox")
     public static let shared = SubscriptionNetworkService()
     let simulatedStartDate: Date
     
     private var sessions = [SessionId: Session]()
     private var productionUrl = "https://buy.itunes.apple.com/verifyReceipt"
     private var sandboxUrl = "https://sandbox.itunes.apple.com/verifyReceipt"
-    private var currentUrl: String = "" {
-        willSet {
-            if newValue == sandboxUrl {
-                NotificationCenter.default.post(name: enviromentChangedToSandbox, object: currentUrl)
-            }
-        }
-    }
+    private var currentUrl: String = ""
     
     init() {
         let persistedDateKey = "SimulatedStartDate"
-        currentUrl = productionUrl
+        currentUrl = sandboxUrl
         if let persistedDate = UserDefaults.standard.object(forKey: persistedDateKey) as? Date {
             simulatedStartDate = persistedDate
         } else {
@@ -72,7 +65,6 @@ class SubscriptionNetworkService {
         request(currentUrl, method: .post, parameters: body, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             
             guard let responseValue = response.result.value else { completion(.failure(.internalError)); return }
-            
             switch response.result {
             case .success(_):
                 
