@@ -30,11 +30,6 @@
                                 </constraints>
                                 <color key="minimumTrackTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="maximumTrackTintColor" red="0.32156862745098036" green="0.20000000000000001" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="audioLocationSliderEditingDidEnd:" destination="aQQ-q3-Epd" eventType="valueChanged" id="BXd-tP-diK"/>
-                                    <action selector="editingEnded:" destination="aQQ-q3-Epd" eventType="touchUpOutside" id="Yd6-Zh-dGc"/>
-                                    <action selector="editingStarted:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="CGS-Zj-vN3"/>
-                                </connections>
                             </slider>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vinyl" translatesAutoresizingMaskIntoConstraints="NO" id="i6A-Jl-x93">
                                 <rect key="frame" x="37" y="93" width="300" height="300"/>

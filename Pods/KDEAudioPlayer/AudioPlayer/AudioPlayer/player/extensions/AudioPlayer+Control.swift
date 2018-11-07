@@ -60,10 +60,10 @@ extension AudioPlayer {
         if hasNext {
             next()
         } else {
-            stop()
+            pause()
         }
     }
-
+    
     /// Stops the player and clear the queue.
     public func stop() {
         retryEventProducer.stopProducingEvents()

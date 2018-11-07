@@ -21,9 +21,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SKPaymentQueue.default().add(self)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        window?.rootViewController = UIViewController()
+
+        let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+        mainView.accessStatus = .available
+        let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
+        
+        guard SubscriptionService.shared.hasReceiptData else {
+            self.window?.rootViewController = subscriptionInfoView
+            return true
+        }
+        
+        SubscriptionService.shared.uploadReceipt { (success,_) in
+            if success {
+               guard SubscriptionService.shared.currentSubscription != nil else {
+                    self.window?.rootViewController = subscriptionInfoView
+                    NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
+                    return
+                }
+                self.window?.rootViewController = mainView
+            } else {
+                self.window?.rootViewController = subscriptionInfoView
+            }
+        }
         SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
         return true
     }
     

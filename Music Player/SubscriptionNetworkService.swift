@@ -65,6 +65,7 @@ class SubscriptionNetworkService {
         request(currentUrl, method: .post, parameters: body, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             
             guard let responseValue = response.result.value else { completion(.failure(.internalError)); return }
+            print(responseValue)
             switch response.result {
             case .success(_):
                 

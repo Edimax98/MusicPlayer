@@ -27,7 +27,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessStatus = AccessStatus.available
+    var accessStatus = AccessStatus.denied
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
@@ -69,22 +69,6 @@ class MusicPlayerLandingPage: UIViewController {
         nowPlayingSongName.text = "Not playing".localized
         musicListVc.mediator.add(recipient: self)
         musicListVc.mediator.add(recipient: playerVc)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        cantFindPurchases()
-    }
-    
-    private func cantFindPurchases() {
-        
-        guard SubscriptionService.shared.currentSessionId != nil,
-            SubscriptionService.shared.hasReceiptData
-            else {
-                showRestoreAlert()
-                return
-        }
     }
     
     fileprivate func checkIfSongPartOfAlbum(_ song: Song) -> Bool {
@@ -97,24 +81,7 @@ class MusicPlayerLandingPage: UIViewController {
         }
     }
     
-    private func showRestoreInProgressAlert() {
-        let alert = UIAlertController(title: "Please wait.Restoring Purchase...", message: nil, preferredStyle: .alert)
-        present(alert, animated: true, completion: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleRestoreSuccessfull(notification:)), name:                       SubscriptionService.restoreSuccessfulNotification, object: nil)
-    }
-    
-    @objc func handleRestoreSuccessfull(notification: Notification) {
-        
-        if currentSubscription != nil {
-            accessStatus = .available
-        }
-        
-        if !wasSubscriptionSkipped && currentSubscription == nil {
-            performSegue(withIdentifier: "toSub", sender: self)
-        }
-    }
-    
-	private func registerCells(for tableView: UITableView) {
+    private func registerCells(for tableView: UITableView) {
 		
 		tableView.register(UINib(nibName: "UpperCell", bundle: nil), forCellReuseIdentifier: UpperCell.identifier)
 		tableView.register(UINib(nibName: "PreferencesCell", bundle: nil), forCellReuseIdentifier: PreferencesCell.identifier)
@@ -144,18 +111,15 @@ class MusicPlayerLandingPage: UIViewController {
             performSegue(withIdentifier: "toSub", sender: self)
             return
         }
-
-        guard let song = self.currentSong else { return }
-        userTappedOnController = true
-<<<<<<< HEAD
-        receive(model: song)
-
-//        if audioPlayer.state == .paused {
-//            audioPlayer.resume()
-//            return
-//        }
-=======
         
+        userTappedOnController = true
+        openCurrentSongInPlayer()
+    }
+    
+    fileprivate func openCurrentSongInPlayer() {
+        
+        guard let song = self.currentSong else { return }
+
         let mediator = Mediator()
         mediator.removeAllRecipients()
         mediator.add(recipient: playerVc)
@@ -174,7 +138,6 @@ class MusicPlayerLandingPage: UIViewController {
         playerVc.closeHandler = {
             popup.dismiss()
         }
->>>>>>> testing
     }
     
     @IBAction func playNextSongButtonPressed(_ sender: Any) {
@@ -396,9 +359,14 @@ extension MusicPlayerLandingPage: SongReceiver {
     
     func receive(model: Song) {
     
+        if currentSong != nil && currentSong == model {
+            openCurrentSongInPlayer()
+            return
+        }
+        
         self.currentSong = model
         userTappedOnController = false
-
+        
         guard accessStatus == .available else {
             performSegue(withIdentifier: "toSub", sender: self)
             return
@@ -479,15 +447,27 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         switch audioPlayer.state {
         case .buffering:
             audioPlayer.pause()
+            playButton.isSelected = false
         case .playing:
             audioPlayer.pause()
+            playButton.isSelected = false
         case .paused:
             audioPlayer.resume()
+            playButton.isSelected = true
         case .stopped:
-            guard let items = audioPlayer.items else { return }
-            audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
+            playButton.isSelected = false
+            
+            if let song = currentSong {
+                guard let item = createItem(with: song.audioPath) else { return }
+                audioPlayer.play(item: item)
+            } else {
+                guard let items = audioPlayer.items else { return }
+                audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
+            }
+            
         case .waitingForConnection:
             audioPlayer.pause()
+            playButton.isSelected = false
         case .failed(let error):
             print("failed", error)
         }
@@ -497,6 +477,7 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         
         if audioPlayer.items?.count == 1 {
             audioPlayer.pause()
+            playButton.isSelected = false
             audioPlayer.seek(to: 0)
             return
         }
@@ -515,6 +496,7 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
 
         if audioPlayer.items?.count == 1 {
             audioPlayer.pause()
+            playButton.isSelected = false
             audioPlayer.seek(to: 0)
             return
         }
