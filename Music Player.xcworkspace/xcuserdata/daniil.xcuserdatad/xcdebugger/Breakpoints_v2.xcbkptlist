@@ -6,80 +6,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/SubscriptionService.swift"
-            timestampString = "563299087.0237629"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.340104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "uploadReceipt(completion:)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/Session.swift"
-            timestampString = "563299087.024129"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.3404551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "isEligibleForTrial"
-            landmarkType = "24">
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/Session.swift"
-            timestampString = "563299087.024331"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.340677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "isEligibleForTrial"
-            landmarkType = "24">
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/Session.swift"
-            timestampString = "563299087.024379"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.340888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "isEligibleForTrial"
-            landmarkType = "24">
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Music Player/SubscriptionService.swift"
-            timestampString = "563299087.024429"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.3411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "uploadReceipt(completion:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.341307"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.341513"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/KDEAudioPlayer/AudioPlayer/AudioPlayer/utils/MPNowPlayingInfoCenter+AudioItem.swift"
+            timestampString = "563383726.341718"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "ap_update(with:duration:progression:playbackRate:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

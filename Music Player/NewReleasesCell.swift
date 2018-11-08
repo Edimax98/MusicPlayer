@@ -61,7 +61,7 @@ extension NewReleasesCell: UICollectionViewDelegate {
             i += 1
         }
         
-        guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
+        //guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
         mediator.send(album: album)
     }
 }

@@ -12,9 +12,7 @@ import MediaPlayer
 
 class PlayerViewController: UIViewController {
     
-    var songWasSelected: ((_ song: Song) -> Void)?
     var closeHandler: (() -> Void)?
-
     weak var playerDelegate: PlayerViewControllerDelegate?
     
     fileprivate var song: Song?
@@ -209,7 +207,6 @@ extension PlayerViewController: AudioPlayerDelegate {
         }
         let secondsAndMinutes = secondsToMinutesSeconds(seconds: UInt(time))
         progressTimerLabel.text = String(format: "%02i:%02i", secondsAndMinutes.minutes, secondsAndMinutes.seconds)
-        print(percentageRead)
         if percentageRead.rounded() == 100 {
             resetSlider()
         }

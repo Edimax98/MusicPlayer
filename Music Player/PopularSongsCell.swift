@@ -52,7 +52,7 @@ extension PopularSongsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let song = songsDataSource.getSongs()[indexPath.row]
-        guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
+        //guard mediator.recipients.isEmpty == false else { mediator.denyAccess(); return }
         mediator.send(song: song)
     }
 }

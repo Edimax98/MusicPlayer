@@ -234,7 +234,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-            guard accessStatus == .available else { return cell }
+           // guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 3:
@@ -245,7 +245,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchNewAlbums(amount: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-            guard accessStatus == .available else { return cell }
+           // guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 4:
@@ -256,7 +256,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchSong(10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-            guard accessStatus == .available else { return cell }
+            //guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: playerVc)
             return cell
         default:
@@ -367,12 +367,12 @@ extension MusicPlayerLandingPage: SongReceiver {
         self.currentSong = model
         userTappedOnController = false
         
-        guard accessStatus == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
+        if accessStatus == .available {
+            playSong(model)
+        } else {
+            playSong(model)
+            audioPlayer.pause()
         }
-        
-        playSong(model)
         audioPlayer.delegate = playerVc
         setupNowPlayingView(with: model)
         
@@ -402,11 +402,6 @@ extension MusicPlayerLandingPage: Reciever {
 extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
-        
-        guard accessStatus == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
-        }
         
         self.tracks = model.songs
         audioPlayer.delegate = musicListVc
@@ -443,6 +438,11 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
     }
     
     func didPressPlayButton() {
+    
+        guard accessStatus == .available else {
+            performSegue(withIdentifier: "toSub", sender: self)
+            return
+        }
         
         switch audioPlayer.state {
         case .buffering:

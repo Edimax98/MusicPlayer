@@ -55,9 +55,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6u-8Q-6DM">
-                                <rect key="frame" x="63" y="71" width="249" height="23"/>
+                                <rect key="frame" x="63" y="71" width="249" height="18.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="X6u-8Q-6DM" secondAttribute="height" multiplier="249:23" id="ssf-fm-CTq"/>
+                                    <constraint firstAttribute="height" constant="18.5" id="z1e-rO-Ysa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                 <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -117,7 +117,7 @@
                                             <action selector="previous:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="ahK-cB-9Od"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q1f-cw-thb" userLabel="Button play">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q1f-cw-thb" userLabel="Button play">
                                         <rect key="frame" x="105" y="0.0" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="eAS-Wf-aL4"/>
@@ -188,8 +188,8 @@
                             <constraint firstItem="sua-4h-lzZ" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="19" id="AkJ-yo-Rbo"/>
                             <constraint firstItem="bqM-Yj-3pT" firstAttribute="centerX" secondItem="i6A-Jl-x93" secondAttribute="centerX" id="DMZ-9H-0bU"/>
                             <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="-7" id="E5X-KS-xqD"/>
-                            <constraint firstItem="i6A-Jl-x93" firstAttribute="top" secondItem="EGP-Ip-Fb1" secondAttribute="bottom" constant="30" id="Fbg-zy-HxF"/>
                             <constraint firstItem="sua-4h-lzZ" firstAttribute="top" secondItem="9W5-3B-gRs" secondAttribute="bottom" constant="28" id="HAW-fL-Z2n"/>
+                            <constraint firstItem="X6u-8Q-6DM" firstAttribute="top" secondItem="EGP-Ip-Fb1" secondAttribute="bottom" constant="8" id="Ikq-me-rj9"/>
                             <constraint firstItem="EGP-Ip-Fb1" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="63" id="Ir9-Sr-70f"/>
                             <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" id="LN8-Mf-6Ej"/>
                             <constraint firstItem="LWx-BJ-yyj" firstAttribute="centerX" secondItem="bqM-Yj-3pT" secondAttribute="centerX" id="MVM-K0-DG6"/>
@@ -205,14 +205,13 @@
                             <constraint firstItem="LWx-BJ-yyj" firstAttribute="centerY" secondItem="bqM-Yj-3pT" secondAttribute="centerY" id="dLY-bH-9F2"/>
                             <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="4Og-O4-tMM" secondAttribute="trailing" constant="25" id="f2Y-7g-X9p"/>
                             <constraint firstItem="xF8-4d-e2m" firstAttribute="top" secondItem="sua-4h-lzZ" secondAttribute="bottom" priority="999" constant="69" id="ihD-ev-g79"/>
-                            <constraint firstItem="EGP-Ip-Fb1" firstAttribute="top" secondItem="Q8O-Lu-JFe" secondAttribute="bottom" constant="20" id="jHn-Rz-HeR"/>
+                            <constraint firstItem="EGP-Ip-Fb1" firstAttribute="top" secondItem="GF2-g4-Q37" secondAttribute="top" constant="40" id="jHn-Rz-HeR"/>
                             <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="sua-4h-lzZ" secondAttribute="trailing" constant="19" id="ldQ-WN-dWU"/>
                             <constraint firstItem="bqM-Yj-3pT" firstAttribute="centerY" secondItem="i6A-Jl-x93" secondAttribute="centerY" id="mmO-xJ-hwt"/>
                             <constraint firstItem="9W5-3B-gRs" firstAttribute="centerX" secondItem="Iqf-Jw-cSt" secondAttribute="centerX" id="qRa-qB-hOk"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="24" id="qRq-bP-Npz"/>
                             <constraint firstItem="OAy-qB-yT2" firstAttribute="top" secondItem="4Og-O4-tMM" secondAttribute="bottom" constant="3" id="wGu-4o-7v7"/>
                             <constraint firstItem="i6A-Jl-x93" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="37" id="wfN-DA-4Fb"/>
-                            <constraint firstItem="X6u-8Q-6DM" firstAttribute="top" secondItem="EGP-Ip-Fb1" secondAttribute="bottom" constant="8" id="xjG-lq-k7r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Iqf-Jw-cSt"/>
                     </view>

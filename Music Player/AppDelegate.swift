@@ -15,45 +15,57 @@ import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-                            
+    
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SKPaymentQueue.default().add(self)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
-        window?.rootViewController = UIViewController()
-
         let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
-        mainView.accessStatus = .available
         let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        window?.rootViewController = mainView
+        
+        SubscriptionService.shared.loadSubscriptionOptions()
         guard SubscriptionService.shared.hasReceiptData else {
             self.window?.rootViewController = subscriptionInfoView
             return true
         }
         
-        SubscriptionService.shared.uploadReceipt { (success,_) in
+        SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
             if success {
-               guard SubscriptionService.shared.currentSubscription != nil else {
+                guard SubscriptionService.shared.currentSubscription != nil else {
                     self.window?.rootViewController = subscriptionInfoView
                     NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
                     return
                 }
-                self.window?.rootViewController = mainView
-            } else {
+                mainView.accessStatus = .available
+            } else if !shouldRetry {
                 self.window?.rootViewController = subscriptionInfoView
+            } else if shouldRetry {
+                SubscriptionService.shared.uploadReceipt { (success, _) in
+                    if success {
+                        guard SubscriptionService.shared.currentSubscription != nil else {
+                            self.window?.rootViewController = subscriptionInfoView
+                            NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
+                            return
+                        }
+                        mainView.accessStatus = .available
+                    } else {
+                        self.window?.rootViewController = subscriptionInfoView
+                    }
+                }
             }
         }
-        SubscriptionService.shared.loadSubscriptionOptions()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-
+        
         let option = DeepLinkOption.build(with: userActivity)
         DeepLinkNavigator.shared.proceed(with: option)
         return true
@@ -82,7 +94,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
             NotificationCenter.default.post(name: SubscriptionService.nothingToRestoreNotification, object: nil)
         }
     }
- 
+    
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
         for transaction in transactions {
@@ -114,15 +126,14 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
                 }
+            } else {
+                SubscriptionService.shared.uploadReceipt { (success, _) in
+                    guard success else { return }
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+                    }
+                }
             }
-//            } else if shouldRetry {
-//                SubscriptionService.shared.uploadReceipt { (success, _) in
-//                    guard success else { return }
-//                    DispatchQueue.main.async {
-//                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
-//                    }
-//                }
-//            }
         }
     }
     
@@ -134,21 +145,21 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
                 }
+            } else {
+                SubscriptionService.shared.uploadReceipt { (success, _) in
+                    guard success else { return }
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
+                    }
+                }
             }
-//            } else if shouldRetry {
-//                SubscriptionService.shared.uploadReceipt { (success, _) in
-//                    guard success else { return }
-//                    DispatchQueue.main.async {
-//                        NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
-//                    }
-//                }
-//            }
         }
     }
     
     func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
         queue.finishTransaction(transaction)
+        NotificationCenter.default.post(name: SubscriptionService.purchaseFailedNotification, object: nil)
     }
     
     func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
