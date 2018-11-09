@@ -9,6 +9,9 @@
 import UIKit
 import AVFoundation
 import KDEAudioPlayer
+import FBSDKCoreKit
+import FacebookCore
+import FBAudienceNetwork
 
 enum AccessStatus {
     case available
@@ -22,12 +25,13 @@ class MusicPlayerLandingPage: UIViewController {
     @IBOutlet weak var nowPlayingSongName: UILabel!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var containerForAd: UIView!
     
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessStatus = AccessStatus.denied
+    var accessStatus = AccessStatus.available
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
@@ -40,8 +44,10 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let currentSubscription = SubscriptionService.shared.currentSubscription
     fileprivate let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
     fileprivate let musicListVc = MusicListViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
-    
+    let fullScreenAd = FBInterstitialAd(placementID: "2094400630876165_2124263474556547")
+
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
+
 
 	override var prefersStatusBarHidden: Bool {
         return true
@@ -53,7 +59,13 @@ class MusicPlayerLandingPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
+        let adView = FBAdView(placementID: "2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.frame = containerForAd.bounds
+        containerForAd.addSubview(adView)
+        adView.delegate = self
+        adView.loadAd()
+        
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -94,10 +106,10 @@ class MusicPlayerLandingPage: UIViewController {
 	
 	private func fillDataSource() {
 		
-		let brightPink = UIColor(red: 244/255.0, green:64/255.0, blue:113/255.0, alpha:1/1.0)
-		let lightPurple = UIColor(red: 144/255.0, green:19/255.0, blue:254/255.0, alpha:1/1.0)
-		let lightBlue = UIColor(red: 53/255.0, green:181/255.0, blue:214/255.0, alpha:1/1.0)
-		let pink = UIColor(red: 226/255.0, green:65/255.0, blue:170/255.0, alpha:1/1.0)
+        let brightPink = UIColor(red: 244/255.0, green:64/255.0, blue:113/255.0, alpha:1/1.0)
+        let lightPurple = UIColor(red: 144/255.0, green:19/255.0, blue:254/255.0, alpha:1/1.0)
+        let lightBlue = UIColor(red: 53/255.0, green:181/255.0, blue:214/255.0, alpha:1/1.0)
+        let pink = UIColor(red: 226/255.0, green:65/255.0, blue:170/255.0, alpha:1/1.0)
 		
 		dataSource.append(HeaderData(icon: "section1", title: "Customise your Preferences".localized, dividerColor: lightBlue))
 		dataSource.append(HeaderData(icon: "section2", title: "Playlists for today".localized, dividerColor: lightPurple))
@@ -234,7 +246,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-           // guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 3:
@@ -245,7 +256,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchNewAlbums(amount: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-           // guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 4:
@@ -256,7 +266,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchSong(10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
-            //guard accessStatus == .available else { return cell }
             cell.mediator.add(recipient: playerVc)
             return cell
         default:
@@ -402,6 +411,13 @@ extension MusicPlayerLandingPage: Reciever {
 extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
+
+        fullScreenAd.load()
+        fullScreenAd.delegate = self
+
+        if fullScreenAd.isAdValid {
+            fullScreenAd.show(fromRootViewController: self)
+        }
         
         self.tracks = model.songs
         audioPlayer.delegate = musicListVc
@@ -510,4 +526,26 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
             completion(tracks[0])
         }
 	}
+}
+
+// MARK: - FBAdViewDelegate
+extension MusicPlayerLandingPage: FBAdViewDelegate {
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+    }
+}
+
+extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
+    
+    func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
+      fullScreenAd.show(fromRootViewController: self)
+    }
+    
+    func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
+        print("error - ", error.localizedDescription)
+    }
 }

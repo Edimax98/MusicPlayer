@@ -65,7 +65,6 @@ class SubscriptionInfoViewController: UIViewController {
             self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + price
         }
         
-        guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
     }
     

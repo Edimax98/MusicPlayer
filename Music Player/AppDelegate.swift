@@ -12,15 +12,14 @@ import StoreKit
 import MediaPlayer
 import FacebookCore
 import FBSDKCoreKit
+import FBAudienceNetwork
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        SKPaymentQueue.default().add(self)
+    private func setupRootController() {
         
         let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
         let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
@@ -32,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubscriptionService.shared.loadSubscriptionOptions()
         guard SubscriptionService.shared.hasReceiptData else {
             self.window?.rootViewController = subscriptionInfoView
-            return true
+            return
         }
         
         SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
@@ -60,6 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        SKPaymentQueue.default().add(self)
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }

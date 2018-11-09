@@ -7,4 +7,5 @@ target 'Music Player' do
     pod 'SwiftyJSON', '~> 4.0'
     pod 'AlamofireImage'
     pod 'KDEAudioPlayer'
+    pod 'FBAudienceNetwork'
 end

@@ -11,6 +11,7 @@ PODS:
   - FacebookCore (0.3.2):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.35)
+  - FBAudienceNetwork (5.0.0)
   - FBSDKCoreKit (4.36.0):
     - Bolts (~> 1.7)
   - KDEAudioPlayer (1.1.0)
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireImage
   - FacebookCore
+  - FBAudienceNetwork
   - KDEAudioPlayer
   - SwiftyJSON (~> 4.0)
 
@@ -29,6 +31,7 @@ SPEC REPOS:
     - AlamofireImage
     - Bolts
     - FacebookCore
+    - FBAudienceNetwork
     - FBSDKCoreKit
     - KDEAudioPlayer
     - SwiftyJSON
@@ -38,10 +41,11 @@ SPEC CHECKSUMS:
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FacebookCore: fe93222bb70346730ef33b061d493e9e7a7cb1f5
+  FBAudienceNetwork: 34b5ff6fa69ac7306aff6c25e8c3891adc88d446
   FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
   KDEAudioPlayer: b3787f02b6718c2416589a7726f2633cde2cd60e
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: aa2fb3ece5b0f71cc963f8b087ae472e96a6c3dd
+PODFILE CHECKSUM: 294032f163c2c3010d55802fe9ddbafe32794c01
 
 COCOAPODS: 1.5.2
