@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
                     return
                 }
-                mainView.accessStatus = .available
+                mainView.accessState = .available
             } else if !shouldRetry {
                 self.window?.rootViewController = subscriptionInfoView
             } else if shouldRetry {
@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
                             return
                         }
-                        mainView.accessStatus = .available
+                        mainView.accessState = .available
                     } else {
                         self.window?.rootViewController = subscriptionInfoView
                     }

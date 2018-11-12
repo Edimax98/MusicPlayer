@@ -1,27 +1,27 @@
 PODS:
   - Alamofire (4.7.3)
-  - AlamofireImage (3.3.1):
-    - Alamofire (~> 4.5)
+  - AlamofireImage (3.4.1):
+    - Alamofire (~> 4.7)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - FacebookCore (0.3.2):
-    - Bolts (~> 1.8)
-    - FBSDKCoreKit (~> 4.35)
-  - FBAudienceNetwork (5.0.0)
-  - FBSDKCoreKit (4.36.0):
-    - Bolts (~> 1.7)
+  - FacebookCore (0.5.0):
+    - Bolts (~> 1.9)
+    - FBSDKCoreKit (~> 4.37)
+  - FBAudienceNetwork (5.0.2)
+  - FBSDKCoreKit (4.38.1):
+    - Bolts (~> 1.9)
   - KDEAudioPlayer (1.1.0)
-  - SwiftyJSON (4.1.0)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireImage
   - FacebookCore
-  - FBAudienceNetwork
+  - FBAudienceNetwork (~> 5.0.1)
   - KDEAudioPlayer
   - SwiftyJSON (~> 4.0)
 
@@ -38,14 +38,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  FacebookCore: fe93222bb70346730ef33b061d493e9e7a7cb1f5
-  FBAudienceNetwork: 34b5ff6fa69ac7306aff6c25e8c3891adc88d446
-  FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
+  FacebookCore: 74288d0add931d361b1596beae787ab72c438249
+  FBAudienceNetwork: 2fd6739135cc15b3260c4d25b6cc7d414afdb2e8
+  FBSDKCoreKit: 8d47857400e2f5bdea697a80daff882e91c84ef6
   KDEAudioPlayer: b3787f02b6718c2416589a7726f2633cde2cd60e
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 294032f163c2c3010d55802fe9ddbafe32794c01
+PODFILE CHECKSUM: aae91f3078d5989940e6edc12230f81cc77689ab
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

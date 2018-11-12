@@ -22,3 +22,17 @@ extension UIViewController {
         return instantiateControllerInStoryboard(storyboard, identifier: nameOfClass)
     }
 }
+
+extension UIAlertController {
+    
+    class func displayLoadingAlert(on viewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "Loading...", message: nil, preferredStyle: .alert)
+        alert.view.tintColor = UIColor.black
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50)) as UIActivityIndicatorView
+        spinner.hidesWhenStopped = true
+        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        spinner.startAnimating()
+        alert.view.addSubview(spinner)
+        return alert
+    }
+}

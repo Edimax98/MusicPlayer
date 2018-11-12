@@ -127,6 +127,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="luB-Sf-ECE" id="VMg-9f-j0q"/>
                         <outlet property="containerForAd" destination="xui-QN-q18" id="BNW-wM-uyd"/>
+                        <outlet property="containerHeightConstraint" destination="9rH-HP-O6C" id="5jO-c8-tXl"/>
                         <outlet property="nowPlayingSongCover" destination="FWj-ry-Lcv" id="RWx-4E-rYd"/>
                         <outlet property="nowPlayingSongName" destination="7oW-3a-mAd" id="cNm-zT-Q9T"/>
                         <outlet property="playButton" destination="JCV-K7-f9q" id="erj-z2-Zie"/>

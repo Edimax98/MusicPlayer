@@ -20,7 +20,7 @@ class SubscriptionInfoViewController: UIViewController {
     @IBOutlet weak var trialTermsLabel: UILabel!
     
     var subscription: Subscription?
-    var status = AccessStatus.denied
+    var status = AccessState.denied
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -75,7 +75,7 @@ class SubscriptionInfoViewController: UIViewController {
             if let destinationVc = segue.destination as? MusicPlayerLandingPage {
                 destinationVc.wasSubscriptionSkipped = true
                 if self.status == .available {
-                    destinationVc.accessStatus = .available
+                    destinationVc.accessState = .available
                 }
             }
         }
