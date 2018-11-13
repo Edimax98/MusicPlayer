@@ -38,7 +38,7 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
         if isAlbum {
             exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
         }

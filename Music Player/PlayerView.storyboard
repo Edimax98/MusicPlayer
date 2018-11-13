@@ -63,17 +63,6 @@
                                 <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6U-y1-izL">
-                                <rect key="frame" x="305" y="4" width="70" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="KjG-fe-gBI"/>
-                                    <constraint firstAttribute="height" constant="70" id="uw8-0j-CNU"/>
-                                </constraints>
-                                <state key="normal" image="exit_player"/>
-                                <connections>
-                                    <action selector="hidePlayerButtonPressed:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="W4l-Kt-qYt"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVC-So-yHc">
                                 <rect key="frame" x="24" y="422" width="33" height="15"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
@@ -177,25 +166,36 @@
                                     </imageView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6U-y1-izL">
+                                <rect key="frame" x="332" y="20" width="27" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="27" id="KjG-fe-gBI"/>
+                                    <constraint firstAttribute="height" constant="27" id="uw8-0j-CNU"/>
+                                </constraints>
+                                <state key="normal" image="exit_player"/>
+                                <connections>
+                                    <action selector="hidePlayerButtonPressed:" destination="aQQ-q3-Epd" eventType="touchUpInside" id="W4l-Kt-qYt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="X6u-8Q-6DM" secondAttribute="trailing" constant="-7" id="4Eh-y7-ecD"/>
+                            <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="X6u-8Q-6DM" secondAttribute="trailing" constant="20" id="4Eh-y7-ecD"/>
                             <constraint firstItem="fFq-To-7ex" firstAttribute="leading" secondItem="GF2-g4-Q37" secondAttribute="leading" id="4Kt-Xw-cWs"/>
                             <constraint firstItem="Iqf-Jw-cSt" firstAttribute="trailing" secondItem="OAy-qB-yT2" secondAttribute="trailing" constant="26" id="6yf-Zm-KvV"/>
                             <constraint firstItem="CVC-So-yHc" firstAttribute="top" secondItem="4Og-O4-tMM" secondAttribute="bottom" constant="3" id="7XF-KO-vYm"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="trailing" secondItem="OAy-qB-yT2" secondAttribute="trailing" constant="1" id="AVv-xE-3xj"/>
                             <constraint firstItem="sua-4h-lzZ" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="19" id="AkJ-yo-Rbo"/>
                             <constraint firstItem="bqM-Yj-3pT" firstAttribute="centerX" secondItem="i6A-Jl-x93" secondAttribute="centerX" id="DMZ-9H-0bU"/>
-                            <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="-7" id="E5X-KS-xqD"/>
+                            <constraint firstItem="q6U-y1-izL" firstAttribute="leading" secondItem="EGP-Ip-Fb1" secondAttribute="trailing" constant="20" id="E5X-KS-xqD"/>
                             <constraint firstItem="sua-4h-lzZ" firstAttribute="top" secondItem="9W5-3B-gRs" secondAttribute="bottom" constant="28" id="HAW-fL-Z2n"/>
                             <constraint firstItem="X6u-8Q-6DM" firstAttribute="top" secondItem="EGP-Ip-Fb1" secondAttribute="bottom" constant="8" id="Ikq-me-rj9"/>
                             <constraint firstItem="EGP-Ip-Fb1" firstAttribute="leading" secondItem="Iqf-Jw-cSt" secondAttribute="leading" constant="63" id="Ir9-Sr-70f"/>
-                            <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" id="LN8-Mf-6Ej"/>
+                            <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" constant="-16" id="LN8-Mf-6Ej"/>
                             <constraint firstItem="LWx-BJ-yyj" firstAttribute="centerX" secondItem="bqM-Yj-3pT" secondAttribute="centerX" id="MVM-K0-DG6"/>
-                            <constraint firstItem="fFq-To-7ex" firstAttribute="trailing" secondItem="q6U-y1-izL" secondAttribute="trailing" id="Nol-cS-XFu"/>
-                            <constraint firstItem="q6U-y1-izL" firstAttribute="top" secondItem="GF2-g4-Q37" secondAttribute="top" constant="4" id="PVu-aj-Gbr"/>
-                            <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" id="RGF-ey-cUr"/>
+                            <constraint firstItem="fFq-To-7ex" firstAttribute="trailing" secondItem="q6U-y1-izL" secondAttribute="trailing" constant="16" id="Nol-cS-XFu"/>
+                            <constraint firstItem="q6U-y1-izL" firstAttribute="top" secondItem="GF2-g4-Q37" secondAttribute="top" constant="20" id="PVu-aj-Gbr"/>
+                            <constraint firstItem="q6U-y1-izL" firstAttribute="trailing" secondItem="Iqf-Jw-cSt" secondAttribute="trailing" constant="-16" id="RGF-ey-cUr"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="leading" secondItem="CVC-So-yHc" secondAttribute="leading" id="WEs-Cv-tgT"/>
                             <constraint firstItem="4Og-O4-tMM" firstAttribute="top" secondItem="i6A-Jl-x93" secondAttribute="bottom" constant="-4" id="XgT-nx-wTW"/>
                             <constraint firstItem="fFq-To-7ex" firstAttribute="top" secondItem="GF2-g4-Q37" secondAttribute="top" id="YFt-5T-zO9"/>
@@ -239,7 +239,7 @@
     <resources>
         <image name="Vinyl" width="618" height="618"/>
         <image name="Wave" width="2995" height="510"/>
-        <image name="exit_player" width="98" height="98"/>
+        <image name="exit_player" width="42" height="42"/>
         <image name="next_track" width="114" height="116"/>
         <image name="play_track" width="141" height="141"/>
         <image name="playlist2" width="200" height="150"/>

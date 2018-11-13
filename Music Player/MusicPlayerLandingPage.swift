@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation
+import MediaPlayer
 import KDEAudioPlayer
 import FBSDKCoreKit
 import FacebookCore
@@ -36,7 +36,11 @@ class MusicPlayerLandingPage: UIViewController {
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
-    fileprivate var currentSong: Song?
+    fileprivate var currentSong: Song? {
+        didSet {
+            setupImageForCommandCenter()
+        }
+    }
     fileprivate var dataSource = [HeaderData]()
     fileprivate var currentAudioIndex = 0
     fileprivate var userTappedOnController = false
@@ -62,15 +66,15 @@ class MusicPlayerLandingPage: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if accessState == .denied {
-            let adView = FBAdView(placementID: "VID_HD_16_9_46S_APP_INSTALL#2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        //if accessState == .denied {
+            let adView = FBAdView(placementID: "2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
             adView.frame = containerForAd.bounds
             containerForAd.addSubview(adView)
             adView.delegate = self
             adView.loadAd()
-        } else {
-            containerHeightConstraint.constant = 0.0
-        }
+//        } else {
+//            containerHeightConstraint.constant = 0.0
+//        }
         
         tableView.separatorStyle = .none
         tableView.delegate = self
@@ -87,6 +91,7 @@ class MusicPlayerLandingPage: UIViewController {
         nowPlayingSongName.text = "Not playing".localized
         musicListVc.mediator.add(recipient: self)
         musicListVc.mediator.add(recipient: playerVc)
+        setupRemoteTransportControls()
     }
     
     fileprivate func checkIfSongPartOfAlbum(_ song: Song) -> Bool {
@@ -221,7 +226,7 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     fileprivate func loadFullScreenAd() {
-        fullScreenAd = FBInterstitialAd(placementID: "VID_HD_16_9_46S_APP_INSTALL#2094400630876165_2124263474556547")
+        fullScreenAd = FBInterstitialAd(placementID: "2094400630876165_2124263474556547")
         fullScreenAd.load()
         fullScreenAd.delegate = self
         loadingAlert = UIAlertController.displayLoadingAlert(on: self)
@@ -266,6 +271,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
             cell.mediator.add(recipient: musicListVc)
+            cell.mediator.add(recipient: playerVc)
             return cell
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewReleasesCell.identifier, for: indexPath) as? NewReleasesCell else {
@@ -275,6 +281,7 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             interactor?.fetchNewAlbums(amount: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
+            cell.mediator.add(recipient: playerVc)
             cell.mediator.add(recipient: musicListVc)
             return cell
         case 4:
@@ -381,6 +388,48 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         setCurrentIndex(from: startSong)
         audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
     }
+    
+    func setupRemoteTransportControls() {
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            if self.audioPlayer.state == .paused {
+                self.audioPlayer.resume()
+                return .success
+            }
+            return .commandFailed
+        }
+    
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            if self.audioPlayer.state == .playing {
+                self.audioPlayer.pause()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        commandCenter.nextTrackCommand.addTarget { [unowned self] event in
+            self.didPressNextButton { _ in }
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.addTarget { [unowned self] event in
+            self.didPressPreviousButton { _ in  }
+            return .success
+        }
+    }
+    
+    func setupImageForCommandCenter() {
+        
+        guard let currentSong = self.currentSong, let image = currentSong.image else { return }
+        
+        let imageForCommandCenter = MPMediaItemArtwork(boundsSize: image.size) { _ in
+            return image
+            
+        }
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = imageForCommandCenter
+    }
 }
 
 extension MusicPlayerLandingPage: SongReceiver {
@@ -431,11 +480,9 @@ extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
         
-        if accessState == .denied {
-            loadFullScreenAd()
-        }
+        loadFullScreenAd()
         
-        self.tracks = model.songs
+        self.tracks.append(contentsOf: model.songs)
         audioPlayer.delegate = musicListVc
         musicListVc.playerDelegate = self
         
@@ -447,7 +494,6 @@ extension MusicPlayerLandingPage: AlbumReceiver {
                     .scrollable(false),
                     .backgroundStyle(.blackFilter(alpha: 0.7))
                 ])
-            
             .show(musicListVc)
         
         musicListVc.closeHandler = {
@@ -507,26 +553,37 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
     
 	func didPressNextButton(completion: @escaping (_ newSong: Song) -> Void) {
         
-        if audioPlayer.items?.count == 1 {
+        guard let index = audioPlayer.currentItemIndexInQueue else { completion(tracks[0]); return }
+        guard let items = audioPlayer.items else { return }
+    
+        if items.count == 1 {
             audioPlayer.pause()
             playButton.isSelected = false
             audioPlayer.seek(to: 0)
             return
         }
         
-		audioPlayer.next()
-        
-        if let index = audioPlayer.currentItemIndexInQueue {
-            completion(tracks[index])
-            setupNowPlayingView(with: tracks[index])
-        } else {
+        if index == items.count - 1 {
+            audioPlayer.stop()
+            audioPlayer.play(items: createItems(with: tracks.map { $0.audioPath })!, startAtIndex: 0)
+            audioPlayer.pause()
             completion(tracks[0])
+            setupNowPlayingView(with: tracks[0])
+            return
         }
+        
+		audioPlayer.next()
+        guard let newIndex = audioPlayer.currentItemIndexInQueue else { completion(tracks[0]); return }
+        completion(tracks[newIndex])
+        setupNowPlayingView(with: tracks[newIndex])
     }
 	
 	func didPressPreviousButton(completion: @escaping (Song) -> Void) {
 
-        if audioPlayer.items?.count == 1 {
+        guard let index = audioPlayer.currentItemIndexInQueue else { completion(tracks[0]); return }
+        guard let items = audioPlayer.items else { return }
+        
+        if items.count == 1 || index == 0 {
             audioPlayer.pause()
             playButton.isSelected = false
             audioPlayer.seek(to: 0)
@@ -534,13 +591,9 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         }
         
         audioPlayer.previous()
-        
-        if let index = audioPlayer.currentItemIndexInQueue {
-            completion(tracks[index])
-            setupNowPlayingView(with: tracks[index])
-        } else {
-            completion(tracks[0])
-        }
+        guard let newIndex = audioPlayer.currentItemIndexInQueue else { return }
+        completion(tracks[newIndex])
+        setupNowPlayingView(with: tracks[newIndex])
 	}
 }
 
@@ -563,6 +616,9 @@ extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
     }
     
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
+        if loadingAlert != nil {
+            loadingAlert.dismiss(animated: true, completion: nil)
+        }
         print("error - ", error.localizedDescription)
     }
 }

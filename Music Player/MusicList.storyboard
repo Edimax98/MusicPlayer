@@ -47,10 +47,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H1c-Cw-kK0">
-                                <rect key="frame" x="325" y="4" width="50" height="50"/>
+                                <rect key="frame" x="332" y="20" width="27" height="27"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Pfu-R4-l0E"/>
-                                    <constraint firstAttribute="width" constant="50" id="U97-WX-7yJ"/>
+                                    <constraint firstAttribute="height" constant="27" id="Pfu-R4-l0E"/>
+                                    <constraint firstAttribute="width" constant="27" id="U97-WX-7yJ"/>
                                 </constraints>
                                 <state key="normal" image="exit_player"/>
                                 <connections>
@@ -62,11 +62,11 @@
                         <constraints>
                             <constraint firstItem="Mpd-pK-cZ1" firstAttribute="top" secondItem="ylu-r5-7lx" secondAttribute="bottom" constant="8" id="5yi-K3-Gtf"/>
                             <constraint firstItem="PER-3h-HpV" firstAttribute="leading" secondItem="P1a-Ut-2fa" secondAttribute="leading" id="8qE-Of-xIU"/>
-                            <constraint firstItem="sWj-qn-mB7" firstAttribute="top" secondItem="H1c-Cw-kK0" secondAttribute="bottom" constant="64" id="8rE-MY-pDy"/>
+                            <constraint firstItem="sWj-qn-mB7" firstAttribute="top" secondItem="H1c-Cw-kK0" secondAttribute="bottom" constant="71" id="8rE-MY-pDy"/>
                             <constraint firstItem="sWj-qn-mB7" firstAttribute="bottom" secondItem="P1a-Ut-2fa" secondAttribute="bottom" id="JGn-yM-eWm"/>
                             <constraint firstItem="Mpd-pK-cZ1" firstAttribute="leading" secondItem="P1a-Ut-2fa" secondAttribute="leading" constant="50" id="PG0-W6-4dC"/>
                             <constraint firstItem="sWj-qn-mB7" firstAttribute="trailing" secondItem="P1a-Ut-2fa" secondAttribute="trailing" id="Pjk-Kq-ugS"/>
-                            <constraint firstItem="P1a-Ut-2fa" firstAttribute="trailing" secondItem="H1c-Cw-kK0" secondAttribute="trailing" id="Uek-Ve-1Nl"/>
+                            <constraint firstItem="P1a-Ut-2fa" firstAttribute="trailing" secondItem="H1c-Cw-kK0" secondAttribute="trailing" constant="16" id="Uek-Ve-1Nl"/>
                             <constraint firstItem="ylu-r5-7lx" firstAttribute="leading" secondItem="P1a-Ut-2fa" secondAttribute="leading" constant="58" id="VSV-z3-RdR"/>
                             <constraint firstItem="P1a-Ut-2fa" firstAttribute="trailing" secondItem="Mpd-pK-cZ1" secondAttribute="trailing" constant="51" id="bh3-Sj-tns"/>
                             <constraint firstItem="sWj-qn-mB7" firstAttribute="leading" secondItem="P1a-Ut-2fa" secondAttribute="leading" id="cNb-8v-7lD"/>
@@ -74,7 +74,7 @@
                             <constraint firstItem="PER-3h-HpV" firstAttribute="trailing" secondItem="P1a-Ut-2fa" secondAttribute="trailing" id="lPn-1j-kuX"/>
                             <constraint firstItem="PER-3h-HpV" firstAttribute="top" secondItem="Jut-oh-zHa" secondAttribute="top" id="nwe-8p-iUG"/>
                             <constraint firstItem="sWj-qn-mB7" firstAttribute="top" secondItem="PER-3h-HpV" secondAttribute="bottom" id="rTU-fG-9we"/>
-                            <constraint firstItem="H1c-Cw-kK0" firstAttribute="leading" secondItem="ylu-r5-7lx" secondAttribute="trailing" constant="9" id="tmV-39-94U"/>
+                            <constraint firstItem="H1c-Cw-kK0" firstAttribute="leading" secondItem="ylu-r5-7lx" secondAttribute="trailing" constant="16" id="tmV-39-94U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="P1a-Ut-2fa"/>
                     </view>
@@ -91,6 +91,6 @@
     </scenes>
     <resources>
         <image name="Wave" width="2995" height="510"/>
-        <image name="exit_player" width="98" height="98"/>
+        <image name="exit_player" width="42" height="42"/>
     </resources>
 </document>
