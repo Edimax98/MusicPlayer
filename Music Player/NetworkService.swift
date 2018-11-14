@@ -29,29 +29,45 @@ class NetworkService {
 // MARK: - SongNetworkService
 extension NetworkService: SongNetworkService {
     
+    private func getSongs(from rawDataResponse: DataResponse<Any>) -> [Song]? {
+        
+        guard let responseValue = rawDataResponse.result.value else {
+            print("Song raw json is nil")
+            return nil
+        }
+        
+        let json = JSON(responseValue)["results"]
+
+        let songs = json.array?.map { jsonArr -> Song in
+            Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue, duration: jsonArr["duration"].uIntValue, albumName: jsonArr["album_name"].stringValue, audioPath: jsonArr["audio"].stringValue, image: nil)
+        }
+        
+        guard let songsToReturn = songs else {
+            print("Songs are nil after being parsed")
+            return nil
+        }
+        
+        return songsToReturn
+    }
+    
+    func fetchSong(with tags: [String]) {
+     
+        request(SongApi.baseUrl, method: .get, parameters: SongApi.themeSongs(themes: tags).parameters, encoding: URLEncoding.default, headers: nil)
+            .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
+                guard let songs = self.getSongs(from: response) else { return }
+                self.songNetworkServiceDelegate?.songNetworkServiceDidGet(songs, with: tags)
+        }
+    }
+    
     func fetchSongs(_ amount: UInt) {
         
-        request("https://api.jamendo.com/v3.0/tracks/?client_id=af79529f&limit=10&order=popularity_month", method: .get, parameters: nil, encoding: URLEncoding(), headers: nil)
+        let parameters = SongApi.topSongs(popularityPeriod: "popularity_month").parameters
+        
+        request(SongApi.baseUrl, method: .get, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
             .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
-                
-                guard let responseValue = response.result.value else {
-                    print("Song raw json is nil")
-                    return
-                }
-                
-                let json = JSON(responseValue)["results"]
-                
-                let songs = json.array?.map { jsonArr -> Song in
-                    Song(name: jsonArr["name"].stringValue, imagePath: jsonArr["image"].stringValue, artistName: jsonArr["artist_name"].stringValue, duration: jsonArr["duration"].uIntValue, albumName: jsonArr["album_name"].stringValue, audioPath: jsonArr["audio"].stringValue, image: nil)
-                }
-                
-                guard let songsToReturn = songs else {
-                    print("Songs are nil after being parsed")
-                    return
-                }
-                
-                self.songNetworkServiceDelegate?.songNetworkerServiceDidGet(songsToReturn)
+                guard let songs = self.getSongs(from: response) else { return }
+                self.songNetworkServiceDelegate?.songNetworkerServiceDidGet(songs)
         }
     }
 }

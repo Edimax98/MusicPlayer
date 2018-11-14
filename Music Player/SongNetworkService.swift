@@ -11,6 +11,8 @@ import Foundation
 protocol SongNetworkServiceDelegate: FetchingErrorHandler {
     
     func songNetworkerServiceDidGet(_ songs: [Song])
+    
+    func songNetworkServiceDidGet(_ songs: [Song], with tags: [String])
 }
 
 protocol SongNetworkService: class {
@@ -18,4 +20,6 @@ protocol SongNetworkService: class {
     var songNetworkServiceDelegate: SongNetworkServiceDelegate? { get set }
     
     func fetchSongs(_ amount: UInt)
+    
+    func fetchSong(with tags: [String])
 }

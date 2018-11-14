@@ -50,8 +50,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
     fileprivate let musicListVc = MusicListViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
     fileprivate var fullScreenAd: FBInterstitialAd!
-    fileprivate var loadingAlert: UIAlertController!
-    fileprivate var cantLoadDataAlert: UIAlertController!
+    fileprivate weak var loadingAlert: UIAlertController!
     fileprivate var adLoadingTimoutTimer: Timer!
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
 
@@ -67,7 +66,7 @@ class MusicPlayerLandingPage: UIViewController {
         super.viewDidLoad()
         
         //if accessState == .denied {
-            let adView = FBAdView(placementID: "2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        let adView = FBAdView(placementID: "VID_HD_16_9_46S_APP_INSTALL#2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
             adView.frame = containerForAd.bounds
             containerForAd.addSubview(adView)
             adView.delegate = self
@@ -92,6 +91,12 @@ class MusicPlayerLandingPage: UIViewController {
         musicListVc.mediator.add(recipient: self)
         musicListVc.mediator.add(recipient: playerVc)
         setupRemoteTransportControls()
+    }
+    
+    fileprivate func pauseAndSeekToStart() {
+        audioPlayer.pause()
+        playButton.isSelected = false
+        audioPlayer.seek(to: 0)
     }
     
     fileprivate func checkIfSongPartOfAlbum(_ song: Song) -> Bool {
@@ -166,16 +171,14 @@ class MusicPlayerLandingPage: UIViewController {
     @IBAction func playNextSongButtonPressed(_ sender: Any) {
         
         if audioPlayer.items?.count == 1 {
-            audioPlayer.pause()
-            audioPlayer.seek(to: 0)
+            pauseAndSeekToStart()
             return
         }
         
         audioPlayer.next()
         
         guard let index = audioPlayer.currentItemIndexInQueue else {
-            audioPlayer.pause()
-            audioPlayer.seek(to: 0)
+            pauseAndSeekToStart()
             return
         }
         
@@ -400,7 +403,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
             }
             return .commandFailed
         }
-    
+
         commandCenter.pauseCommand.addTarget { [unowned self] event in
             if self.audioPlayer.state == .playing {
                 self.audioPlayer.pause()
@@ -422,13 +425,17 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
     
     func setupImageForCommandCenter() {
         
-        guard let currentSong = self.currentSong, let image = currentSong.image else { return }
+        guard let currentSong = self.currentSong else { return }
         
-        let imageForCommandCenter = MPMediaItemArtwork(boundsSize: image.size) { _ in
-            return image
-            
+        var nowPlayingInfo = [String : Any]()
+        
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: currentSong.image!.size) { _ in
+            return currentSong.image!
         }
-        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = imageForCommandCenter
+    
+        DispatchQueue.main.async {
+            MPNowPlayingInfoCenter.default().nowPlayingInfo? = nowPlayingInfo
+        }
     }
 }
 
@@ -557,9 +564,7 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         guard let items = audioPlayer.items else { return }
     
         if items.count == 1 {
-            audioPlayer.pause()
-            playButton.isSelected = false
-            audioPlayer.seek(to: 0)
+            pauseAndSeekToStart()
             return
         }
         
@@ -584,14 +589,13 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
         guard let items = audioPlayer.items else { return }
         
         if items.count == 1 || index == 0 {
-            audioPlayer.pause()
-            playButton.isSelected = false
-            audioPlayer.seek(to: 0)
+            pauseAndSeekToStart()
             return
         }
         
         audioPlayer.previous()
         guard let newIndex = audioPlayer.currentItemIndexInQueue else { return }
+        
         completion(tracks[newIndex])
         setupNowPlayingView(with: tracks[newIndex])
 	}
@@ -619,6 +623,7 @@ extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
         if loadingAlert != nil {
             loadingAlert.dismiss(animated: true, completion: nil)
         }
+        self.adLoadingTimoutTimer.invalidate()
         print("error - ", error.localizedDescription)
     }
 }

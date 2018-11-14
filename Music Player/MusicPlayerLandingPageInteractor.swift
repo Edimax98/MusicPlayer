@@ -141,6 +141,7 @@
     }
     
     func fetchSong(_ amount: UInt) {
+        networkService.fetchSong(with: ["happy"])
         networkService.fetchSongs(10)
     }
     
@@ -167,6 +168,13 @@
  
  // MARK: - SongNetworkServiceDelegate
  extension MusicPlayerLandingPageInteractor: SongNetworkServiceDelegate {
+    
+    func songNetworkServiceDidGet(_ songs: [Song], with tags: [String]) {
+        
+        self.songs = songs
+        let paths = getImagePaths(from: songs)
+        networkService.fetchImages(from: paths, for: .song)
+    }
     
     func songNetworkerServiceDidGet(_ songs: [Song]) {
         
