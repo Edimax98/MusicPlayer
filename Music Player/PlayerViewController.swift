@@ -16,7 +16,7 @@ class PlayerViewController: UIViewController {
     weak var playerDelegate: PlayerViewControllerDelegate?
     
     fileprivate var song: Song?
-    private var isAlbum = false
+    var isAlbum = false
     private var isTimeEditing = false
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -41,6 +41,8 @@ class PlayerViewController: UIViewController {
  
         if isAlbum {
             exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
+        } else {
+            exitButton.setImage(UIImage(named: "exit_player"), for: .normal)
         }
         
         playButton.setImage(UIImage(named: "pause"), for: .selected)
@@ -160,6 +162,14 @@ class PlayerViewController: UIViewController {
 extension PlayerViewController: SongReceiver {
     
     func receive(model: Song) {
+        if exitButton != nil {
+            if isAlbum {
+                exitButton.setImage(UIImage(named: "back_arrow"), for: .normal)
+            } else {
+                exitButton.setImage(UIImage(named: "exit_player"), for: .normal)
+            }
+        }
+        
         if self.song != model {
             self.song = model
             resetSlider()
@@ -172,7 +182,6 @@ extension PlayerViewController: SongReceiver {
 extension PlayerViewController: AlbumReceiver {
     
     func receive(model: Album) {
-        isAlbum = true
     }
 }
 

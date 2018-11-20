@@ -59,10 +59,16 @@ class SubscriptionInfoViewController: UIViewController {
                                                name: SubscriptionService.purchaseFailedNotification,
                                                object: nil)
         
-        if UserDefaults.standard.bool(forKey: "isTrialExpired") {
+        SubscriptionService.shared.loadSubscriptionOptions()
+        
+        if !SubscriptionService.shared.isEligibleForTrial {
             self.trialLabel.text = "All access".localized
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + price
+            self.priceLabel.text = "Subscription price - ".localized + price
+        } else {
+            self.trialLabel.text = "3 days FOR FREE".localized
+            guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
+            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + price
         }
         
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
@@ -129,21 +135,21 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func termOfServiceButtonPressed(_ sender: Any) {
-        guard let url = URL(string: "http://indiesound.org/terms") else { return }
+        guard let url = URL(string: "https://sfbtech.org/terms") else { return }
         let webView = SFSafariViewController(url: url)
         present(webView, animated: true, completion: nil)
     }
     
     @IBAction func privacyPolicyButtonPressed(_ sender: Any) {
-        guard let url = URL(string: "http://indiesound.org/policy") else { return }
+        guard let url = URL(string: "https://sfbtech.org/policy") else { return }
         let webView = SFSafariViewController(url: url)
         present(webView, animated: true, completion: nil)
     }
     
     @objc func handlePurchaseSuccessfull(notification: Notification) {
         
-        guard let subscription = subscription else { return }
-        
+        guard let subscription = SubscriptionService.shared.options?.first else { return }
+
         if let _ = SubscriptionService.shared.currentSubscription {
             if !SubscriptionService.shared.isEligibleForTrial {
                 self.trialLabel.text = "All access".localized
@@ -163,11 +169,14 @@ class SubscriptionInfoViewController: UIViewController {
     
     @objc func handleRestoreSuccessfull(notification: Notification) {
         
-        guard let subscription = subscription else { return }
-        
+        guard let subscription = SubscriptionService.shared.options?.first else { return }
+
         if !SubscriptionService.shared.isEligibleForTrial {
             trialLabel.text = "All access".localized
             self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
+        } else {
+            self.trialLabel.text = "3 days FOR FREE".localized
+            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice
         }
         
         if SubscriptionService.shared.currentSubscription != nil {
@@ -185,12 +194,15 @@ class SubscriptionInfoViewController: UIViewController {
     
     @objc func noSubscriptionsAfterAutiCheck() {
         
-        guard let subscription = subscription else { return }
+        guard let subscription = SubscriptionService.shared.options?.first else { return }
         
         if !SubscriptionService.shared.isEligibleForTrial {
-                self.trialLabel.text = "All access".localized
-                self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
+            self.trialLabel.text = "All access".localized
+            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
             UserDefaults.standard.set(true, forKey: "isTrialExpired")
+        } else {
+            self.trialLabel.text = "3 days FOR FREE".localized
+            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice
         }
     }
     
@@ -202,6 +214,15 @@ class SubscriptionInfoViewController: UIViewController {
         }
     
         self.subscription = sub
+
+        if UserDefaults.standard.bool(forKey: "isTrialExpired") {
+            self.trialLabel.text = "All access".localized
+            self.priceLabel.text =  "Subscription price - ".localized + sub.formattedPrice
+        } else {
+            self.trialLabel.text = "3 days FOR FREE".localized
+            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + sub.formattedPrice
+        }
+    
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
     }
     

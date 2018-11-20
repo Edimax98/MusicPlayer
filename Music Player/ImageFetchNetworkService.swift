@@ -19,7 +19,7 @@ protocol ImageFetchNetworkService {
     
     var imageFetcherDelegate: ImageFetchNetworkServiceDelegate? { get set }
     
-    func fetchImages(from urls: [String], for modelType: ModelType)
+    func fetchImages(from urls: [String], for modelType: ModelType, completion: @escaping ([String:Image]) -> ())
     
     func fetchNestedImages(from nestedUrls: [[String]])
 }

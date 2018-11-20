@@ -14,6 +14,7 @@
     weak var songsOutput: SongsInteractorOutput?
     weak var albumsOutput: AlbumInteractorOutput?
     weak var playlistOutput: PlaylistInteractorOutput?
+    weak var themePlaylistOutput: ThemePlaylistInteractorOutput?
     
     fileprivate var networkService: NetworkService
     fileprivate var songNetworkService: SongNetworkService
@@ -97,8 +98,8 @@
     fileprivate func setImagesForSongs(_ images: [String:Image])  {
         
         var i = 0
-        
-        while images.count - 1 >= i {
+
+        while self.songs.count - 1 >= i {
             if images.keys.contains(where: { (url) -> Bool in songs[i].imagePath == url }) {
                 songs[i].image = images[songs[i].imagePath]
             }
@@ -140,8 +141,38 @@
         return result
     }
     
+    fileprivate func makeThemesPlaylist(from songs: [Song], amountOfSongsInside: Int) -> [Album] {
+        
+        var playlistToReturn = [Album]()
+        var tempSongs = songs
+        
+        while tempSongs.count > 0 {
+            let bunchOfSongs = Array(tempSongs.prefix(amountOfSongsInside))
+            tempSongs = Array(tempSongs.dropFirst(amountOfSongsInside))
+            let playlist = Album(name: "", artistName: "Your friend", imagePath: "", songs: bunchOfSongs)
+            playlistToReturn.append(playlist)
+        }
+        makeImages(for: &playlistToReturn)
+        
+        return playlistToReturn
+    }
+    
+    fileprivate func makeTheme(of tags: [String]) -> String {
+        return ""
+    }
+    
+    fileprivate func makeImages(for themePlaylists: inout [Album]) {
+        
+        var i = 0
+        
+        while i <= themePlaylists.count - 1 {
+            let image = themePlaylists[i].songs.first?.image
+            themePlaylists[i].image = image
+            i += 1
+        }
+    }
+    
     func fetchSong(_ amount: UInt) {
-        networkService.fetchSong(with: ["happy"])
         networkService.fetchSongs(10)
     }
     
@@ -164,6 +195,10 @@
         let randomGenres = getRandomGenres(from: self.genres, with: 5)
         networkService.fetchTodaysPlaylists(for: randomGenres, amountOfSongs: amountOfSongs)
     }
+    
+    func fetchSongs(amount: Int, tags: [String]) {
+        networkService.fetchSong(with: tags)
+    }
  }
  
  // MARK: - SongNetworkServiceDelegate
@@ -173,14 +208,24 @@
         
         self.songs = songs
         let paths = getImagePaths(from: songs)
-        networkService.fetchImages(from: paths, for: .song)
+        
+        networkService.fetchImages(from: paths, for: .song) { [unowned self] images in
+            
+            self.setImagesForSongs(images)
+            let themePlaylists = self.makeThemesPlaylist(from: self.songs, amountOfSongsInside: 2)
+            //self.makeImages(for: themePlaylists)
+            self.themePlaylistOutput?.sendPlaylist(themePlaylists, theme: "Workout")
+        }
     }
     
     func songNetworkerServiceDidGet(_ songs: [Song]) {
         
         self.songs = songs
         let paths = getImagePaths(from: songs)
-        networkService.fetchImages(from: paths, for: .song)
+        networkService.fetchImages(from: paths, for: .song) { images in
+            self.setImagesForSongs(images)
+            self.songsOutput?.sendSongs(self.songs)
+        }
     }
     
     func fetchingEndedWithError(_ error: Error) {
@@ -195,7 +240,10 @@
         
         self.albums = albums
         let paths = getImagePaths(from: albums)
-        networkService.fetchImages(from: paths, for: .album)
+        networkService.fetchImages(from: paths, for: .album) { images in
+            self.setImagesForAlbums(images)
+            self.albumsOutput?.sendAlbums(self.albums)
+        }
     }
  }
  
@@ -212,18 +260,6 @@
     
     func imageFetchNetworkSeriviceDidGet(_ images: [String:Image], with modelType: ModelType) {
         
-        DispatchQueue.main.async {
-            switch modelType {
-            case .song:
-                self.setImagesForSongs(images)
-                self.songsOutput?.sendSongs(self.songs)
-            case .album:
-                self.setImagesForAlbums(images)
-                self.albumsOutput?.sendAlbums(self.albums)
-            default:
-                break
-            }
-        }
     }
  }
  

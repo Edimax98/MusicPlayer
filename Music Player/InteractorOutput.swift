@@ -18,6 +18,11 @@ protocol AlbumInteractorOutput: class {
     func sendAlbums(_ albums: [Album])
 }
 
+protocol ThemePlaylistInteractorOutput: class {
+    
+    func sendPlaylist(_ playlists: [Album], theme: String)
+}
+
 protocol PlaylistInteractorOutput: class {
     
     func sendPlaylist(_ playlists: [Album])

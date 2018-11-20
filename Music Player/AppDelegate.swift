@@ -17,44 +17,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    private let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+    private let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
+    
+    private func uploadRecieptSucceeded() {
+        guard SubscriptionService.shared.currentSubscription != nil else {
+            self.window?.rootViewController = self.subscriptionInfoView
+            NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
+            return
+        }
+        self.mainView.accessState = .available
+        self.mainView.accessStatusChanged(to: .available)
+    }
+    
+    private func tryAgainToUploadReciept() {
+        SubscriptionService.shared.uploadReceipt { (success, _) in
+            if success {
+                self.uploadRecieptSucceeded()
+            } else {
+                self.window?.rootViewController = self.subscriptionInfoView
+            }
+        }
+    }
+    
     private func setupRootController() {
-        
-        let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
-        let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = mainView
         
         SubscriptionService.shared.loadSubscriptionOptions()
+        
         guard SubscriptionService.shared.hasReceiptData else {
             self.window?.rootViewController = subscriptionInfoView
             return
         }
-        
+
         SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
             if success {
-                guard SubscriptionService.shared.currentSubscription != nil else {
-                    self.window?.rootViewController = subscriptionInfoView
-                    NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
-                    return
-                }
-                mainView.accessState = .available
-            } else if !shouldRetry {
-                self.window?.rootViewController = subscriptionInfoView
+                self.uploadRecieptSucceeded()
             } else if shouldRetry {
-                SubscriptionService.shared.uploadReceipt { (success, _) in
-                    if success {
-                        guard SubscriptionService.shared.currentSubscription != nil else {
-                            self.window?.rootViewController = subscriptionInfoView
-                            NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
-                            return
-                        }
-                        mainView.accessState = .available
-                    } else {
-                        self.window?.rootViewController = subscriptionInfoView
-                    }
-                }
+                self.tryAgainToUploadReciept()
+            } else if !shouldRetry {
+                self.window?.rootViewController = self.subscriptionInfoView
             }
         }
     }
@@ -62,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         SKPaymentQueue.default().add(self)
+        setupRootController()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }

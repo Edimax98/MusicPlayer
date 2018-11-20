@@ -179,7 +179,7 @@ extension NetworkService: ImageFetchNetworkService {
         }
     }
     
-    func fetchImages(from urls: [String], for modelType: ModelType) {
+    func fetchImages(from urls: [String], for modelType: ModelType, completion: @escaping ([String : Image]) -> ()) {
         
         let fetchingQueue = DispatchQueue.global(qos: .utility)
         let group = DispatchGroup()
@@ -201,7 +201,8 @@ extension NetworkService: ImageFetchNetworkService {
             fetchingQueue.async(execute: block)
         }
         group.notify(queue: .main) {
-            self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(images, with: modelType)
+            completion(images)
+            //self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(images, with: modelType)
         }
     }
 }

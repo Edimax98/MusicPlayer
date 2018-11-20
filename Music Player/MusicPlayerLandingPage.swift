@@ -27,12 +27,13 @@ class MusicPlayerLandingPage: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var containerForAd: UIView!
     @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var adTopConstant: NSLayoutConstraint!
     
     fileprivate let headerSize: CGFloat = 60
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessState = AccessState.available
+    var accessState = AccessState.denied
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
@@ -41,6 +42,7 @@ class MusicPlayerLandingPage: UIViewController {
             setupImageForCommandCenter()
         }
     }
+    
     fileprivate var dataSource = [HeaderData]()
     fileprivate var currentAudioIndex = 0
     fileprivate var userTappedOnController = false
@@ -53,7 +55,8 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate weak var loadingAlert: UIAlertController!
     fileprivate var adLoadingTimoutTimer: Timer!
     fileprivate var interactor: MusicPlayerLandingPageInteractor?
-
+    fileprivate var adView: FBAdView!
+    
 	override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -65,15 +68,14 @@ class MusicPlayerLandingPage: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //if accessState == .denied {
-        let adView = FBAdView(placementID: "VID_HD_16_9_46S_APP_INSTALL#2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
-            adView.frame = containerForAd.bounds
-            containerForAd.addSubview(adView)
+        if accessState == .denied {
+            adView = FBAdView(placementID: "2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
             adView.delegate = self
             adView.loadAd()
-//        } else {
-//            containerHeightConstraint.constant = 0.0
-//        }
+        } else {
+            containerHeightConstraint.constant = 0
+            adTopConstant.constant = -45
+        }
         
         tableView.separatorStyle = .none
         tableView.delegate = self
@@ -145,9 +147,13 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     fileprivate func openCurrentSongInPlayer() {
-        
+    
         guard let song = self.currentSong else { return }
 
+        if accessState == .denied {
+            loadFullScreenAd()
+        }
+        
         let mediator = Mediator()
         mediator.removeAllRecipients()
         mediator.add(recipient: playerVc)
@@ -187,6 +193,12 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     @IBAction func playNowPlayingSongButtonPressed(_ sender: Any) {
+        
+        guard accessState == .available else {
+            showRestoreAlert()
+            return
+        }
+        
         playButton.isSelected = !playButton.isSelected
         
         switch audioPlayer.state {
@@ -235,6 +247,25 @@ class MusicPlayerLandingPage: UIViewController {
         loadingAlert = UIAlertController.displayLoadingAlert(on: self)
         present(loadingAlert, animated: true, completion: nil)
         adLoadingTimoutTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleTimeout), userInfo: nil, repeats: false)
+    }
+    
+    func accessStatusChanged(to accessStatus: AccessState) {
+        
+        if accessStatus == .denied {
+            adView = FBAdView(placementID: "2094400630876165_2124265184556376", adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+            adView.frame = containerForAd.bounds
+            containerForAd.addSubview(adView)
+            adView.delegate = self
+            adView.loadAd()
+        } else {
+            if adView != nil {
+                adView.removeFromSuperview()
+                self.view.layoutIfNeeded()
+                adView = nil
+            }
+            containerHeightConstraint.constant = 0
+            adTopConstant.constant = -45
+        }
     }
     
     @objc func handleTimeout() {
@@ -316,7 +347,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         case 4:
             return 450
         default:
-            return 150
+            return 160
         }
     }
     
@@ -376,8 +407,10 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
 
         if checkIfSongPartOfAlbum(song) == false {
             audioPlayer.play(item: item)
+            playerVc.isAlbum = false
         } else {
             playAlbum(tracks, startSong: song)
+            playerVc.isAlbum = true
         }
     }
     
@@ -454,12 +487,13 @@ extension MusicPlayerLandingPage: SongReceiver {
         if accessState == .available {
             playSong(model)
         } else {
+            loadFullScreenAd()
             playSong(model)
             audioPlayer.pause()
         }
-        audioPlayer.delegate = playerVc
         setupNowPlayingView(with: model)
-        
+        audioPlayer.delegate = playerVc
+
         let popup = PopupController
             .create(self)
             .customize(
@@ -487,7 +521,9 @@ extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
         
-        loadFullScreenAd()
+        if accessState == .denied {
+            loadFullScreenAd()
+        }
         
         self.tracks.append(contentsOf: model.songs)
         audioPlayer.delegate = musicListVc
@@ -604,6 +640,16 @@ extension MusicPlayerLandingPage: PlayerViewControllerDelegate {
 // MARK: - FBAdViewDelegate
 extension MusicPlayerLandingPage: FBAdViewDelegate {
     
+    func adViewDidLoad(_ adView: FBAdView) {
+        if accessState == .denied && containerForAd != nil {
+            adView.frame = containerForAd.bounds
+            containerForAd.addSubview(adView)
+        } else if containerForAd != nil {
+            adView.removeFromSuperview()
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
         containerHeightConstraint.constant = 0.0
         print(error.localizedDescription)
@@ -613,6 +659,8 @@ extension MusicPlayerLandingPage: FBAdViewDelegate {
 extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
     
     func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
+        
+        guard loadingAlert != nil else { return }
         loadingAlert.dismiss(animated: true) {
             self.adLoadingTimoutTimer.invalidate()
             interstitialAd.show(fromRootViewController: self)

@@ -21,7 +21,6 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     weak var playerDelegate: PlayerViewControllerDelegate?
-
     weak var audioPlayerDelegate: AudioPlayerDelegate?
     
     deinit {

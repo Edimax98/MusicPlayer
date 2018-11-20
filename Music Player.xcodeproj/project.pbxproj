@@ -28,6 +28,10 @@
 		A50017BB214A976B00E30175 /* SubscriptionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BA214A976B00E30175 /* SubscriptionNetworkService.swift */; };
 		A50017BD214A98CE00E30175 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BC214A98CE00E30175 /* Session.swift */; };
 		A50017BF214A9A4000E30175 /* PaidSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50017BE214A9A4000E30175 /* PaidSubscription.swift */; };
+		A51313FA219EE7B20068DB76 /* ThemePlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51313F9219EE7B20068DB76 /* ThemePlaylistsViewController.swift */; };
+		A51313FD219EE9800068DB76 /* ThemePlaylistsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51313FC219EE9800068DB76 /* ThemePlaylistsDataSource.swift */; };
+		A5131403219EF0040068DB76 /* ThemePlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5131401219EF0040068DB76 /* ThemePlaylistCell.swift */; };
+		A5131404219EF0040068DB76 /* ThemePlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5131402219EF0040068DB76 /* ThemePlaylistCell.xib */; };
 		A52FD81B2146A439006C7EA0 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD8192146A439006C7EA0 /* ClipCell.swift */; };
 		A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52FD81A2146A439006C7EA0 /* ClipCell.xib */; };
 		A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD81D2146CDCA006C7EA0 /* SongCell.swift */; };
@@ -112,6 +116,10 @@
 		A50017BA214A976B00E30175 /* SubscriptionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionNetworkService.swift; sourceTree = "<group>"; };
 		A50017BC214A98CE00E30175 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		A50017BE214A9A4000E30175 /* PaidSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidSubscription.swift; sourceTree = "<group>"; };
+		A51313F9219EE7B20068DB76 /* ThemePlaylistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaylistsViewController.swift; sourceTree = "<group>"; };
+		A51313FC219EE9800068DB76 /* ThemePlaylistsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaylistsDataSource.swift; sourceTree = "<group>"; };
+		A5131401219EF0040068DB76 /* ThemePlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaylistCell.swift; sourceTree = "<group>"; };
+		A5131402219EF0040068DB76 /* ThemePlaylistCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaylistCell.xib; sourceTree = "<group>"; };
 		A52FD8192146A439006C7EA0 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
 		A52FD81A2146A439006C7EA0 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
 		A52FD81D2146CDCA006C7EA0 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
@@ -267,6 +275,41 @@
 				A50017BE214A9A4000E30175 /* PaidSubscription.swift */,
 			);
 			name = Subscription;
+			sourceTree = "<group>";
+		};
+		A51313FB219EE7C00068DB76 /* ThemePlaylistsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A51313FF219EEFDC0068DB76 /* View */,
+			);
+			name = ThemePlaylistsViewController;
+			sourceTree = "<group>";
+		};
+		A51313FE219EE98D0068DB76 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				A51313FC219EE9800068DB76 /* ThemePlaylistsDataSource.swift */,
+			);
+			name = DataSource;
+			sourceTree = "<group>";
+		};
+		A51313FF219EEFDC0068DB76 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A51313FE219EE98D0068DB76 /* DataSource */,
+				A5131400219EEFE10068DB76 /* Cells */,
+				A51313F9219EE7B20068DB76 /* ThemePlaylistsViewController.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		A5131400219EEFE10068DB76 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A5131401219EF0040068DB76 /* ThemePlaylistCell.swift */,
+				A5131402219EF0040068DB76 /* ThemePlaylistCell.xib */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		A52FD8182146A41C006C7EA0 /* NewClipsCell */ = {
@@ -534,6 +577,7 @@
 				A5696F202167A20D00D5FD89 /* Extensions */,
 				A5355FCB2158F693005D4101 /* Appearance */,
 				A5355FDE215918F9005D4101 /* Player */,
+				A51313FB219EE7C00068DB76 /* ThemePlaylistsViewController */,
 				A5CB1A812153C8F50002D7CC /* MusicListViewController */,
 				A5B7C096214AAFBE0019E5C8 /* MusicPlayerLanding */,
 				D36191BB19E9647B00CC9026 /* Main.storyboard */,
@@ -641,6 +685,7 @@
 				83843A8E21458C1500C8A0BE /* PopularSongsCell.xib in Resources */,
 				832540A72145BB1300727316 /* TodaySongCell.xib in Resources */,
 				A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */,
+				A5131404219EF0040068DB76 /* ThemePlaylistCell.xib in Resources */,
 				A58747F0217F776400A7C2B2 /* SubscriptionInfoViewController.storyboard in Resources */,
 				A5355FD321590CA0005D4101 /* MusicList.storyboard in Resources */,
 				A5F8259E216B59A9007C0CC7 /* deeplink.html in Resources */,
@@ -737,6 +782,7 @@
 				A5E96353215542D6006509C7 /* ModelType.swift in Sources */,
 				A56BDEE72151012900D75F83 /* PopularSongsDataSource.swift in Sources */,
 				A57C7AFC21762C37008DA476 /* Model.swift in Sources */,
+				A51313FD219EE9800068DB76 /* ThemePlaylistsDataSource.swift in Sources */,
 				A56BDEE52150FD6100D75F83 /* MusicPlayerLandingPageInteractor.swift in Sources */,
 				A59EF47E2150043700BC6CEA /* Album.swift in Sources */,
 				A5CB1A7E2153AC540002D7CC /* AlbumEndPoint.swift in Sources */,
@@ -762,7 +808,9 @@
 				A57C7AFA21762B94008DA476 /* Reciever.swift in Sources */,
 				A5CB1A832153CA330002D7CC /* SongsDataSource.swift in Sources */,
 				A5CB1A872153CB530002D7CC /* TrackCell.swift in Sources */,
+				A51313FA219EE7B20068DB76 /* ThemePlaylistsViewController.swift in Sources */,
 				A56BDEDB2150ECBD00D75F83 /* SongNetworkService.swift in Sources */,
+				A5131403219EF0040068DB76 /* ThemePlaylistCell.swift in Sources */,
 				A56BDEED2151526800D75F83 /* NewReleasesDataSource.swift in Sources */,
 				A5C98F50217482FE0091F5CE /* PlayerViewControllerDelegate.swift in Sources */,
 				A5EC62D721539A6700721542 /* HeaderData.swift in Sources */,
