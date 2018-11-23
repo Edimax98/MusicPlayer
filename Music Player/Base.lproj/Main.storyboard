@@ -135,6 +135,7 @@
                         <outlet property="playButton" destination="JCV-K7-f9q" id="erj-z2-Zie"/>
                         <outlet property="tableView" destination="bED-Nd-gb6" id="JCx-fb-Aab"/>
                         <segue destination="w78-on-r5H" kind="show" identifier="toSub" id="WTe-5M-ZCJ"/>
+                        <segue destination="cyn-tg-pC4" kind="show" identifier="openThemePlaylists" id="1Ye-ih-OTM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oR4-zS-aZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -144,20 +145,20 @@
         <!--Theme Playlists View Controller-->
         <scene sceneID="B8N-Jh-KRN">
             <objects>
-                <viewController id="cyn-tg-pC4" customClass="ThemePlaylistsViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ThemePlaylistsVc" id="cyn-tg-pC4" customClass="ThemePlaylistsViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rf8-Bc-OFH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wave" translatesAutoresizingMaskIntoConstraints="NO" id="1Rk-r9-OMp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="118"/>
+                                <rect key="frame" x="0.0" y="24" width="375" height="96"/>
                                 <color key="backgroundColor" red="0.1019607843" green="0.10980392160000001" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="118" id="LwO-0w-cCv"/>
+                                    <constraint firstAttribute="height" constant="96" id="LwO-0w-cCv"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-OH-irp">
-                                <rect key="frame" x="58" y="48" width="258" height="23"/>
+                                <rect key="frame" x="58" y="61" width="258" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ZJt-OH-irp" secondAttribute="height" multiplier="274:23" constant="-16" id="62l-Ea-od1"/>
                                 </constraints>
@@ -176,20 +177,34 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDk-9V-Naz">
+                                <rect key="frame" x="324" y="40" width="27" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="6MI-pi-Cd0"/>
+                                    <constraint firstAttribute="width" constant="27" id="DK0-qV-acM"/>
+                                </constraints>
+                                <state key="normal" image="exit_player"/>
+                                <connections>
+                                    <action selector="closeView:" destination="cyn-tg-pC4" eventType="touchUpInside" id="HOs-GZ-v4m"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.1041124239563942" green="0.097518511116504669" blue="0.17620721459388733" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="3vK-eQ-gok" firstAttribute="trailing" secondItem="SDk-9V-Naz" secondAttribute="trailing" constant="24" id="8QI-H1-1on"/>
                             <constraint firstItem="3vK-eQ-gok" firstAttribute="trailing" secondItem="ZJt-OH-irp" secondAttribute="trailing" constant="59" id="GT3-rA-cCg"/>
-                            <constraint firstItem="sci-sn-bWr" firstAttribute="top" secondItem="ZJt-OH-irp" secondAttribute="bottom" constant="47" id="QpM-7N-RdN"/>
-                            <constraint firstItem="sci-sn-bWr" firstAttribute="top" secondItem="1Rk-r9-OMp" secondAttribute="bottom" id="RGx-CT-XcU"/>
+                            <constraint firstItem="sci-sn-bWr" firstAttribute="top" secondItem="ZJt-OH-irp" secondAttribute="bottom" constant="34" id="QpM-7N-RdN"/>
+                            <constraint firstItem="sci-sn-bWr" firstAttribute="top" secondItem="1Rk-r9-OMp" secondAttribute="bottom" constant="-2" id="RGx-CT-XcU"/>
                             <constraint firstItem="1Rk-r9-OMp" firstAttribute="leading" secondItem="3vK-eQ-gok" secondAttribute="leading" id="RIH-XJ-yvW"/>
                             <constraint firstItem="sci-sn-bWr" firstAttribute="trailing" secondItem="3vK-eQ-gok" secondAttribute="trailing" id="SPt-Y5-yK2"/>
+                            <constraint firstItem="SDk-9V-Naz" firstAttribute="leading" secondItem="3vK-eQ-gok" secondAttribute="leading" constant="324" id="aOz-f7-UaN"/>
                             <constraint firstItem="1Rk-r9-OMp" firstAttribute="trailing" secondItem="3vK-eQ-gok" secondAttribute="trailing" id="gyL-B3-8h1"/>
-                            <constraint firstItem="1Rk-r9-OMp" firstAttribute="top" secondItem="Rf8-Bc-OFH" secondAttribute="top" id="hOG-9t-pIh"/>
+                            <constraint firstItem="SDk-9V-Naz" firstAttribute="top" secondItem="3vK-eQ-gok" secondAttribute="top" constant="20" id="hDF-Xa-eb6"/>
+                            <constraint firstItem="1Rk-r9-OMp" firstAttribute="top" secondItem="3vK-eQ-gok" secondAttribute="top" constant="4" id="hOG-9t-pIh"/>
                             <constraint firstItem="ZJt-OH-irp" firstAttribute="leading" secondItem="3vK-eQ-gok" secondAttribute="leading" constant="58" id="mrJ-g8-cju"/>
-                            <constraint firstItem="ZJt-OH-irp" firstAttribute="top" secondItem="3vK-eQ-gok" secondAttribute="top" constant="28" id="qCo-mi-tC0"/>
+                            <constraint firstItem="ZJt-OH-irp" firstAttribute="top" secondItem="3vK-eQ-gok" secondAttribute="top" constant="41" id="qCo-mi-tC0"/>
                             <constraint firstItem="sci-sn-bWr" firstAttribute="leading" secondItem="3vK-eQ-gok" secondAttribute="leading" id="qre-vE-V6w"/>
-                            <constraint firstItem="sci-sn-bWr" firstAttribute="bottom" secondItem="3vK-eQ-gok" secondAttribute="bottom" id="ztI-hb-Vti"/>
+                            <constraint firstItem="sci-sn-bWr" firstAttribute="bottom" secondItem="Rf8-Bc-OFH" secondAttribute="bottom" id="ztI-hb-Vti"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3vK-eQ-gok"/>
                     </view>
@@ -200,7 +215,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBo-kr-Cgj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1561" y="-529"/>
+            <point key="canvasLocation" x="1365.5999999999999" y="-529.38530734632684"/>
         </scene>
         <!--SubscriptionInfoViewController-->
         <scene sceneID="nsp-CN-1GD">
@@ -214,6 +229,7 @@
     <resources>
         <image name="Next_now" width="54" height="42"/>
         <image name="Wave" width="2995" height="510"/>
+        <image name="exit_player" width="42" height="42"/>
         <image name="nosong" width="150" height="150"/>
         <image name="play_now" width="36" height="42"/>
     </resources>

@@ -212,9 +212,8 @@
         networkService.fetchImages(from: paths, for: .song) { [unowned self] images in
             
             self.setImagesForSongs(images)
-            let themePlaylists = self.makeThemesPlaylist(from: self.songs, amountOfSongsInside: 2)
-            //self.makeImages(for: themePlaylists)
-            self.themePlaylistOutput?.sendPlaylist(themePlaylists, theme: "Workout")
+            let themePlaylists = self.makeThemesPlaylist(from: self.songs, amountOfSongsInside: 10)
+            self.themePlaylistOutput?.sendPlaylist(themePlaylists, theme: tags.first!)
         }
     }
     

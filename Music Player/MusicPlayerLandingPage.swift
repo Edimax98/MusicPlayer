@@ -33,10 +33,11 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessState = AccessState.denied
+    var accessState = AccessState.available
     var wasSubscriptionSkipped = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
+    fileprivate var selectedAlbum = [Song]()
     fileprivate var currentSong: Song? {
         didSet {
             setupImageForCommandCenter()
@@ -102,7 +103,7 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     fileprivate func checkIfSongPartOfAlbum(_ song: Song) -> Bool {
-        return tracks.contains(song)
+        return selectedAlbum.contains(song)
     }
     
     private func showRestoreAlert() {
@@ -390,6 +391,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
     }
 	
 	func setCurrentIndex(from song: Song) {
+        
         guard let index = tracks.firstIndex(of: song) else {
             print("cant find index")
             return
@@ -409,7 +411,7 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
             audioPlayer.play(item: item)
             playerVc.isAlbum = false
         } else {
-            playAlbum(tracks, startSong: song)
+            playAlbum(selectedAlbum, startSong: song)
             playerVc.isAlbum = true
         }
     }
@@ -421,6 +423,8 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         if audioPlayer.items != nil && userTappedOnController == false {
             audioPlayer.stop()
         }
+        
+        tracks = album
         setCurrentIndex(from: startSong)
         audioPlayer.play(items: items, startAtIndex: currentAudioIndex)
     }
@@ -525,7 +529,8 @@ extension MusicPlayerLandingPage: AlbumReceiver {
             loadFullScreenAd()
         }
         
-        self.tracks.append(contentsOf: model.songs)
+        self.selectedAlbum = model.songs
+        //self.tracks.append(contentsOf: model.songs)
         audioPlayer.delegate = musicListVc
         musicListVc.playerDelegate = self
         

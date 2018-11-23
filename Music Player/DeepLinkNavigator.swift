@@ -12,27 +12,23 @@ class DeepLinkNavigator {
     
     private init() { }
     static let shared = DeepLinkNavigator()
-    private var popupController = PopupController()
-    private let popupOptions = [
-        PopupCustomOption.layout(.top),
-        PopupCustomOption.animation(.fadeIn),
-        PopupCustomOption.scrollable(false),
-        PopupCustomOption.backgroundStyle(.blackFilter(alpha: 0.7))]
+    var alertController = UIAlertController()
     
-    func proceed(with deepLinkOption: DeepLinkOption?) {
+    func proceed(with deeplinkType: DeeplinkType) {
         
-        guard let option = deepLinkOption else { return }
-        
-        switch option {
-        case .player:
-            let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
-            popupController.customize(popupOptions).show(playerVc)
-        case .mainView:
-            let mainView = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
-            popupController.customize(popupOptions).show(mainView)
-        case .musicList:
-            let musicList = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
-            popupController.customize(popupOptions).show(musicList)
+        switch deeplinkType {
+        case .themePlaylist(themeName: let theme):
+            openView(with: theme)
+        default:
+            break
+        }
+    }
+    
+    private func openView(with theme: String) {
+        if let vc = UIApplication.shared.keyWindow?.rootViewController {
+            let themePlaylistsView = ThemePlaylistsViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil), identifier: "ThemePlaylistsVc")
+            themePlaylistsView.theme = theme
+            vc.present(themePlaylistsView, animated: true, completion: nil)
         }
     }
 }

@@ -67,23 +67,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         SKPaymentQueue.default().add(self)
-        setupRootController()
+        //setupRootController()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        
-        let option = DeepLinkOption.build(with: userActivity)
-        DeepLinkNavigator.shared.proceed(with: option)
-        return true
-    }
-    
     func applicationDidBecomeActive(_ application: UIApplication) {
+        DeepLinker.checkDeeplink()
         AppEventsLogger.activate(application)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        let _ = DeepLinker.handleDeeplink(url: url)
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
         return handled
     }

@@ -32,6 +32,7 @@
 		A51313FD219EE9800068DB76 /* ThemePlaylistsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51313FC219EE9800068DB76 /* ThemePlaylistsDataSource.swift */; };
 		A5131403219EF0040068DB76 /* ThemePlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5131401219EF0040068DB76 /* ThemePlaylistCell.swift */; };
 		A5131404219EF0040068DB76 /* ThemePlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5131402219EF0040068DB76 /* ThemePlaylistCell.xib */; };
+		A528663021A80D3D00000FB5 /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A528662F21A80D3D00000FB5 /* DeepLinkParser.swift */; };
 		A52FD81B2146A439006C7EA0 /* ClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD8192146A439006C7EA0 /* ClipCell.swift */; };
 		A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52FD81A2146A439006C7EA0 /* ClipCell.xib */; };
 		A52FD81F2146CDCA006C7EA0 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FD81D2146CDCA006C7EA0 /* SongCell.swift */; };
@@ -59,7 +60,7 @@
 		A57C7AFC21762C37008DA476 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AFB21762C37008DA476 /* Model.swift */; };
 		A58747E5217F3FAB00A7C2B2 /* SubscriptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58747E4217F3FAB00A7C2B2 /* SubscriptionInfoViewController.swift */; };
 		A58747F0217F776400A7C2B2 /* SubscriptionInfoViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58747F2217F776400A7C2B2 /* SubscriptionInfoViewController.storyboard */; };
-		A59C361A21677A99009E14C5 /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C361921677A99009E14C5 /* DeepLinkOption.swift */; };
+		A59C361A21677A99009E14C5 /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C361921677A99009E14C5 /* DeeplinkManager.swift */; };
 		A59EF47E2150043700BC6CEA /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59EF47D2150043700BC6CEA /* Album.swift */; };
 		A5B02C64217A195800A9E3A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B02C63217A195800A9E3A4 /* StoreKit.framework */; };
 		A5B06A62215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B06A61215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift */; };
@@ -120,6 +121,7 @@
 		A51313FC219EE9800068DB76 /* ThemePlaylistsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaylistsDataSource.swift; sourceTree = "<group>"; };
 		A5131401219EF0040068DB76 /* ThemePlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaylistCell.swift; sourceTree = "<group>"; };
 		A5131402219EF0040068DB76 /* ThemePlaylistCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePlaylistCell.xib; sourceTree = "<group>"; };
+		A528662F21A80D3D00000FB5 /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
 		A52FD8192146A439006C7EA0 /* ClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCell.swift; sourceTree = "<group>"; };
 		A52FD81A2146A439006C7EA0 /* ClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClipCell.xib; sourceTree = "<group>"; };
 		A52FD81D2146CDCA006C7EA0 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
@@ -151,7 +153,7 @@
 		A5931347214B9D3C0071C75B /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5931349214B9D410071C75B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A593134B214B9DB00071C75B /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A59C361921677A99009E14C5 /* DeepLinkOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkOption.swift; sourceTree = "<group>"; };
+		A59C361921677A99009E14C5 /* DeeplinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
 		A59EF47D2150043700BC6CEA /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		A5B02C622179DF8D00A9E3A4 /* Music Player.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Music Player.entitlements"; sourceTree = "<group>"; };
 		A5B02C63217A195800A9E3A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -299,6 +301,7 @@
 				A51313FE219EE98D0068DB76 /* DataSource */,
 				A5131400219EEFE10068DB76 /* Cells */,
 				A51313F9219EE7B20068DB76 /* ThemePlaylistsViewController.swift */,
+				A5CB1A812153C8F50002D7CC /* MusicListViewController */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -541,8 +544,9 @@
 		A5F8259A216B50D3007C0CC7 /* DeepLink */ = {
 			isa = PBXGroup;
 			children = (
-				A59C361921677A99009E14C5 /* DeepLinkOption.swift */,
+				A59C361921677A99009E14C5 /* DeeplinkManager.swift */,
 				A5F8259B216B50F1007C0CC7 /* DeepLinkNavigator.swift */,
+				A528662F21A80D3D00000FB5 /* DeepLinkParser.swift */,
 			);
 			name = DeepLink;
 			sourceTree = "<group>";
@@ -578,7 +582,6 @@
 				A5355FCB2158F693005D4101 /* Appearance */,
 				A5355FDE215918F9005D4101 /* Player */,
 				A51313FB219EE7C00068DB76 /* ThemePlaylistsViewController */,
-				A5CB1A812153C8F50002D7CC /* MusicListViewController */,
 				A5B7C096214AAFBE0019E5C8 /* MusicPlayerLanding */,
 				D36191BB19E9647B00CC9026 /* Main.storyboard */,
 				D3D2E95019A36A0000DEF125 /* Application */,
@@ -758,7 +761,7 @@
 				83843A782145881800C8A0BE /* UpperCell.swift in Sources */,
 				83843A8521458B9700C8A0BE /* NewReleasesCell.swift in Sources */,
 				832540A62145BB1300727316 /* TodaySongCell.swift in Sources */,
-				A59C361A21677A99009E14C5 /* DeepLinkOption.swift in Sources */,
+				A59C361A21677A99009E14C5 /* DeeplinkManager.swift in Sources */,
 				A50017B9214A861D00E30175 /* Subscription.swift in Sources */,
 				A5355FDD21591384005D4101 /* PopupViewController.swift in Sources */,
 				A5B06A66215BD1A2001C05EB /* TodayPlaylistDataSource.swift in Sources */,
@@ -772,6 +775,7 @@
 				D3D2E95319A36A0000DEF125 /* AppDelegate.swift in Sources */,
 				A57C7AF521762AFC008DA476 /* Mediator.swift in Sources */,
 				A5696F262167A6ED00D5FD89 /* UiIViewExtension.swift in Sources */,
+				A528663021A80D3D00000FB5 /* DeepLinkParser.swift in Sources */,
 				A5630F51214A837C0051759A /* SubscriptionService.swift in Sources */,
 				A56BDEDD2150ED2800D75F83 /* FetchingErrorHandler.swift in Sources */,
 				A5F825A2216B6AA7007C0CC7 /* StringExtention.swift in Sources */,

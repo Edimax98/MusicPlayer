@@ -64,11 +64,11 @@ class SubscriptionInfoViewController: UIViewController {
         if !SubscriptionService.shared.isEligibleForTrial {
             self.trialLabel.text = "All access".localized
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = "Subscription price - ".localized + price
+            self.priceLabel.text = "Subscription price - ".localized + price + " per week"
         } else {
             self.trialLabel.text = "3 days FOR FREE".localized
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + price
+            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + price + " per week"
         }
         
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
@@ -153,7 +153,7 @@ class SubscriptionInfoViewController: UIViewController {
         if let _ = SubscriptionService.shared.currentSubscription {
             if !SubscriptionService.shared.isEligibleForTrial {
                 self.trialLabel.text = "All access".localized
-                self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
+                self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
 
                 FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
                                            parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
@@ -173,10 +173,10 @@ class SubscriptionInfoViewController: UIViewController {
 
         if !SubscriptionService.shared.isEligibleForTrial {
             trialLabel.text = "All access".localized
-            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
+            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
         } else {
             self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice
+            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice + " per week"
         }
         
         if SubscriptionService.shared.currentSubscription != nil {
@@ -198,11 +198,11 @@ class SubscriptionInfoViewController: UIViewController {
         
         if !SubscriptionService.shared.isEligibleForTrial {
             self.trialLabel.text = "All access".localized
-            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice
+            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
             UserDefaults.standard.set(true, forKey: "isTrialExpired")
         } else {
             self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice
+            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice + " per week"
         }
     }
     
@@ -217,10 +217,10 @@ class SubscriptionInfoViewController: UIViewController {
 
         if UserDefaults.standard.bool(forKey: "isTrialExpired") {
             self.trialLabel.text = "All access".localized
-            self.priceLabel.text =  "Subscription price - ".localized + sub.formattedPrice
+            self.priceLabel.text =  "Subscription price - ".localized + sub.formattedPrice + " per week"
         } else {
             self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + sub.formattedPrice
+            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + sub.formattedPrice + " per week"
         }
     
         self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized

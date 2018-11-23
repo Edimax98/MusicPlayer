@@ -9,6 +9,8 @@
 import Foundation
 
 fileprivate let dividerForDate = "_"
+fileprivate let productionApiKey = "af79529f"
+fileprivate let testApiKey = "aa06c755"
 
 enum AlbumApi {
     case newReleases(amount: UInt, startDate: String, endDate: String)
@@ -24,9 +26,9 @@ extension AlbumApi: EndPointType {
     var parameters: [String : Any] {
         switch self {
         case .newReleases(let amount, let startDate, let endDate):
-            return ["client_id":"af79529f","limit":amount,"datebetween":startDate + dividerForDate + endDate]
+            return ["client_id":productionApiKey,"limit":amount,"datebetween":startDate + dividerForDate + endDate]
         case .bunchOfAlbums(let amount):
-            return ["client_id":"af79529f","limit":amount]
+            return ["client_id":productionApiKey,"limit":amount]
         }
     }
 }

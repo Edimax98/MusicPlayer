@@ -8,6 +8,9 @@
 
 import Foundation
 
+fileprivate let productionApiKey = "af79529f"
+fileprivate let testApiKey = "aa06c755"
+
 enum SongApi {
     case topSongs(popularityPeriod: String)
     case themeSongs(themes: [String])
@@ -22,9 +25,9 @@ extension SongApi: EndPointType {
     var parameters: [String : Any] {
         switch self {
         case .topSongs(let popularityPeriod):
-            return ["client_id":"af79529f", "limit":10, "order":popularityPeriod]
+            return ["client_id": productionApiKey, "limit":10, "order":popularityPeriod]
         case .themeSongs(let themes):
-            return ["client_id":"af79529f", "limit":10, "tags":themes]
+            return ["client_id": productionApiKey, "limit":100, "tags":themes]
         }
     }
 }

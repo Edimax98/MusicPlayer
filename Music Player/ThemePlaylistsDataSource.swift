@@ -10,7 +10,10 @@ import UIKit
 
 class ThemePlaylistsDataSource: NSObject {
     
-    private var playlists = [Album]()
+    private var playlists = [Album(name: "First", artistName: "Somebody", imagePath: "", songs: []),
+                             Album(name: "Second", artistName: "Somebody", imagePath: "", songs: []),
+                             Album(name: "Third", artistName: "Somebody", imagePath: "", songs: []),
+                             Album(name: "Fourth", artistName: "Somebody", imagePath: "", songs: [])]
 
     func setPlaylists(_ playlists: [Album]) {
         self.playlists = playlists

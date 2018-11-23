@@ -202,7 +202,6 @@ extension NetworkService: ImageFetchNetworkService {
         }
         group.notify(queue: .main) {
             completion(images)
-            //self.imageFetcherDelegate?.imageFetchNetworkSeriviceDidGet(images, with: modelType)
         }
     }
 }
