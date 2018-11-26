@@ -33,8 +33,9 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let defaultBackgroundColor = UIColor(red: 13 / 255, green: 15 / 255, blue: 22 / 255, alpha: 1)
     
     fileprivate var audioPlayer = AudioPlayer()
-    var accessState = AccessState.available
+    var accessState = AccessState.denied
     var wasSubscriptionSkipped = false
+    var wasOpenedAfterDeeplink = true
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
     fileprivate var selectedAlbum = [Song]()
@@ -50,8 +51,8 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate let countOfRowsInSection = 1
     fileprivate let countOfSection = 5
     fileprivate let currentSubscription = SubscriptionService.shared.currentSubscription
-    fileprivate let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
-    fileprivate let musicListVc = MusicListViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
+    let playerVc = PlayerViewController.controllerInStoryboard(UIStoryboard(name: "PlayerView", bundle: nil))
+    let musicListVc = MusicListViewController.controllerInStoryboard(UIStoryboard(name: "MusicList", bundle: nil))
     fileprivate var fullScreenAd: FBInterstitialAd!
     fileprivate weak var loadingAlert: UIAlertController!
     fileprivate var adLoadingTimoutTimer: Timer!
@@ -94,8 +95,17 @@ class MusicPlayerLandingPage: UIViewController {
         musicListVc.mediator.add(recipient: self)
         musicListVc.mediator.add(recipient: playerVc)
         setupRemoteTransportControls()
+        interactor?.fetchSongs(amount: 50, tags: ["Happy"])
+        interactor?.fetchNewAlbums(amount: 10)
+        interactor?.fetchSong(10)
+        
+        musicListVc.wasShownHandler = {
+            if self.wasSubscriptionSkipped == false && self.wasOpenedAfterDeeplink {
+                self.musicListVc.showSubOffer()
+            }
+        }
     }
-    
+
     fileprivate func pauseAndSeekToStart() {
         audioPlayer.pause()
         playButton.isSelected = false
@@ -107,9 +117,7 @@ class MusicPlayerLandingPage: UIViewController {
     }
     
     private func showRestoreAlert() {
-        if wasSubscriptionSkipped == false {
-            performSegue(withIdentifier: "toSub", sender: self)
-        }
+        performSegue(withIdentifier: "toSub", sender: self)
     }
     
     private func registerCells(for tableView: UITableView) {
@@ -298,22 +306,23 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             }
             return cell
         case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TodaysPlaylistCell.identifier, for: indexPath) as? TodaysPlaylistCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier:  TodaysPlaylistCell.identifier, for: indexPath) as? TodaysPlaylistCell else {
                 return UITableViewCell()
             }
-            self.interactor?.playlistOutput = cell
-            interactor?.fetchTodaysPlaylists(amountOfSongs: 10)
+            self.interactor?.themePlaylistOutput = cell
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
             cell.mediator.add(recipient: musicListVc)
             cell.mediator.add(recipient: playerVc)
+            if wasOpenedAfterDeeplink {
+                cell.shouldArtificiallyPressCell = true
+            }
             return cell
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewReleasesCell.identifier, for: indexPath) as? NewReleasesCell else {
                 return UITableViewCell()
             }
             self.interactor?.albumsOutput = cell
-            interactor?.fetchNewAlbums(amount: 10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
             cell.mediator.add(recipient: playerVc)
@@ -324,7 +333,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
                 return UITableViewCell()
             }
             self.interactor?.songsOutput = cell
-            interactor?.fetchSong(10)
             cell.mediator.removeAllRecipients()
             cell.mediator.add(recipient: self)
             cell.mediator.add(recipient: playerVc)
@@ -460,6 +468,11 @@ extension MusicPlayerLandingPage: UITableViewDelegate {
         }
     }
     
+    @IBAction func unwindToMainPage(segue: UIStoryboardSegue) {
+        wasSubscriptionSkipped = true
+    }
+
+    
     func setupImageForCommandCenter() {
         
         guard let currentSong = self.currentSong else { return }
@@ -514,23 +527,15 @@ extension MusicPlayerLandingPage: SongReceiver {
     }
 }
 
-extension MusicPlayerLandingPage: Reciever {
-    
-    func accessDenied() {
-        performSegue(withIdentifier: "toSub", sender: self)
-    }
-}
-
 extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
         
-        if accessState == .denied {
+        if accessState == .denied && wasOpenedAfterDeeplink == false {
             loadFullScreenAd()
         }
-        
+    
         self.selectedAlbum = model.songs
-        //self.tracks.append(contentsOf: model.songs)
         audioPlayer.delegate = musicListVc
         musicListVc.playerDelegate = self
         
@@ -665,16 +670,20 @@ extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
     
     func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
         
-        guard loadingAlert != nil else { return }
+        guard loadingAlert != nil else { adLoadingTimoutTimer.invalidate(); return }
         loadingAlert.dismiss(animated: true) {
             self.adLoadingTimoutTimer.invalidate()
             interstitialAd.show(fromRootViewController: self)
         }
     }
     
+    func interstitialAdDidClose(_ interstitialAd: FBInterstitialAd) {
+    }
+    
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
+        
         if loadingAlert != nil {
-            loadingAlert.dismiss(animated: true, completion: nil)
+            loadingAlert.dismiss(animated: true)
         }
         self.adLoadingTimoutTimer.invalidate()
         print("error - ", error.localizedDescription)

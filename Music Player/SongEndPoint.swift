@@ -13,7 +13,7 @@ fileprivate let testApiKey = "aa06c755"
 
 enum SongApi {
     case topSongs(popularityPeriod: String)
-    case themeSongs(themes: [String])
+    case themeSongs(amount: Int, themes: [String])
 }
 
 extension SongApi: EndPointType {
@@ -26,8 +26,8 @@ extension SongApi: EndPointType {
         switch self {
         case .topSongs(let popularityPeriod):
             return ["client_id": productionApiKey, "limit":10, "order":popularityPeriod]
-        case .themeSongs(let themes):
-            return ["client_id": productionApiKey, "limit":100, "tags":themes]
+        case .themeSongs(let amount, let themes):
+            return ["client_id": productionApiKey, "limit":amount, "tags":themes]
         }
     }
 }

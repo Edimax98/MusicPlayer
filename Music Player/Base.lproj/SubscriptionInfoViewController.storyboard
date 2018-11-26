@@ -192,7 +192,6 @@
                                         </state>
                                         <connections>
                                             <action selector="skipButtonPressed:" destination="t4t-QW-6nu" eventType="touchUpInside" id="sVY-DN-X4C"/>
-                                            <segue destination="rJW-zo-Zx7" kind="show" identifier="openMainPage" id="a2m-3l-PPP"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="xeJ-8Y-XmB">
@@ -290,11 +289,14 @@
                         <outlet property="skipButton" destination="fAH-5b-BIc" id="0y4-tz-jcl"/>
                         <outlet property="trialLabel" destination="Hvc-ou-EpY" id="33Y-kX-VOR"/>
                         <outlet property="trialTermsLabel" destination="baV-TM-w2z" id="q0G-2e-m0v"/>
+                        <segue destination="LWi-It-p8F" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMainPageWithSegue:" id="P6Y-m6-18T"/>
+                        <segue destination="rJW-zo-Zx7" kind="show" identifier="openMainPage" id="6qh-JN-Ei0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xco-Sd-yNb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="LWi-It-p8F" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-202.40000000000001" y="-336.20689655172413"/>
+            <point key="canvasLocation" x="-162" y="-737"/>
         </scene>
     </scenes>
     <resources>

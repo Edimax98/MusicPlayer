@@ -22,7 +22,7 @@ class DeeplinkParser {
         var pathComponents = components.path.components(separatedBy: "/")
         pathComponents.removeFirst()
         
-        switch host {w
+        switch host {
         case "main":
             return DeeplinkType.mainView
         case "themePlaylists":

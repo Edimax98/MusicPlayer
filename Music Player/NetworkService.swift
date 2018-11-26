@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import AlamofireImage
 import SwiftyJSON
+import FBSDKCoreKit
 
 class NetworkService {
     
@@ -50,13 +51,14 @@ extension NetworkService: SongNetworkService {
         return songsToReturn
     }
     
-    func fetchSong(with tags: [String]) {
-     
-        request(SongApi.baseUrl, method: .get, parameters: SongApi.themeSongs(themes: tags).parameters, encoding: URLEncoding.default, headers: nil)
+    func fetchSong(amount: Int, with tags: [String]) {
+        
+        request(SongApi.baseUrl, method: .get, parameters: SongApi.themeSongs(amount: amount, themes: tags).parameters, encoding: URLEncoding.default, headers: nil)
             .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
                 guard let songs = self.getSongs(from: response) else { return }
                 self.songNetworkServiceDelegate?.songNetworkServiceDidGet(songs, with: tags)
         }
+        FBSDKAppEvents.logEvent("Request to API was sent")
     }
     
     func fetchSongs(_ amount: UInt) {
@@ -69,6 +71,7 @@ extension NetworkService: SongNetworkService {
                 guard let songs = self.getSongs(from: response) else { return }
                 self.songNetworkServiceDelegate?.songNetworkerServiceDidGet(songs)
         }
+        FBSDKAppEvents.logEvent("Request to API was sent")
     }
 }
 
@@ -105,6 +108,7 @@ extension NetworkService: AlbumNetworkService {
                 }
                 self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumsToReturn)
         }
+        FBSDKAppEvents.logEvent("Request to API was sent")
     }
     
     
@@ -138,6 +142,7 @@ extension NetworkService: AlbumNetworkService {
                 }
                 self.albumNetworkDelegate?.albumNetworkServiceDidGet(albumToReturn)
         }
+        FBSDKAppEvents.logEvent("Request to API was sent")
     }
 }
 
@@ -237,6 +242,7 @@ extension NetworkService: TodaysPlaylistsNetworkService {
                     playlists.append(todaysPlaylist)
                     group.leave()
                 }
+                FBSDKAppEvents.logEvent("Request to API was sent")
             }
             fetchingQueue.async(execute: block)
         }

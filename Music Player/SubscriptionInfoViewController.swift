@@ -76,8 +76,16 @@ class SubscriptionInfoViewController: UIViewController {
     
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "openMainPage" {
+        if segue.identifier == "unwindToMain" {
+            if let destinationVc = segue.destination as? MusicPlayerLandingPage {
+                destinationVc.wasSubscriptionSkipped = true
+                if self.status == .available {
+                    destinationVc.accessState = .available
+                }
+            }
+        }
             
+        if segue.identifier == "openMainPage" {
             if let destinationVc = segue.destination as? MusicPlayerLandingPage {
                 destinationVc.wasSubscriptionSkipped = true
                 if self.status == .available {
@@ -122,7 +130,14 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func skipButtonPressed(_ sender: Any) {
+    
         FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [:])
+        
+        if self.parent == nil {
+            performSegue(withIdentifier: "openMainPage", sender: self)
+        } else {
+            performSegue(withIdentifier: "unwindToMain", sender: self)
+        }
     }
 
     @IBAction func startSubscriptionButtonPressed(_ sender: Any) {

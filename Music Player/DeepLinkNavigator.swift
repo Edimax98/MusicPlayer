@@ -25,10 +25,9 @@ class DeepLinkNavigator {
     }
     
     private func openView(with theme: String) {
-        if let vc = UIApplication.shared.keyWindow?.rootViewController {
+        if let vc = UIApplication.shared.keyWindow?.rootViewController as? MusicPlayerLandingPage {
             let themePlaylistsView = ThemePlaylistsViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil), identifier: "ThemePlaylistsVc")
-            themePlaylistsView.theme = theme
-            vc.present(themePlaylistsView, animated: true, completion: nil)
+            //themePlaylistsView.interactor?.fetchSongs(amount: 100, tags: ["Happy"])
         }
     }
 }

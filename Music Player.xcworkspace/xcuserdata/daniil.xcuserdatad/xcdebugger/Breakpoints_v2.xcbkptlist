@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Music Player/SubscriptionService.swift"
+            timestampString = "564939232.468195"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "uploadReceipt(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Music_Player.SubscriptionService.uploadReceipt(completion: Swift.Optional&lt;(Swift.Bool, Swift.Bool) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Music Player"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/daniil/Desktop/music/Music%20Player/SubscriptionService.swift"
+                  timestampString = "564941163.1696939"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Music_Player.Result&lt;Music_Player.Session&gt;) -&gt; () in Music_Player.SubscriptionService.uploadReceipt(completion: Swift.Optional&lt;(Swift.Bool, Swift.Bool) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Music Player"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/daniil/Desktop/music/Music%20Player/SubscriptionService.swift"
+                  timestampString = "564941163.172012"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

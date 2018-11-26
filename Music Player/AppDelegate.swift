@@ -30,12 +30,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.mainView.accessStatusChanged(to: .available)
     }
     
-    private func tryAgainToUploadReciept() {
+    private func tryToUploadReciept() {
         SubscriptionService.shared.uploadReceipt { (success, _) in
             if success {
                 self.uploadRecieptSucceeded()
             } else {
                 self.window?.rootViewController = self.subscriptionInfoView
+            }
+        }
+    }
+    
+    private func uploadSucceededAfterDeeplink(with url: URL) {
+        
+        guard SubscriptionService.shared.currentSubscription != nil else {
+            mainView.wasSubscriptionSkipped = true
+            mainView.tableView.reloadData()
+            return
+        }
+        self.mainView.accessState = .available
+        self.mainView.accessStatusChanged(to: .available)
+    }
+    
+    private func tryToUploadAfterDeeplink(with url: URL) {
+        
+        SubscriptionService.shared.uploadReceipt { (success, _) in
+            if success {
+                self.uploadSucceededAfterDeeplink(with: url)
+            } else {
+                self.mainView.wasOpenedAfterDeeplink = true
             }
         }
     }
@@ -57,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if success {
                 self.uploadRecieptSucceeded()
             } else if shouldRetry {
-                self.tryAgainToUploadReciept()
+                self.tryToUploadReciept()
             } else if !shouldRetry {
                 self.window?.rootViewController = self.subscriptionInfoView
             }
@@ -79,8 +101,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        let _ = DeepLinker.handleDeeplink(url: url)
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        guard SubscriptionService.shared.hasReceiptData else {
+            mainView.wasOpenedAfterDeeplink = true
+            mainView.tableView.reloadData()
+            return handled
+        }
+        
+        SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+            if success {
+                self.uploadSucceededAfterDeeplink(with: url)
+            } else if shouldRetry {
+                self.tryToUploadAfterDeeplink(with: url)
+            } else {
+                self.mainView.wasOpenedAfterDeeplink = true
+            }
+        }
         return handled
     }
     

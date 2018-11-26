@@ -13,6 +13,7 @@ class ThemePlaylistsViewController: UIViewController {
     @IBOutlet weak var themeTitleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     fileprivate let cellHeight: CGFloat = 180
+    let mediator = Mediator()
     var interactor: MusicPlayerLandingPageInteractor?
     var theme: String?
     
@@ -30,7 +31,7 @@ class ThemePlaylistsViewController: UIViewController {
         
         if let unwrappedTheme = theme {
             themeTitleLabel.text = unwrappedTheme
-            interactor?.fetchSongs(amount: 10, tags: [unwrappedTheme])
+            //interactor?.fetchSongs(amount: 10, tags: [unwrappedTheme])
         }
     }
     
@@ -47,10 +48,17 @@ extension ThemePlaylistsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension ThemePlaylistsViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let themeAlbum = dataSource.getPlaylists()[indexPath.row]
+        mediator.send(album: themeAlbum)
+    }
+}
+
 extension ThemePlaylistsViewController: ThemePlaylistInteractorOutput {
     
     func sendPlaylist(_ playlists: [Album], theme: String) {
-        
         dataSource.setPlaylists(playlists)
         collectionView.reloadData()
     }

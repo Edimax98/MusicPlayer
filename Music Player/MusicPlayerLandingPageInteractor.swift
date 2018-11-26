@@ -79,7 +79,6 @@
         for playlist in playlists {
             paths.append(getImagePaths(from: playlist.songs))
          }
-        
         return paths
     }
     
@@ -95,16 +94,17 @@
         }
     }
     
-    fileprivate func setImagesForSongs(_ images: [String:Image])  {
-        
+    fileprivate func setImagesForSongs(_ songs: [Song], images: [String:Image]) -> [Song] {
+    
         var i = 0
-
-        while self.songs.count - 1 >= i {
-            if images.keys.contains(where: { (url) -> Bool in songs[i].imagePath == url }) {
-                songs[i].image = images[songs[i].imagePath]
+        var songsWithImages = songs
+        while songsWithImages.count - 1 >= i {
+            if images.keys.contains(where: { (url) -> Bool in songsWithImages[i].imagePath == url }) {
+                songsWithImages[i].image = images[songsWithImages[i].imagePath]
             }
             i += 1
         }
+        return songsWithImages
     }
 
     fileprivate func setImagesForSongsInsidePlaylist(_ nestedImages: [[String:Image]]) {
@@ -149,16 +149,12 @@
         while tempSongs.count > 0 {
             let bunchOfSongs = Array(tempSongs.prefix(amountOfSongsInside))
             tempSongs = Array(tempSongs.dropFirst(amountOfSongsInside))
-            let playlist = Album(name: "", artistName: "Your friend", imagePath: "", songs: bunchOfSongs)
+            let playlist = Album(name: "Collection #\(tempSongs.count / 10 + 1)", artistName: "Your friend", imagePath: "", songs: bunchOfSongs)
             playlistToReturn.append(playlist)
         }
         makeImages(for: &playlistToReturn)
         
         return playlistToReturn
-    }
-    
-    fileprivate func makeTheme(of tags: [String]) -> String {
-        return ""
     }
     
     fileprivate func makeImages(for themePlaylists: inout [Album]) {
@@ -174,6 +170,10 @@
     
     func fetchSong(_ amount: UInt) {
         networkService.fetchSongs(10)
+    }
+    
+    func fetchSongs(amount: Int, tags: [String]) {
+        networkService.fetchSong(amount: amount, with: tags)
     }
     
     func fetchAlbums(_ amount: UInt) {
@@ -195,10 +195,6 @@
         let randomGenres = getRandomGenres(from: self.genres, with: 5)
         networkService.fetchTodaysPlaylists(for: randomGenres, amountOfSongs: amountOfSongs)
     }
-    
-    func fetchSongs(amount: Int, tags: [String]) {
-        networkService.fetchSong(with: tags)
-    }
  }
  
  // MARK: - SongNetworkServiceDelegate
@@ -206,24 +202,20 @@
     
     func songNetworkServiceDidGet(_ songs: [Song], with tags: [String]) {
         
-        self.songs = songs
         let paths = getImagePaths(from: songs)
-        
         networkService.fetchImages(from: paths, for: .song) { [unowned self] images in
-            
-            self.setImagesForSongs(images)
-            let themePlaylists = self.makeThemesPlaylist(from: self.songs, amountOfSongsInside: 10)
+            let songsToSend = self.setImagesForSongs(songs, images: images)
+            let themePlaylists = self.makeThemesPlaylist(from: songsToSend, amountOfSongsInside: 10)
             self.themePlaylistOutput?.sendPlaylist(themePlaylists, theme: tags.first!)
         }
     }
     
     func songNetworkerServiceDidGet(_ songs: [Song]) {
         
-        self.songs = songs
         let paths = getImagePaths(from: songs)
         networkService.fetchImages(from: paths, for: .song) { images in
-            self.setImagesForSongs(images)
-            self.songsOutput?.sendSongs(self.songs)
+            let songsToSend = self.setImagesForSongs(songs, images: images)
+            self.songsOutput?.sendSongs(songsToSend)
         }
     }
     

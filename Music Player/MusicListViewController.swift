@@ -16,13 +16,15 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var musicTableView: UITableView!
     
     var closeHandler: (() -> Void)?
-    var songWasSelected: ((_ song: Song) -> Void)?
+    var wasShownHandler: (() -> Void)?
+    var shouldOfferSubscription = false
     let mediator = Mediator()
     fileprivate var album: Album?
     fileprivate let dataSource = SongsDataSource()
     weak var playerDelegate: PlayerViewControllerDelegate?
     weak var audioPlayerDelegate: AudioPlayerDelegate?
-    
+    let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil), identifier: "SubscriptionInfoViewController")
+
     deinit {
         print("deinited ", self)
     }
@@ -33,6 +35,15 @@ class MusicListViewController: UIViewController, PopupContentViewController {
         musicTableView.dataSource = dataSource
         musicTableView.delegate = self
         musicTableView.register(UINib(nibName: "TrackCell", bundle: nil), forCellReuseIdentifier: TrackCell.identifier)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        wasShownHandler?()
+    }
+    
+    func showSubOffer() {
+        self.show(subOfferVc, sender: self)
     }
     
     private func fillLabels() {

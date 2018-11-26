@@ -17,6 +17,7 @@ class TodaysPlaylistCell: UITableViewCell {
     fileprivate let cellHeight: CGFloat = 150
     let mediator = Mediator()
     var dataSource = TodaysPlaylistDataSource()
+    var shouldArtificiallyPressCell = false
     static var identifier = "TodaysPlaylistCell"
     
     override func awakeFromNib() {
@@ -52,12 +53,16 @@ extension TodaysPlaylistCell: UICollectionViewDelegateFlowLayout {
     }
 }
  
-// MARK: - PlaylistInteractorOutput
- extension TodaysPlaylistCell: PlaylistInteractorOutput {
+// MARK: - ThemePlaylistInteractorOutput
+extension TodaysPlaylistCell: ThemePlaylistInteractorOutput {
     
-    func sendPlaylist(_ playlists: [Album]) {
+    func sendPlaylist(_ playlists: [Album], theme: String) {
         dataSource.setPlaylists(playlists)
         todaysPlaylistCollectionView.reloadData()
+        
+        if shouldArtificiallyPressCell {
+            collectionView(todaysPlaylistCollectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+        }
     }
  }
  
