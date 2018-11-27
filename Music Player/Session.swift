@@ -32,9 +32,11 @@ struct Session {
         
         for sub in paidSubscriptions {
             if sub.isTrial == true && paidSubscriptions.count != 1 {
+                UserDefaults.standard.set(true, forKey: "isTrialExpired")
                 return false
             }
         }
+        UserDefaults.standard.set(false, forKey: "isTrialExpired")
         return true
     }
     

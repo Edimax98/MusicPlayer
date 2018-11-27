@@ -60,9 +60,9 @@ extension TodaysPlaylistCell: ThemePlaylistInteractorOutput {
         dataSource.setPlaylists(playlists)
         todaysPlaylistCollectionView.reloadData()
         
-        if shouldArtificiallyPressCell {
-            collectionView(todaysPlaylistCollectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
-        }
+//        if shouldArtificiallyPressCell {
+//        collectionView(todaysPlaylistCollectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+//        }
     }
  }
  

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func uploadRecieptSucceeded() {
         guard SubscriptionService.shared.currentSubscription != nil else {
-            self.window?.rootViewController = self.subscriptionInfoView
+            self.mainView.showSubscriptionOffer()
             NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
             return
         }
@@ -35,16 +35,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if success {
                 self.uploadRecieptSucceeded()
             } else {
-                self.window?.rootViewController = self.subscriptionInfoView
+                self.mainView.wasSubscriptionSkipped = false
+                self.mainView.showSubscriptionOffer()
             }
         }
     }
     
     private func uploadSucceededAfterDeeplink(with url: URL) {
         
+        let _ =  DeepLinker.handleDeeplink(url: url)
+        DeepLinker.checkDeeplink()
+        
         guard SubscriptionService.shared.currentSubscription != nil else {
-            mainView.wasSubscriptionSkipped = true
-            mainView.tableView.reloadData()
+            DeepLinkNavigator.shared.dataLoaded = { [weak self] in
+                self?.mainView.wasSubscriptionSkipped = false
+                self?.mainView.wasOpenedAfterDeeplink = true
+                self?.mainView.showSubscriptionOffer()
+                NotificationCenter.default.post(name: SubscriptionService.noSubscriptionAfterAutoCheckNotification, object: self)
+            }
             return
         }
         self.mainView.accessState = .available
@@ -57,7 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if success {
                 self.uploadSucceededAfterDeeplink(with: url)
             } else {
+                self.mainView.wasSubscriptionSkipped = false
                 self.mainView.wasOpenedAfterDeeplink = true
+                self.mainView.showSubscriptionOffer()
             }
         }
     }
@@ -71,17 +81,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SubscriptionService.shared.loadSubscriptionOptions()
         
         guard SubscriptionService.shared.hasReceiptData else {
-            self.window?.rootViewController = subscriptionInfoView
+            self.mainView.showSubscriptionOffer()
             return
         }
-
+        //mainView.showLoadingAlert()
         SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
+          //  self.mainView.dismissLoadingAlert()
             if success {
                 self.uploadRecieptSucceeded()
             } else if shouldRetry {
                 self.tryToUploadReciept()
             } else if !shouldRetry {
-                self.window?.rootViewController = self.subscriptionInfoView
+                self.mainView.showSubscriptionOffer()
             }
         }
     }
@@ -89,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         SKPaymentQueue.default().add(self)
-        //setupRootController()
+        setupRootController()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
@@ -102,20 +113,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-        
+    
         guard SubscriptionService.shared.hasReceiptData else {
-            mainView.wasOpenedAfterDeeplink = true
-            mainView.tableView.reloadData()
+                    //let _ = self.mainView.view
+                    let _ =  DeepLinker.handleDeeplink(url: url)
+                    DeepLinker.checkDeeplink()
+            DeepLinkNavigator.shared.dataLoaded = { [weak self] in
+                self?.mainView.wasOpenedAfterDeeplink = true
+                self?.mainView.wasSubscriptionSkipped = false
+                self?.mainView.showSubscriptionOffer()
+            }
             return handled
         }
-        
+
         SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+            //self.mainView.dismissLoadingAlert()
             if success {
                 self.uploadSucceededAfterDeeplink(with: url)
             } else if shouldRetry {
                 self.tryToUploadAfterDeeplink(with: url)
             } else {
                 self.mainView.wasOpenedAfterDeeplink = true
+                self.mainView.showSubscriptionOffer()
             }
         }
         return handled
@@ -123,6 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         SKPaymentQueue.default().remove(self)
+        UserDefaults.standard.removeObject(forKey: "isTrialExpired")
     }
 }
 

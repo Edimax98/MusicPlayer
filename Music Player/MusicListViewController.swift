@@ -23,8 +23,7 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     fileprivate let dataSource = SongsDataSource()
     weak var playerDelegate: PlayerViewControllerDelegate?
     weak var audioPlayerDelegate: AudioPlayerDelegate?
-    let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil), identifier: "SubscriptionInfoViewController")
-
+    
     deinit {
         print("deinited ", self)
     }
@@ -43,7 +42,8 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     }
     
     func showSubOffer() {
-        self.show(subOfferVc, sender: self)
+        let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil), identifier: "SubscriptionInfoViewController")
+        self.present(subOfferVc, animated: true, completion: nil)
     }
     
     private func fillLabels() {
@@ -105,7 +105,7 @@ extension MusicListViewController: PlayerViewControllerDelegate {
     }
     
     func didPressPreviousButton(completion: @escaping (Song) -> Void) {
-        playerDelegate?.didPressPreviousButton{ newSong in
+        playerDelegate?.didPressPreviousButton { newSong in
             completion(newSong)
         }
     }

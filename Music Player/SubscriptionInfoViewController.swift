@@ -21,7 +21,11 @@ class SubscriptionInfoViewController: UIViewController {
     
     var subscription: Subscription?
     var status = AccessState.denied
-    
+    fileprivate let trialExpiredMessage = "Your trial period has expired. Subscription price - ".localized
+    fileprivate let trialAvailableMessage = "3 days trial. Subscription price - ".localized
+    fileprivate let disclaimerMessage = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. Subscription auto-renewal may be turned off by going to the Account Settings after purchase. Any unused portion of a free trial will be forfeited when you purchase a subscription.".localized
+    fileprivate let allAccessMessage = "All access".localized
+    fileprivate let freeTrialMessage = "3 days for FREE".localized
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -61,31 +65,21 @@ class SubscriptionInfoViewController: UIViewController {
         
         SubscriptionService.shared.loadSubscriptionOptions()
         
-        if !SubscriptionService.shared.isEligibleForTrial {
-            self.trialLabel.text = "All access".localized
+        if UserDefaults.standard.bool(forKey: "isTrialExpired") {
+            self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = "Subscription price - ".localized + price + " per week"
+            self.priceLabel.text = trialExpiredMessage + price + " per week"
         } else {
-            self.trialLabel.text = "3 days FOR FREE".localized
+            self.trialLabel.text = freeTrialMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + price + " per week"
+            self.priceLabel.text = trialAvailableMessage + price + " per week"
         }
-        
-        self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
+        self.trialTermsLabel.text = disclaimerMessage
     }
     
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "unwindToMain" {
-            if let destinationVc = segue.destination as? MusicPlayerLandingPage {
-                destinationVc.wasSubscriptionSkipped = true
-                if self.status == .available {
-                    destinationVc.accessState = .available
-                }
-            }
-        }
-            
-        if segue.identifier == "openMainPage" {
             if let destinationVc = segue.destination as? MusicPlayerLandingPage {
                 destinationVc.wasSubscriptionSkipped = true
                 if self.status == .available {
@@ -130,13 +124,12 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func skipButtonPressed(_ sender: Any) {
-    
         FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [:])
         
-        if self.parent == nil {
-            performSegue(withIdentifier: "openMainPage", sender: self)
-        } else {
+        if let _ = parent as? MusicPlayerLandingPage {
             performSegue(withIdentifier: "unwindToMain", sender: self)
+        } else {
+            self.dismiss(animated: true, completion: nil)
         }
     }
 
@@ -167,8 +160,8 @@ class SubscriptionInfoViewController: UIViewController {
 
         if let _ = SubscriptionService.shared.currentSubscription {
             if !SubscriptionService.shared.isEligibleForTrial {
-                self.trialLabel.text = "All access".localized
-                self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
+                self.trialLabel.text = allAccessMessage
+                self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + " per week"
 
                 FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
                                            parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
@@ -186,12 +179,12 @@ class SubscriptionInfoViewController: UIViewController {
         
         guard let subscription = SubscriptionService.shared.options?.first else { return }
 
-        if !SubscriptionService.shared.isEligibleForTrial {
-            trialLabel.text = "All access".localized
-            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
+        if SubscriptionService.shared.isEligibleForTrial == false {
+            trialLabel.text = allAccessMessage
+            self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + " per week"
         } else {
-            self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice + " per week"
+            self.trialLabel.text = freeTrialMessage
+            self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + " per week"
         }
         
         if SubscriptionService.shared.currentSubscription != nil {
@@ -209,16 +202,7 @@ class SubscriptionInfoViewController: UIViewController {
     
     @objc func noSubscriptionsAfterAutiCheck() {
         
-        guard let subscription = SubscriptionService.shared.options?.first else { return }
-        
-        if !SubscriptionService.shared.isEligibleForTrial {
-            self.trialLabel.text = "All access".localized
-            self.priceLabel.text = "Your trial period has expired. ".localized + "Subscription price - ".localized + subscription.formattedPrice + " per week"
-            UserDefaults.standard.set(true, forKey: "isTrialExpired")
-        } else {
-            self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "Subscription price - ".localized + subscription.formattedPrice + " per week"
-        }
+        //guard let subscription = SubscriptionService.shared.options?.first else { return }
     }
     
     @objc func handleOptionsLoaded(notification: Notification) {
@@ -227,18 +211,20 @@ class SubscriptionInfoViewController: UIViewController {
             showErrorAlert(for: .internalError)
             return
         }
-    
+
         self.subscription = sub
 
         if UserDefaults.standard.bool(forKey: "isTrialExpired") {
-            self.trialLabel.text = "All access".localized
-            self.priceLabel.text =  "Subscription price - ".localized + sub.formattedPrice + " per week"
+            self.trialLabel.text = allAccessMessage
+            guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
+            self.priceLabel.text = trialExpiredMessage + price + " per week"
         } else {
-            self.trialLabel.text = "3 days FOR FREE".localized
-            self.priceLabel.text = "3 days trial. ".localized + "Subscription price - ".localized + sub.formattedPrice + " per week"
+            self.trialLabel.text = freeTrialMessage
+            guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
+            self.priceLabel.text = trialAvailableMessage + price + " per week"
         }
     
-        self.trialTermsLabel.text = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. You can cancel anytime with your iTunes account settings. Any unused portion of a free trial will be forfeited if you purchase a subscription.".localized
+        self.trialTermsLabel.text = disclaimerMessage
     }
     
     @objc func nothingToRestore(notification: Notification) {

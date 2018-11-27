@@ -35,10 +35,11 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var audioPlayer = AudioPlayer()
     var accessState = AccessState.denied
     var wasSubscriptionSkipped = false
-    var wasOpenedAfterDeeplink = true
+    var wasOpenedAfterDeeplink = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
     fileprivate var selectedAlbum = [Song]()
+    fileprivate(set) var themeAlbums: [Album]?
     fileprivate var currentSong: Song? {
         didSet {
             setupImageForCommandCenter()
@@ -56,7 +57,7 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var fullScreenAd: FBInterstitialAd!
     fileprivate weak var loadingAlert: UIAlertController!
     fileprivate var adLoadingTimoutTimer: Timer!
-    fileprivate var interactor: MusicPlayerLandingPageInteractor?
+    var interactor: MusicPlayerLandingPageInteractor?
     fileprivate var adView: FBAdView!
     
 	override var prefersStatusBarHidden: Bool {
@@ -76,7 +77,7 @@ class MusicPlayerLandingPage: UIViewController {
             adView.loadAd()
         } else {
             containerHeightConstraint.constant = 0
-            adTopConstant.constant = -45
+            view.layoutIfNeeded()
         }
         
         tableView.separatorStyle = .none
@@ -100,9 +101,9 @@ class MusicPlayerLandingPage: UIViewController {
         interactor?.fetchSong(10)
         
         musicListVc.wasShownHandler = {
-            if self.wasSubscriptionSkipped == false && self.wasOpenedAfterDeeplink {
-                self.musicListVc.showSubOffer()
-            }
+//            if self.wasSubscriptionSkipped == false && self.wasOpenedAfterDeeplink {
+//                self.musicListVc.showSubOffer()
+//            }
         }
     }
 
@@ -249,6 +250,19 @@ class MusicPlayerLandingPage: UIViewController {
         return result
     }
     
+    func showLoadingAlert() {
+        loadingAlert = UIAlertController.displayLoadingAlert(on: self)
+        present(loadingAlert, animated: true, completion: nil)
+        adLoadingTimoutTimer = Timer.scheduledTimer(timeInterval: 8, target: self, selector: #selector(handleTimeout), userInfo: nil, repeats: false)
+    }
+    
+    func dismissLoadingAlert() {
+        guard loadingAlert != nil, adLoadingTimoutTimer != nil else { return }
+        loadingAlert.dismiss(animated: true) {
+            self.adLoadingTimoutTimer.invalidate()
+        }
+    }
+    
     fileprivate func loadFullScreenAd() {
         fullScreenAd = FBInterstitialAd(placementID: "2094400630876165_2124263474556547")
         fullScreenAd.load()
@@ -275,6 +289,10 @@ class MusicPlayerLandingPage: UIViewController {
             containerHeightConstraint.constant = 0
             adTopConstant.constant = -45
         }
+    }
+    
+    func showSubscriptionOffer() {
+        performSegue(withIdentifier: "toSub", sender: self)
     }
     
     @objc func handleTimeout() {
@@ -314,9 +332,6 @@ extension MusicPlayerLandingPage: UITableViewDataSource {
             cell.mediator.add(recipient: self)
             cell.mediator.add(recipient: musicListVc)
             cell.mediator.add(recipient: playerVc)
-            if wasOpenedAfterDeeplink {
-                cell.shouldArtificiallyPressCell = true
-            }
             return cell
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewReleasesCell.identifier, for: indexPath) as? NewReleasesCell else {
@@ -531,9 +546,9 @@ extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
         
-        if accessState == .denied && wasOpenedAfterDeeplink == false {
+        //if accessState == .denied && wasOpenedAfterDeeplink == false {
             loadFullScreenAd()
-        }
+        //}
     
         self.selectedAlbum = model.songs
         audioPlayer.delegate = musicListVc
@@ -661,7 +676,9 @@ extension MusicPlayerLandingPage: FBAdViewDelegate {
     }
     
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        containerHeightConstraint.constant = 0.0
+        adTopConstant.constant = -45
+        adView.removeFromSuperview()
+        view.layoutIfNeeded()
         print(error.localizedDescription)
     }
 }
@@ -677,15 +694,12 @@ extension MusicPlayerLandingPage: FBInterstitialAdDelegate {
         }
     }
     
-    func interstitialAdDidClose(_ interstitialAd: FBInterstitialAd) {
-    }
-    
     func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
         
         if loadingAlert != nil {
             loadingAlert.dismiss(animated: true)
         }
         self.adLoadingTimoutTimer.invalidate()
-        print("error - ", error.localizedDescription)
+        print("Error  - ", error.localizedDescription)
     }
 }
