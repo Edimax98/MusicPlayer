@@ -126,11 +126,11 @@ class SubscriptionInfoViewController: UIViewController {
     @IBAction func skipButtonPressed(_ sender: Any) {
         FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [:])
         
-        if let _ = parent as? MusicPlayerLandingPage {
+      //  if let _ = parent as? MusicPlayerLandingPage {
             performSegue(withIdentifier: "unwindToMain", sender: self)
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
+//        } else {
+//            self.dismiss(animated: true, completion: nil)
+//        }
     }
 
     @IBAction func startSubscriptionButtonPressed(_ sender: Any) {
@@ -165,11 +165,13 @@ class SubscriptionInfoViewController: UIViewController {
 
                 FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
                                            parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
-                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier])
+                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
+                                                        FBSDKAppEventParameterNameDescription: "Production"])
             } else {
                 FBSDKAppEvents.logPurchase(0.0, currency: "",
                                            parameters: [FBSDKAppEventParameterNameContentType: "3 days trial",
-                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier])
+                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
+                                                        FBSDKAppEventParameterNameDescription: "Production"])
             }
             status = .available
         }
@@ -201,8 +203,6 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @objc func noSubscriptionsAfterAutiCheck() {
-        
-        //guard let subscription = SubscriptionService.shared.options?.first else { return }
     }
     
     @objc func handleOptionsLoaded(notification: Notification) {

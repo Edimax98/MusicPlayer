@@ -16,7 +16,6 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     @IBOutlet weak var musicTableView: UITableView!
     
     var closeHandler: (() -> Void)?
-    var wasShownHandler: (() -> Void)?
     var shouldOfferSubscription = false
     let mediator = Mediator()
     fileprivate var album: Album?
@@ -38,12 +37,6 @@ class MusicListViewController: UIViewController, PopupContentViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        wasShownHandler?()
-    }
-    
-    func showSubOffer() {
-        let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil), identifier: "SubscriptionInfoViewController")
-        self.present(subOfferVc, animated: true, completion: nil)
     }
     
     private func fillLabels() {

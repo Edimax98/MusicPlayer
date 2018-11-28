@@ -12,6 +12,7 @@ class DeepLinkNavigator {
     
     private init() { }
     static let shared = DeepLinkNavigator()
+    var wasProceeded = false
     
     var dataLoaded: (() -> Void)?
 
@@ -27,25 +28,14 @@ class DeepLinkNavigator {
     
     private func openView(with theme: String) {
         if let vc = UIApplication.shared.keyWindow?.rootViewController as? MusicPlayerLandingPage {
-           // vc.showLoadingAlert()
-            vc.interactor?.fetchSongs(amount: 10, tags: [theme])
-            vc.interactor?.themePlaylistOutput = self
-        }
-    }
-}
-
-extension DeepLinkNavigator: ThemePlaylistInteractorOutput {
-    
-    func sendPlaylist(_ playlists: [Album], theme: String) {
-        if let vc = UIApplication.shared.keyWindow?.rootViewController as? MusicPlayerLandingPage {
-            vc.dismissLoadingAlert()
-            dataLoaded?()
-            let mediator = Mediator()
-            //let _ = vc.musicListVc.view
-            //mediator.removeAllRecipients()
-            mediator.add(recipient: vc)
-            mediator.add(recipient: vc.musicListVc)
-            mediator.send(album: playlists.first!)
+            vc.interactor?.fetchSongs(amount: 10, tags: [theme]) { (albums ,theme) in
+                let mediator = Mediator()
+                self.wasProceeded = true
+                mediator.add(recipient: vc)
+                mediator.add(recipient: vc.musicListVc)
+                mediator.send(album: albums.first!)
+                self.dataLoaded?()
+            }
         }
     }
 }

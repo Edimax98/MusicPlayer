@@ -22,4 +22,6 @@ protocol SongNetworkService: class {
     func fetchSongs(_ amount: UInt)
     
     func fetchSong(amount: Int, with tags: [String])
+    
+    func fetchSong(amount: Int, with tags: [String], completion: @escaping ([Song]) -> ())
 }

@@ -35,7 +35,6 @@ class MusicPlayerLandingPage: UIViewController {
     fileprivate var audioPlayer = AudioPlayer()
     var accessState = AccessState.denied
     var wasSubscriptionSkipped = false
-    var wasOpenedAfterDeeplink = false
     fileprivate var option: Subscription?
     fileprivate var tracks = [Song]()
     fileprivate var selectedAlbum = [Song]()
@@ -99,12 +98,6 @@ class MusicPlayerLandingPage: UIViewController {
         interactor?.fetchSongs(amount: 50, tags: ["Happy"])
         interactor?.fetchNewAlbums(amount: 10)
         interactor?.fetchSong(10)
-        
-        musicListVc.wasShownHandler = {
-//            if self.wasSubscriptionSkipped == false && self.wasOpenedAfterDeeplink {
-//                self.musicListVc.showSubOffer()
-//            }
-        }
     }
 
     fileprivate func pauseAndSeekToStart() {
@@ -147,11 +140,7 @@ class MusicPlayerLandingPage: UIViewController {
     
     @IBAction func nowPlayingViewTapped(_ sender: Any) {
 
-        guard accessState == .available else {
-            performSegue(withIdentifier: "toSub", sender: self)
-            return
-        }
-        
+        guard accessState == .available else { return }
         userTappedOnController = true
         openCurrentSongInPlayer()
     }
@@ -268,7 +257,9 @@ class MusicPlayerLandingPage: UIViewController {
         fullScreenAd.load()
         fullScreenAd.delegate = self
         loadingAlert = UIAlertController.displayLoadingAlert(on: self)
-        present(loadingAlert, animated: true, completion: nil)
+        if loadingAlert != nil {
+            present(loadingAlert, animated: true, completion: nil)
+        }
         adLoadingTimoutTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleTimeout), userInfo: nil, repeats: false)
     }
     
@@ -287,7 +278,7 @@ class MusicPlayerLandingPage: UIViewController {
                 adView = nil
             }
             containerHeightConstraint.constant = 0
-            adTopConstant.constant = -45
+            //adTopConstant.constant = -45
         }
     }
     
@@ -546,9 +537,9 @@ extension MusicPlayerLandingPage: AlbumReceiver {
  
     func receive(model: Album) {
         
-        //if accessState == .denied && wasOpenedAfterDeeplink == false {
+        if accessState == .denied && DeepLinkNavigator.shared.wasProceeded == false {
             loadFullScreenAd()
-        //}
+        }
     
         self.selectedAlbum = model.songs
         audioPlayer.delegate = musicListVc
@@ -676,7 +667,7 @@ extension MusicPlayerLandingPage: FBAdViewDelegate {
     }
     
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        adTopConstant.constant = -45
+        //adTopConstant.constant = -45
         adView.removeFromSuperview()
         view.layoutIfNeeded()
         print(error.localizedDescription)

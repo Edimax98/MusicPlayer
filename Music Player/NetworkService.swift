@@ -30,6 +30,16 @@ class NetworkService {
 // MARK: - SongNetworkService
 extension NetworkService: SongNetworkService {
     
+    func fetchSong(amount: Int, with tags: [String], completion: @escaping ([Song]) -> ()) {
+        
+        request(SongApi.baseUrl, method: .get, parameters: SongApi.themeSongs(amount: amount, themes: tags).parameters, encoding: URLEncoding.default, headers: nil)
+            .response(queue: fetchingQueue, responseSerializer: DataRequest.jsonResponseSerializer()) { (response) in
+                guard let songs = self.getSongs(from: response) else { return }
+                completion(songs)
+        }
+        FBSDKAppEvents.logEvent("Request to API was sent")
+    }
+    
     private func getSongs(from rawDataResponse: DataResponse<Any>) -> [Song]? {
         
         guard let responseValue = rawDataResponse.result.value else {

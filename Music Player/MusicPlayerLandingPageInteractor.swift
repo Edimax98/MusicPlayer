@@ -176,6 +176,17 @@
         networkService.fetchSong(amount: amount, with: tags)
     }
     
+    func fetchSongs(amount: Int, tags: [String], completion: @escaping ([Album], String) -> ()) {
+        networkService.fetchSong(amount: amount, with: tags) { (songs) in
+            let paths = self.getImagePaths(from: songs)
+            self.networkService.fetchImages(from: paths, for: .song) { [unowned self] images in
+                let songsToSend = self.setImagesForSongs(songs, images: images)
+                let themePlaylists = self.makeThemesPlaylist(from: songsToSend, amountOfSongsInside: 10)
+                completion(themePlaylists,tags.first!)
+            }
+        }
+    }
+    
     func fetchAlbums(_ amount: UInt) {
         networkService.fetchAlbums(amount)
     }
