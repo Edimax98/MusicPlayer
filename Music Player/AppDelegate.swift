@@ -11,6 +11,7 @@ import UIKit
 import StoreKit
 import FacebookCore
 import FBSDKCoreKit
+import FBSDKCoreKit.FBSDKAppLinkUtility
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -84,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         //mainView.showLoadingAlert()
         SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
-          //  self.mainView.dismissLoadingAlert()
+            //  self.mainView.dismissLoadingAlert()
             if success {
                 self.uploadRecieptSucceeded()
             } else if shouldRetry {
@@ -95,8 +96,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+        
         SKPaymentQueue.default().add(self)
         setupRootController()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -104,21 +107,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        DeepLinker.checkDeeplink()
         AppEventsLogger.activate(application)
+        
+        FBSDKAppLinkUtility.fetchDeferredAppLink { (url, error) in
+            
+            if let unwrappedError = error {
+                print("Error after deffered deeplink - \(unwrappedError)")
+            } else {
+                guard let unwrappedUrl = url else { print("URL after deffered deeplink is nil"); return }
+                
+                guard SubscriptionService.shared.hasReceiptData else {
+                    let _ = DeepLinker.handleDeeplink(url: unwrappedUrl)
+                    DeepLinker.checkDeeplink()
+                    self.mainView.showSubscriptionOffer()
+                    return
+                }
+                
+                SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+                    if success {
+                        self.uploadSucceededAfterDeeplink(with: unwrappedUrl)
+                    } else if shouldRetry {
+                        self.tryToUploadAfterDeeplink(with: unwrappedUrl)
+                    } else if !shouldRetry {
+                        let _ = DeepLinker.handleDeeplink(url: unwrappedUrl)
+                        DeepLinker.checkDeeplink()
+                        self.mainView.showSubscriptionOffer()
+                    }
+                }
+            }
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-    
+        
         guard SubscriptionService.shared.hasReceiptData else {
             let _ = DeepLinker.handleDeeplink(url: url)
             DeepLinker.checkDeeplink()
             mainView.showSubscriptionOffer()
             return handled
         }
-
+        
         SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
             //self.mainView.dismissLoadingAlert()
             if success {

@@ -84,6 +84,7 @@ class SubscriptionInfoViewController: UIViewController {
                 destinationVc.wasSubscriptionSkipped = true
                 if self.status == .available {
                     destinationVc.accessState = .available
+                    destinationVc.accessStatusChanged(to: .available)
                 }
             }
         }
@@ -125,12 +126,7 @@ class SubscriptionInfoViewController: UIViewController {
     
     @IBAction func skipButtonPressed(_ sender: Any) {
         FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [:])
-        
-      //  if let _ = parent as? MusicPlayerLandingPage {
-            performSegue(withIdentifier: "unwindToMain", sender: self)
-//        } else {
-//            self.dismiss(animated: true, completion: nil)
-//        }
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
 
     @IBAction func startSubscriptionButtonPressed(_ sender: Any) {
@@ -162,16 +158,9 @@ class SubscriptionInfoViewController: UIViewController {
             if !SubscriptionService.shared.isEligibleForTrial {
                 self.trialLabel.text = allAccessMessage
                 self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + " per week"
-
-                FBSDKAppEvents.logPurchase(subscription.priceWithoutCurrency, currency: subscription.currencyCode,
-                                           parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
-                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
-                                                        FBSDKAppEventParameterNameDescription: "Production"])
             } else {
-                FBSDKAppEvents.logPurchase(0.0, currency: "",
-                                           parameters: [FBSDKAppEventParameterNameContentType: "3 days trial",
-                                                        FBSDKAppEventParameterNameContentID: subscription.product.productIdentifier,
-                                                        FBSDKAppEventParameterNameDescription: "Production"])
+                self.trialLabel.text = allAccessMessage
+                self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + " per week"
             }
             status = .available
         }
@@ -192,7 +181,7 @@ class SubscriptionInfoViewController: UIViewController {
         if SubscriptionService.shared.currentSubscription != nil {
             let alert = UIAlertController(title: "Successfull".localized, message: nil, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                self.performSegue(withIdentifier: "openMainPage", sender: self)
+                self.performSegue(withIdentifier: "unwindToMain", sender: self)
             }
             alert.addAction(okAction)
             present(alert, animated: true, completion: nil)

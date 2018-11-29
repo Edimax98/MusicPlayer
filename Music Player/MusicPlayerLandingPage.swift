@@ -274,10 +274,10 @@ class MusicPlayerLandingPage: UIViewController {
         } else {
             if adView != nil {
                 adView.removeFromSuperview()
-                self.view.layoutIfNeeded()
                 adView = nil
             }
             containerHeightConstraint.constant = 0
+            self.view.layoutIfNeeded()
             //adTopConstant.constant = -45
         }
     }
