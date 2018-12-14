@@ -66,6 +66,7 @@
 		A5B06A62215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B06A61215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift */; };
 		A5B06A64215B8E88001C05EB /* TodayPlaylistEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B06A63215B8E88001C05EB /* TodayPlaylistEndPoint.swift */; };
 		A5B06A66215BD1A2001C05EB /* TodayPlaylistDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B06A65215BD1A2001C05EB /* TodayPlaylistDataSource.swift */; };
+		A5B689DD21C3E9C9005E3493 /* WelcomePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B689DC21C3E9C9005E3493 /* WelcomePagesViewController.swift */; };
 		A5BD8E1121467D1400F3F812 /* NewAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */; };
 		A5BD8E1221467D1400F3F812 /* NewAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */; };
 		A5C7350B2147BF4000F58D1E /* UPCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */; };
@@ -84,6 +85,7 @@
 		A5E9635121552AB5006509C7 /* ImageFetchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */; };
 		A5E96353215542D6006509C7 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E96352215542D6006509C7 /* ModelType.swift */; };
 		A5EC62D721539A6700721542 /* HeaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EC62D621539A6700721542 /* HeaderData.swift */; };
+		A5EFB3F521B13719004EE546 /* FacebookEventsEnviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB3F421B13719004EE546 /* FacebookEventsEnviroment.swift */; };
 		A5F8259C216B50F1007C0CC7 /* DeepLinkNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8259B216B50F1007C0CC7 /* DeepLinkNavigator.swift */; };
 		A5F8259E216B59A9007C0CC7 /* deeplink.html in Resources */ = {isa = PBXBuildFile; fileRef = A5F8259D216B59A9007C0CC7 /* deeplink.html */; };
 		A5F825A2216B6AA7007C0CC7 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F825A1216B6AA7007C0CC7 /* StringExtention.swift */; };
@@ -160,6 +162,7 @@
 		A5B06A61215B8CED001C05EB /* TodaysPlaylistsNertworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysPlaylistsNertworkService.swift; sourceTree = "<group>"; };
 		A5B06A63215B8E88001C05EB /* TodayPlaylistEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayPlaylistEndPoint.swift; sourceTree = "<group>"; };
 		A5B06A65215BD1A2001C05EB /* TodayPlaylistDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayPlaylistDataSource.swift; sourceTree = "<group>"; };
+		A5B689DC21C3E9C9005E3493 /* WelcomePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePagesViewController.swift; sourceTree = "<group>"; };
 		A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlbumCell.swift; sourceTree = "<group>"; };
 		A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAlbumCell.xib; sourceTree = "<group>"; };
 		A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCarouselFlowLayout.swift; sourceTree = "<group>"; };
@@ -178,6 +181,7 @@
 		A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetchNetworkService.swift; sourceTree = "<group>"; };
 		A5E96352215542D6006509C7 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		A5EC62D621539A6700721542 /* HeaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderData.swift; sourceTree = "<group>"; };
+		A5EFB3F421B13719004EE546 /* FacebookEventsEnviroment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookEventsEnviroment.swift; sourceTree = "<group>"; };
 		A5F8259B216B50F1007C0CC7 /* DeepLinkNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkNavigator.swift; sourceTree = "<group>"; };
 		A5F8259D216B59A9007C0CC7 /* deeplink.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = deeplink.html; sourceTree = "<group>"; };
 		A5F825A1216B6AA7007C0CC7 /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
@@ -384,6 +388,7 @@
 		A56BDED92150EC9D00D75F83 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A5EFB3F621B1371D004EE546 /* Helpers */,
 				A56BDED82150EC9600D75F83 /* Network */,
 				A5CB1A7C2153AC340002D7CC /* EndPoint */,
 			);
@@ -460,6 +465,14 @@
 				A5B06A65215BD1A2001C05EB /* TodayPlaylistDataSource.swift */,
 			);
 			name = DataSource;
+			sourceTree = "<group>";
+		};
+		A5B689DE21C3F0E8005E3493 /* WelcomePages */ = {
+			isa = PBXGroup;
+			children = (
+				A5B689DC21C3E9C9005E3493 /* WelcomePagesViewController.swift */,
+			);
+			name = WelcomePages;
 			sourceTree = "<group>";
 		};
 		A5B7C096214AAFBE0019E5C8 /* MusicPlayerLanding */ = {
@@ -541,6 +554,14 @@
 			name = FlowLayout;
 			sourceTree = "<group>";
 		};
+		A5EFB3F621B1371D004EE546 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A5EFB3F421B13719004EE546 /* FacebookEventsEnviroment.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		A5F8259A216B50D3007C0CC7 /* DeepLink */ = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +609,7 @@
 				A56BDED92150EC9D00D75F83 /* Services */,
 				A56BDEDC2150ED2800D75F83 /* FetchingErrorHandler.swift */,
 				A58747E6217F3FDF00A7C2B2 /* SubscriptionInfo */,
+				A5B689DE21C3F0E8005E3493 /* WelcomePages */,
 			);
 			path = "Music Player";
 			sourceTree = "<group>";
@@ -717,6 +739,7 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/KDEAudioPlayer/KDEAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/paper-onboarding/paper_onboarding.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -727,6 +750,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDEAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/paper_onboarding.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -767,6 +791,7 @@
 				A5B06A66215BD1A2001C05EB /* TodayPlaylistDataSource.swift in Sources */,
 				83843A7C21458AA700C8A0BE /* PreferencesCell.swift in Sources */,
 				A57C7AF821762B85008DA476 /* Sender.swift in Sources */,
+				A5EFB3F521B13719004EE546 /* FacebookEventsEnviroment.swift in Sources */,
 				A50017BB214A976B00E30175 /* SubscriptionNetworkService.swift in Sources */,
 				A5C98F4E217482E90091F5CE /* PlayerViewController.swift in Sources */,
 				83843A8921458BD000C8A0BE /* NewClipsCell.swift in Sources */,
@@ -787,6 +812,7 @@
 				A56BDEE72151012900D75F83 /* PopularSongsDataSource.swift in Sources */,
 				A57C7AFC21762C37008DA476 /* Model.swift in Sources */,
 				A51313FD219EE9800068DB76 /* ThemePlaylistsDataSource.swift in Sources */,
+				A5B689DD21C3E9C9005E3493 /* WelcomePagesViewController.swift in Sources */,
 				A56BDEE52150FD6100D75F83 /* MusicPlayerLandingPageInteractor.swift in Sources */,
 				A59EF47E2150043700BC6CEA /* Album.swift in Sources */,
 				A5CB1A7E2153AC540002D7CC /* AlbumEndPoint.swift in Sources */,

@@ -9,7 +9,6 @@
 import UIKit
 import FBSDKCoreKit
 import SafariServices
-
 class SubscriptionInfoViewController: UIViewController {
     
     @IBOutlet weak var restorePurchaseButton: UIButton!
@@ -62,10 +61,20 @@ class SubscriptionInfoViewController: UIViewController {
                                                selector: #selector(handlePurchaseFailed),
                                                name: SubscriptionService.purchaseFailedNotification,
                                                object: nil)
+    
+        if !SubscriptionService.shared.hasReceiptData {
+            SubscriptionService.shared.loadSubscriptionOptions()
+            
+            SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+                if success {
+                    self.performSegue(withIdentifier: "unwindToMain", sender: self)
+                } else if shouldRetry {
+                    SubscriptionService.shared.uploadReceipt()
+                }
+            }
+        }
         
-        SubscriptionService.shared.loadSubscriptionOptions()
-        
-        if UserDefaults.standard.bool(forKey: "isTrialExpired") {
+        if UserDefaults.standard.bool(forKey: "isTrialExpired") == true {
             self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
             self.priceLabel.text = trialExpiredMessage + price + " per week"
@@ -125,7 +134,7 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @IBAction func skipButtonPressed(_ sender: Any) {
-        FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [:])
+        FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [FBSDKAppEventParameterNameDescription: FacebookEventsEviroment.shared.enviroment.rawValue])
         performSegue(withIdentifier: "unwindToMain", sender: self)
     }
 
@@ -167,16 +176,6 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @objc func handleRestoreSuccessfull(notification: Notification) {
-        
-        guard let subscription = SubscriptionService.shared.options?.first else { return }
-
-        if SubscriptionService.shared.isEligibleForTrial == false {
-            trialLabel.text = allAccessMessage
-            self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + " per week"
-        } else {
-            self.trialLabel.text = freeTrialMessage
-            self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + " per week"
-        }
         
         if SubscriptionService.shared.currentSubscription != nil {
             let alert = UIAlertController(title: "Successfull".localized, message: nil, preferredStyle: .alert)
@@ -221,6 +220,14 @@ class SubscriptionInfoViewController: UIViewController {
     }
     
     @objc func handlePurchaseFailed() {
-        
+        let alertController = UIAlertController(title: "Cannot connect to iTunes", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        if presentedViewController != nil {
+            alertController.dismiss(animated: false, completion: {
+                self.present(alertController, animated: true, completion: nil)
+            })
+        } else {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }

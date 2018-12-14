@@ -22,7 +22,7 @@
     fileprivate var imageFetcherNetworkService: ImageFetchNetworkService
     fileprivate var todayPlaylistNetworkService: TodaysPlaylistsNetworkService
     
-    fileprivate let genres = ["Indie Rock", "Deep House","Hip-Hop", "Jazz", "Country",
+    fileprivate let genres = ["Indie Rock", "Deep House", "Hip-Hop", "Jazz", "Country",
                         "Art Pop", "Rock", "Classical", "Trap", "Pop", "RNB",
                         "Modern Rock", "Chill", "Bass Trap", "Dance Pop",
                         "Blues","Pop Rock", "Bass Trap",
@@ -98,6 +98,7 @@
     
         var i = 0
         var songsWithImages = songs
+        
         while songsWithImages.count - 1 >= i {
             if images.keys.contains(where: { (url) -> Bool in songsWithImages[i].imagePath == url }) {
                 songsWithImages[i].image = images[songsWithImages[i].imagePath]

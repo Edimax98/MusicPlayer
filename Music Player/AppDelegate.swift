@@ -96,19 +96,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SKPaymentQueue.default().add(self)
-        setupRootController()
+        //setupRootController()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        window?.rootViewController = WelcomePagesViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+        
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEventsLogger.activate(application)
-        
         FBSDKAppLinkUtility.fetchDeferredAppLink { (url, error) in
             
             if let unwrappedError = error {
@@ -203,17 +205,39 @@ extension AppDelegate: SKPaymentTransactionObserver {
         print("User is attempting to purchase product id: \(transaction.payment.productIdentifier)")
     }
     
+    fileprivate func logEvents() {
+        
+        SubscriptionService.shared.loadSubscriptionOptions()
+        SubscriptionService.shared.optionsLoaded = { option in
+            if SubscriptionService.shared.isEligibleForTrial && SubscriptionService.shared.currentSubscription != nil {
+                FBSDKAppEvents.logEvent(FBSDKAppEventNameInitiatedCheckout,
+                                        parameters: [FBSDKAppEventParameterNameContentType: "3 days trial",
+                                                     FBSDKAppEventParameterNameContentID: option.product.productIdentifier,
+                                                     FBSDKAppEventParameterNameDescription: FacebookEventsEviroment.shared.enviroment.rawValue])
+                
+            }
+            if SubscriptionService.shared.isEligibleForTrial == false {
+                FBSDKAppEvents.logPurchase(option.priceWithoutCurrency, currency: option.currencyCode,
+                                           parameters: [FBSDKAppEventParameterNameContentType: "Weekly subscription",
+                                                        FBSDKAppEventParameterNameContentID: option.product.productIdentifier,
+                                                        FBSDKAppEventParameterNameDescription: FacebookEventsEviroment.shared.enviroment.rawValue])
+            }
+        }
+    }
+    
     func handlePurchasedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("User purchased product id: \(transaction.payment.productIdentifier)")
         queue.finishTransaction(transaction)
         SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
             if success {
+                self.logEvents()
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
                 }
-            } else {
+            } else if shouldRetry {
                 SubscriptionService.shared.uploadReceipt { (success, _) in
                     guard success else { return }
+                    self.logEvents()
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: SubscriptionService.purchaseSuccessfulNotification, object: nil)
                     }
@@ -230,7 +254,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: SubscriptionService.restoreSuccessfulNotification, object: nil)
                 }
-            } else {
+            } else if shouldRetry {
                 SubscriptionService.shared.uploadReceipt { (success, _) in
                     guard success else { return }
                     DispatchQueue.main.async {

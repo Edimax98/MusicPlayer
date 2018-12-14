@@ -19,7 +19,8 @@ struct Session {
     public var currentSubscription: PaidSubscription? {
         let activeSubscriptions = paidSubscriptions.filter { $0.isActive && $0.purchaseDate >= SubscriptionNetworkService.shared.simulatedStartDate }
         var current = activeSubscriptions.last
-        
+        print("CURRENT")
+        print(current ?? "NIL")
         paidSubscriptions.forEach {
             if $0.isTrial == true {
                 current?.isEligibleForTrial = false

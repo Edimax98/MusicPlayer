@@ -8,4 +8,5 @@ target 'Music Player' do
     pod 'AlamofireImage'
     pod 'KDEAudioPlayer'
     pod 'FBAudienceNetwork', '~> 5.0.1'
+    pod 'paper-onboarding'
 end

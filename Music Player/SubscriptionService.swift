@@ -20,6 +20,7 @@ class SubscriptionService: NSObject {
     static let noSubscriptionAfterAutoCheckNotification = Notification.Name("NoSubscriptionAfterAutoCheck")
 
     static let shared = SubscriptionService()
+    var optionsLoaded: ((Subscription) -> ())?
     
     var hasReceiptData: Bool {
         return loadReceipt() != nil
@@ -27,6 +28,9 @@ class SubscriptionService: NSObject {
     
     var options: [Subscription]? {
         didSet {
+            if let option = options?.first {
+                optionsLoaded?(option)
+            }
             NotificationCenter.default.post(name: SubscriptionService.optionsLoadedNotification, object: options)
         }
     }

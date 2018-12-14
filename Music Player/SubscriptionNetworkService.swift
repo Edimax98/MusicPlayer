@@ -72,6 +72,7 @@ class SubscriptionNetworkService {
                 guard let json = JSON(responseValue).dictionaryObject else { completion(.failure(.internalError)); return }
                 
                 let status = JSON(responseValue)["status"].intValue
+                print(responseValue)
                 guard let recieptStatus = RecieptStatus(rawValue: status) else { completion(.failure(.internalError)); return }
                 
                 let session = Session(receiptData: data, parsedReceipt: json)

@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FNU-cT-jE0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R55-zM-ICx">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Welcome Pages View Controller-->
+        <scene sceneID="TR0-PN-j4P">
+            <objects>
+                <viewController storyboardIdentifier="WelcomePagesViewController" id="R55-zM-ICx" customClass="WelcomePagesViewController" customModule="Music_Player" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Djb-Ra-61a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M53-2v-qTJ">
+                                <rect key="frame" x="325" y="28" width="34" height="34"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
+                                <state key="normal" title="skip">
+                                    <color key="titleColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="aRy-rv-10L" kind="show" id="DY1-gn-W7T"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GAP-yh-u1g" customClass="PaperOnboarding" customModule="paper_onboarding">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GAP-yh-u1g" firstAttribute="leading" secondItem="cLL-hZ-SVT" secondAttribute="leading" id="1O9-Yg-RyC"/>
+                            <constraint firstItem="GAP-yh-u1g" firstAttribute="bottom" secondItem="cLL-hZ-SVT" secondAttribute="bottom" id="BK0-Xa-XSO"/>
+                            <constraint firstItem="GAP-yh-u1g" firstAttribute="trailing" secondItem="cLL-hZ-SVT" secondAttribute="trailing" id="I0c-EI-vtu"/>
+                            <constraint firstItem="GAP-yh-u1g" firstAttribute="top" secondItem="cLL-hZ-SVT" secondAttribute="top" id="LAj-UE-wr8"/>
+                            <constraint firstItem="cLL-hZ-SVT" firstAttribute="trailing" secondItem="M53-2v-qTJ" secondAttribute="trailing" constant="16" id="kKo-qe-r3W"/>
+                            <constraint firstItem="M53-2v-qTJ" firstAttribute="top" secondItem="cLL-hZ-SVT" secondAttribute="top" constant="8" id="osg-c7-GSW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cLL-hZ-SVT"/>
+                    </view>
+                    <connections>
+                        <outlet property="paperOnboardingView" destination="GAP-yh-u1g" id="zJi-rN-SSv"/>
+                        <outlet property="skipButton" destination="M53-2v-qTJ" id="B9n-bx-aKc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ynq-bj-LE3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-604" y="-709"/>
+        </scene>
         <!--Music Player Landing Page-->
         <scene sceneID="BTe-Ph-W1h">
             <objects>
@@ -140,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oR4-zS-aZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="574" y="-529"/>
+            <point key="canvasLocation" x="516" y="-666"/>
         </scene>
         <!--Theme Playlists View Controller-->
         <scene sceneID="B8N-Jh-KRN">
@@ -215,7 +258,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBo-kr-Cgj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1365.5999999999999" y="-529.38530734632684"/>
+            <point key="canvasLocation" x="1668" y="-666"/>
         </scene>
         <!--SubscriptionInfoViewController-->
         <scene sceneID="nsp-CN-1GD">
@@ -223,7 +266,15 @@
                 <viewControllerPlaceholder storyboardName="SubscriptionInfoViewController" referencedIdentifier="SubscriptionInfoViewController" id="w78-on-r5H" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3M-df-g4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1244" y="-937"/>
+            <point key="canvasLocation" x="1183" y="-1110"/>
+        </scene>
+        <!--SubscriptionInfoViewController-->
+        <scene sceneID="Qw3-go-0Ad">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SubscriptionInfoViewController" referencedIdentifier="SubscriptionInfoViewController" id="aRy-rv-10L" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="38G-OO-bxl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="121" y="-1093"/>
         </scene>
     </scenes>
     <resources>
