@@ -62,18 +62,18 @@ class SubscriptionInfoViewController: UIViewController {
                                                name: SubscriptionService.purchaseFailedNotification,
                                                object: nil)
     
-        if !SubscriptionService.shared.hasReceiptData {
-            SubscriptionService.shared.loadSubscriptionOptions()
-            
-            SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
-                if success {
-                    self.performSegue(withIdentifier: "unwindToMain", sender: self)
-                } else if shouldRetry {
-                    SubscriptionService.shared.uploadReceipt()
-                }
-            }
-        }
-        
+//        if !SubscriptionService.shared.hasReceiptData {
+//            SubscriptionService.shared.loadSubscriptionOptions()
+//
+//            SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
+//                if success {
+//                    self.performSegue(withIdentifier: "unwindToMain", sender: self)
+//                } else if shouldRetry {
+//                    SubscriptionService.shared.uploadReceipt()
+//                }
+//            }
+//        }
+		
         if UserDefaults.standard.bool(forKey: "isTrialExpired") == true {
             self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }

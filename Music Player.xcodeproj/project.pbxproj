@@ -658,7 +658,7 @@
 				TargetAttributes = {
 					D3D2E94C19A36A0000DEF125 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = FKAK3GFPT6;
+						DevelopmentTeam = M32M9JNSSA;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -991,7 +991,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_OBJC_NSCFERROR = YES;
 				CODE_SIGN_ENTITLEMENTS = "Music Player/Music Player.entitlements";
-				DEVELOPMENT_TEAM = FKAK3GFPT6;
+				DEVELOPMENT_TEAM = M32M9JNSSA;
 				IBSC_ERRORS = YES;
 				INFOPLIST_FILE = "Music Player/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1010,7 +1010,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_OBJC_NSCFERROR = YES;
 				CODE_SIGN_ENTITLEMENTS = "Music Player/Music Player.entitlements";
-				DEVELOPMENT_TEAM = FKAK3GFPT6;
+				DEVELOPMENT_TEAM = M32M9JNSSA;
 				IBSC_ERRORS = YES;
 				INFOPLIST_FILE = "Music Player/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;

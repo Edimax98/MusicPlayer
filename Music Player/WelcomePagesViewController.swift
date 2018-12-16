@@ -13,6 +13,7 @@ class WelcomePagesViewController: UIViewController {
 
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var paperOnboardingView: PaperOnboarding!
+	var welcomePagesSkipped: (() -> Void)?
     
     fileprivate static let titleFont = UIFont(name: "Helvetica-Bold", size: 36.0) ?? UIFont.boldSystemFont(ofSize: 36.0)
     fileprivate static let descriptionFont = UIFont(name: "Helvetica-Regular", size: 25.0) ?? UIFont.systemFont(ofSize: 14.0)
@@ -63,6 +64,7 @@ class WelcomePagesViewController: UIViewController {
 
     @IBAction func skipButtonPressed(_ sender: Any) {
         UserDefaults.standard.set(true, forKey: "wereWelcomePagesShown")
+		welcomePagesSkipped?()
     }
 }
 

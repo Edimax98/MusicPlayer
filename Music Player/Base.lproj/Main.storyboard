@@ -25,7 +25,7 @@
                                     <color key="titleColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="aRy-rv-10L" kind="show" id="DY1-gn-W7T"/>
+                                    <action selector="skipButtonPressed:" destination="R55-zM-ICx" eventType="touchUpInside" id="K2V-Kf-dA8"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GAP-yh-u1g" customClass="PaperOnboarding" customModule="paper_onboarding">
@@ -51,7 +51,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ynq-bj-LE3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-604" y="-709"/>
+            <point key="canvasLocation" x="-297" y="-666"/>
         </scene>
         <!--Music Player Landing Page-->
         <scene sceneID="BTe-Ph-W1h">
@@ -267,14 +267,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3M-df-g4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1183" y="-1110"/>
-        </scene>
-        <!--SubscriptionInfoViewController-->
-        <scene sceneID="Qw3-go-0Ad">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SubscriptionInfoViewController" referencedIdentifier="SubscriptionInfoViewController" id="aRy-rv-10L" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="38G-OO-bxl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="121" y="-1093"/>
         </scene>
     </scenes>
     <resources>

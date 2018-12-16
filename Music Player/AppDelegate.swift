@@ -83,9 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.mainView.showSubscriptionOffer()
             return
         }
-        //mainView.showLoadingAlert()
-        SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
-            //  self.mainView.dismissLoadingAlert()
+
+		SubscriptionService.shared.uploadReceipt { (success,shouldRetry) in
             if success {
                 self.uploadRecieptSucceeded()
             } else if shouldRetry {
@@ -99,12 +98,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SKPaymentQueue.default().add(self)
-        //setupRootController()
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
-        window?.rootViewController = WelcomePagesViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
-        
+		
+		if UserDefaults.standard.bool(forKey: "wereWelcomePagesShown") {
+			setupRootController()
+		} else {
+			
+			window = UIWindow(frame: UIScreen.main.bounds)
+			window?.makeKeyAndVisible()
+			window?.rootViewController = WelcomePagesViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+			
+			guard let welcomePagesVc = window?.rootViewController as? WelcomePagesViewController else {
+				return true
+			}
+			
+			welcomePagesVc.welcomePagesSkipped = { [weak self] in
+				guard let unwrappedSelf = self else { return }
+				unwrappedSelf.setupRootController()
+			}
+		}
+		
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
