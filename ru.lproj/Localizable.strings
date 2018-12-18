@@ -6,9 +6,36 @@
   Copyright © 2018 polat. All rights reserved.
 */
 
-//"Not playing" = "Не играет";
-//"Customise your Preferences" = "Настройте ваши предпочтения";
-//"Playlists for today" = "Плейлисты на сегодня";
-//"New Releases" = "Новые релизы";
-//"Popular Songs" = "Популярные песни";
-//"Play the moment" = "Слушай каждое мгновение";
+// Main view
+"Not playing" = "Не играет";
+"Customise your Preferences" = "Настройте ваши предпочтения";
+"Playlists for today" = "Плейлисты на сегодня";
+"New Releases" = "Новые релизы";
+"Popular Songs" = "Популярные песни";
+"Play the moment" = "Слушай каждое мгновение";
+
+// Subscription offer
+"All access" = "Полный доступ";
+"3 days for FREE" = "3 дня БЕСПЛАТНО";
+"Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. Subscription auto-renewal may be turned off by going to the Account Settings after purchase. Any unused portion of a free trial will be forfeited when you purchase a subscription." = "Расчет будет произведен по вашему iTunes аккаунту при подтверждении покупки. Если подписка не отменена она автоматически возобновляется в течение 24 часов до окончания текущего периода. Возобновление подписки может быть отменено в настройках аккаунта после покупки. Неиспользованная часть бесплатной пробной версии будет аннулирована после покупки подписки.";
+"Your trial period has expired. Subscription price - " = "Ваш пробный период истек. Цена подписки - ";
+"3 days trial. Subscription price - " = "3 дня пробный период. Цена подписки - ";
+"Features" = "Особенности";
+"Full access to 400 000 songs" = "Доступ к 400 000 песен";
+"The best indie authors" = "Лучшие инди исполнители";
+"Ads free" = "Без рекламы";
+" per week" = " в неделю";
+"skip" = "отмена";
+"restore" = "восстановить";
+"START" = "НАЧАТЬ";
+"Terms of Service" = "Условия Обслуживания";
+"Privacy Policy" = "Политика конфиденциальности";
+
+//Welcome screen
+"The best indies" = "Лучшие инди";
+"Discover the best indie songs of 400 000 collection" = "Откройте для себя мир инди музыки, состоящей из 400 000 песен";
+"Custom playlists" =  "Подборки песен";
+"Every day a fresh custom playlists. Each playlist was created by Indie Sound" = "Каждый день новые плейлисты. Каждый плейлист подобран Indie Sound для вас!";
+"Enjoy!" = "Наслаждайтесь!";
+"Start your journey right now! With paid subscription you can avoid ads." = "Начинайте свое путешествие прямо сейчас! С платной версией вы можете избавиться от рекламы";
+"skip" = "пропустить";

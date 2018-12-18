@@ -11,12 +11,19 @@ import FBSDKCoreKit
 import SafariServices
 class SubscriptionInfoViewController: UIViewController {
     
+    @IBOutlet weak var purchaseButton: UIButton!
     @IBOutlet weak var restorePurchaseButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var featuresTitleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var trialLabel: UILabel!
     @IBOutlet weak var trialTermsLabel: UILabel!
+    @IBOutlet weak var AccesFeatureLabel: UILabel!
+    @IBOutlet weak var authorsFeatureLabel: UILabel!
+    @IBOutlet weak var adsFreeFeatureLabel: UILabel!
+    @IBOutlet weak var featuresTitle: UILabel!
+    @IBOutlet weak var termsButton: UIButton!
+    @IBOutlet weak var policyButton: UIButton!
     
     var subscription: Subscription?
     var status = AccessState.denied
@@ -25,6 +32,7 @@ class SubscriptionInfoViewController: UIViewController {
     fileprivate let disclaimerMessage = "Payment will be charged to your iTunes Account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. Subscription auto-renewal may be turned off by going to the Account Settings after purchase. Any unused portion of a free trial will be forfeited when you purchase a subscription.".localized
     fileprivate let allAccessMessage = "All access".localized
     fileprivate let freeTrialMessage = "3 days for FREE".localized
+    fileprivate let subscriptionDuration = " per week".localized
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -61,34 +69,33 @@ class SubscriptionInfoViewController: UIViewController {
                                                selector: #selector(handlePurchaseFailed),
                                                name: SubscriptionService.purchaseFailedNotification,
                                                object: nil)
-    
-//        if !SubscriptionService.shared.hasReceiptData {
-//            SubscriptionService.shared.loadSubscriptionOptions()
-//
-//            SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
-//                if success {
-//                    self.performSegue(withIdentifier: "unwindToMain", sender: self)
-//                } else if shouldRetry {
-//                    SubscriptionService.shared.uploadReceipt()
-//                }
-//            }
-//        }
 		
+        AccesFeatureLabel.text = "Full access to 400 000 songs".localized
+        authorsFeatureLabel.text = "The best indie authors".localized
+        adsFreeFeatureLabel.text = "Ads free".localized
+        trialTermsLabel.text = disclaimerMessage
+        featuresTitle.text = "Features".localized
+        
+        restorePurchaseButton.setTitle("restore".localized, for: .normal)
+        skipButton.setTitle("skip".localized, for: .normal)
+        purchaseButton.setTitle("START".localized, for: .normal)
+        termsButton.setTitle("Terms of Service".localized, for: .normal)
+        policyButton.setTitle("Privacy Policy".localized, for: .normal)
+        
         if UserDefaults.standard.bool(forKey: "isTrialExpired") == true {
             self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = trialExpiredMessage + price + " per week"
+            self.priceLabel.text = trialExpiredMessage + price + subscriptionDuration
         } else {
             self.trialLabel.text = freeTrialMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = trialAvailableMessage + price + " per week"
+            self.priceLabel.text = trialAvailableMessage + price + subscriptionDuration
         }
-        self.trialTermsLabel.text = disclaimerMessage
     }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "unwindToMain" {
+        if segue.identifier == "unwindToMain" || segue.identifier == "openMainPage" {
             if let destinationVc = segue.destination as? MusicPlayerLandingPage {
                 destinationVc.wasSubscriptionSkipped = true
                 if self.status == .available {
@@ -124,7 +131,7 @@ class SubscriptionInfoViewController: UIViewController {
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let backAction = UIAlertAction(title: "OK", style: .default)
+        let backAction = UIAlertAction(title:"OK", style: .default)
         alert.addAction(backAction)
         present(alert, animated: true, completion: nil)
     }
@@ -135,7 +142,12 @@ class SubscriptionInfoViewController: UIViewController {
     
     @IBAction func skipButtonPressed(_ sender: Any) {
         FBSDKAppEvents.logEvent("User skipped subscription offer", parameters: [FBSDKAppEventParameterNameDescription: FacebookEventsEviroment.shared.enviroment.rawValue])
-        performSegue(withIdentifier: "unwindToMain", sender: self)
+    
+        if let _ = self.parent as? MusicPlayerLandingPage {
+            performSegue(withIdentifier: "unwindToMain", sender: self)
+        } else {
+            performSegue(withIdentifier: "openMainPage", sender: self)
+        }
     }
 
     @IBAction func startSubscriptionButtonPressed(_ sender: Any) {
@@ -166,10 +178,10 @@ class SubscriptionInfoViewController: UIViewController {
         if let _ = SubscriptionService.shared.currentSubscription {
             if !SubscriptionService.shared.isEligibleForTrial {
                 self.trialLabel.text = allAccessMessage
-                self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + " per week"
+                self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + subscriptionDuration
             } else {
                 self.trialLabel.text = allAccessMessage
-                self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + " per week"
+                self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + subscriptionDuration
             }
             status = .available
         }
@@ -205,14 +217,12 @@ class SubscriptionInfoViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "isTrialExpired") {
             self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = trialExpiredMessage + price + " per week"
+            self.priceLabel.text = trialExpiredMessage + price + subscriptionDuration
         } else {
             self.trialLabel.text = freeTrialMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
-            self.priceLabel.text = trialAvailableMessage + price + " per week"
+            self.priceLabel.text = trialAvailableMessage + price + subscriptionDuration
         }
-    
-        self.trialTermsLabel.text = disclaimerMessage
     }
     
     @objc func nothingToRestore(notification: Notification) {

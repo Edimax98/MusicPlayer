@@ -37,6 +37,7 @@
                         <constraints>
                             <constraint firstItem="GAP-yh-u1g" firstAttribute="leading" secondItem="cLL-hZ-SVT" secondAttribute="leading" id="1O9-Yg-RyC"/>
                             <constraint firstItem="GAP-yh-u1g" firstAttribute="bottom" secondItem="cLL-hZ-SVT" secondAttribute="bottom" id="BK0-Xa-XSO"/>
+                            <constraint firstItem="M53-2v-qTJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cLL-hZ-SVT" secondAttribute="leading" symbolic="YES" id="CeD-Og-K8d"/>
                             <constraint firstItem="GAP-yh-u1g" firstAttribute="trailing" secondItem="cLL-hZ-SVT" secondAttribute="trailing" id="I0c-EI-vtu"/>
                             <constraint firstItem="GAP-yh-u1g" firstAttribute="top" secondItem="cLL-hZ-SVT" secondAttribute="top" id="LAj-UE-wr8"/>
                             <constraint firstItem="cLL-hZ-SVT" firstAttribute="trailing" secondItem="M53-2v-qTJ" secondAttribute="trailing" constant="16" id="kKo-qe-r3W"/>
@@ -258,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBo-kr-Cgj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1668" y="-666"/>
+            <point key="canvasLocation" x="1465" y="-666"/>
         </scene>
         <!--SubscriptionInfoViewController-->
         <scene sceneID="nsp-CN-1GD">

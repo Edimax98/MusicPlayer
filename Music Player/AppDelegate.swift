@@ -17,6 +17,7 @@ import FBSDKCoreKit.FBSDKAppLinkUtility
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    weak var accessHandler: AccessHandler?
     
     private let mainView = MusicPlayerLandingPage.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
     private let subscriptionInfoView = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
@@ -111,10 +112,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				return true
 			}
 			
+            accessHandler = welcomePagesVc
+            let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
 			welcomePagesVc.welcomePagesSkipped = { [weak self] in
 				guard let unwrappedSelf = self else { return }
-				unwrappedSelf.setupRootController()
-			}
+                SubscriptionService.shared.loadSubscriptionOptions()
+                unwrappedSelf.window?.rootViewController = subOfferVc
+            }
 		}
 		
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -164,7 +168,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         SubscriptionService.shared.uploadReceipt { (success, shouldRetry) in
-            //self.mainView.dismissLoadingAlert()
             if success {
                 self.uploadSucceededAfterDeeplink(with: url)
             } else if shouldRetry {
