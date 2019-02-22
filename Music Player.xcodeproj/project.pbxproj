@@ -56,8 +56,6 @@
 		A56BDEED2151526800D75F83 /* NewReleasesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BDEEC2151526800D75F83 /* NewReleasesDataSource.swift */; };
 		A570DF94221EE89A00027EE1 /* TestGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A570DF92221EE89A00027EE1 /* TestGenreCell.swift */; };
 		A570DF95221EE89A00027EE1 /* TestGenreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A570DF93221EE89A00027EE1 /* TestGenreCell.xib */; };
-		A570DF98221F027D00027EE1 /* GenreTestHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */; };
-		A570DF9A221F02A100027EE1 /* GenreTestHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */; };
 		A57C7AF521762AFC008DA476 /* Mediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF421762AFC008DA476 /* Mediator.swift */; };
 		A57C7AF821762B85008DA476 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF721762B85008DA476 /* Sender.swift */; };
 		A57C7AFA21762B94008DA476 /* Reciever.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF921762B94008DA476 /* Reciever.swift */; };
@@ -86,6 +84,8 @@
 		A5CB1A832153CA330002D7CC /* SongsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB1A822153CA330002D7CC /* SongsDataSource.swift */; };
 		A5CB1A872153CB530002D7CC /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB1A852153CB530002D7CC /* TrackCell.swift */; };
 		A5CB1A882153CB530002D7CC /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5CB1A862153CB530002D7CC /* TrackCell.xib */; };
+		A5CB528F22203BFF0037DF28 /* GenreCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB528D22203BFF0037DF28 /* GenreCollectionViewHeader.swift */; };
+		A5CB529022203BFF0037DF28 /* GenreCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5CB528E22203BFF0037DF28 /* GenreCollectionViewHeader.xib */; };
 		A5E0C32E216F69E80045975E /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0C32D216F69E80045975E /* Knob.swift */; };
 		A5E9635121552AB5006509C7 /* ImageFetchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */; };
 		A5E96353215542D6006509C7 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E96352215542D6006509C7 /* ModelType.swift */; };
@@ -153,8 +153,6 @@
 		A56BDEEC2151526800D75F83 /* NewReleasesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesDataSource.swift; sourceTree = "<group>"; };
 		A570DF92221EE89A00027EE1 /* TestGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenreCell.swift; sourceTree = "<group>"; };
 		A570DF93221EE89A00027EE1 /* TestGenreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestGenreCell.xib; sourceTree = "<group>"; };
-		A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTestHeaderView.swift; sourceTree = "<group>"; };
-		A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTestHeaderView.xib; sourceTree = "<group>"; };
 		A57C7AF421762AFC008DA476 /* Mediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mediator.swift; sourceTree = "<group>"; };
 		A57C7AF721762B85008DA476 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		A57C7AF921762B94008DA476 /* Reciever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reciever.swift; sourceTree = "<group>"; };
@@ -187,6 +185,8 @@
 		A5CB1A822153CA330002D7CC /* SongsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsDataSource.swift; sourceTree = "<group>"; };
 		A5CB1A852153CB530002D7CC /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		A5CB1A862153CB530002D7CC /* TrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
+		A5CB528D22203BFF0037DF28 /* GenreCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewHeader.swift; sourceTree = "<group>"; };
+		A5CB528E22203BFF0037DF28 /* GenreCollectionViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreCollectionViewHeader.xib; sourceTree = "<group>"; };
 		A5E0C32D216F69E80045975E /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		A5E9635021552AB5006509C7 /* ImageFetchNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetchNetworkService.swift; sourceTree = "<group>"; };
 		A5E96352215542D6006509C7 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
@@ -444,8 +444,8 @@
 				A5C5CA3F221ECBDE003945BF /* GenreTestViewController.swift */,
 				A570DF92221EE89A00027EE1 /* TestGenreCell.swift */,
 				A570DF93221EE89A00027EE1 /* TestGenreCell.xib */,
-				A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */,
-				A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */,
+				A5CB528D22203BFF0037DF28 /* GenreCollectionViewHeader.swift */,
+				A5CB528E22203BFF0037DF28 /* GenreCollectionViewHeader.xib */,
 			);
 			name = GenreTest;
 			sourceTree = "<group>";
@@ -736,13 +736,13 @@
 				83843A9421459E3600C8A0BE /* PreferedGenreCell.xib in Resources */,
 				83843A8E21458C1500C8A0BE /* PopularSongsCell.xib in Resources */,
 				832540A72145BB1300727316 /* TodaySongCell.xib in Resources */,
-				A570DF9A221F02A100027EE1 /* GenreTestHeaderView.xib in Resources */,
 				A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */,
 				A5131404219EF0040068DB76 /* ThemePlaylistCell.xib in Resources */,
 				A58747F0217F776400A7C2B2 /* SubscriptionInfoViewController.storyboard in Resources */,
 				A5355FD321590CA0005D4101 /* MusicList.storyboard in Resources */,
 				A5F8259E216B59A9007C0CC7 /* deeplink.html in Resources */,
 				D36191BE19E9647B00CC9026 /* Main.storyboard in Resources */,
+				A5CB529022203BFF0037DF28 /* GenreCollectionViewHeader.xib in Resources */,
 				83843A8221458B4900C8A0BE /* TodaysPlaylistCell.xib in Resources */,
 				D3D2E95A19A36A0000DEF125 /* Images.xcassets in Resources */,
 				83843A7D21458AA700C8A0BE /* PreferencesCell.xib in Resources */,
@@ -821,7 +821,6 @@
 				A5C5CA40221ECBDE003945BF /* GenreTestViewController.swift in Sources */,
 				A57C7AF821762B85008DA476 /* Sender.swift in Sources */,
 				A5EFB3F521B13719004EE546 /* FacebookEventsEnviroment.swift in Sources */,
-				A570DF98221F027D00027EE1 /* GenreTestHeaderView.swift in Sources */,
 				A50017BB214A976B00E30175 /* SubscriptionNetworkService.swift in Sources */,
 				A5C98F4E217482E90091F5CE /* PlayerViewController.swift in Sources */,
 				83843A8921458BD000C8A0BE /* NewClipsCell.swift in Sources */,
@@ -829,6 +828,7 @@
 				A5F8259C216B50F1007C0CC7 /* DeepLinkNavigator.swift in Sources */,
 				D3D2E95319A36A0000DEF125 /* AppDelegate.swift in Sources */,
 				A57C7AF521762AFC008DA476 /* Mediator.swift in Sources */,
+				A5CB528F22203BFF0037DF28 /* GenreCollectionViewHeader.swift in Sources */,
 				A5696F262167A6ED00D5FD89 /* UiIViewExtension.swift in Sources */,
 				A528663021A80D3D00000FB5 /* DeepLinkParser.swift in Sources */,
 				A5630F51214A837C0051759A /* SubscriptionService.swift in Sources */,

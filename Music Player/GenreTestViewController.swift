@@ -28,14 +28,13 @@ class GenreTestViewController: UIViewController {
         genresCollectionView.dataSource = self
         genresCollectionView.allowsMultipleSelection = true
         genresCollectionView.register(UINib(nibName: "TestGenreCell", bundle: nil), forCellWithReuseIdentifier: TestGenreCell.identifier)
+//        genresCollectionView.register(UINib(nibName: "GenreTestViewController", bundle: nil), forSupplementaryViewOfKind: UIcollectiovi, withReuseIdentifier: GenreCollectionViewHeader.identifier)
     }
 }
 
 extension GenreTestViewController: UICollectionViewDelegateFlowLayout {
     
-
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let padding: CGFloat = 60
         
@@ -67,6 +66,24 @@ extension GenreTestViewController: UICollectionViewDelegate {
 }
 
 extension GenreTestViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+    
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if (kind == UICollectionElementKindSectionHeader) {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GenreCollectionViewHeader.identifier, for: indexPath)
+            
+            return headerView
+        } else {
+            return UICollectionReusableView()
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return genres.count
