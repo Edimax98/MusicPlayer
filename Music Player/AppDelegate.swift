@@ -96,30 +96,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // MARK: App life cycle
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         SKPaymentQueue.default().add(self)
 		
-		if UserDefaults.standard.bool(forKey: "wereWelcomePagesShown") {
-			setupRootController()
-		} else {
+//        if UserDefaults.standard.bool(forKey: "wereWelcomePagesShown") {
+//            setupRootController()
+//        } else {
 			
 			window = UIWindow(frame: UIScreen.main.bounds)
 			window?.makeKeyAndVisible()
-			window?.rootViewController = WelcomePagesViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+			//window?.rootViewController = WelcomePagesViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
+            window?.rootViewController = GenreTestViewController.controllerInStoryboard(UIStoryboard(name: "Main", bundle: nil))
 			
-			guard let welcomePagesVc = window?.rootViewController as? WelcomePagesViewController else {
-				return true
-			}
-			
-            accessHandler = welcomePagesVc
-            let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
-			welcomePagesVc.welcomePagesSkipped = { [weak self] in
-				guard let unwrappedSelf = self else { return }
-                SubscriptionService.shared.loadSubscriptionOptions()
-                unwrappedSelf.window?.rootViewController = subOfferVc
-            }
-		}
+//            guard let welcomePagesVc = window?.rootViewController as? WelcomePagesViewController else {
+//                return true
+//            }
+//
+//            accessHandler = welcomePagesVc
+//            let subOfferVc = SubscriptionInfoViewController.controllerInStoryboard(UIStoryboard(name: "SubscriptionInfoViewController", bundle: nil))
+//            welcomePagesVc.welcomePagesSkipped = { [weak self] in
+//                guard let unwrappedSelf = self else { return }
+//                SubscriptionService.shared.loadSubscriptionOptions()
+//                unwrappedSelf.window?.rootViewController = subOfferVc
+//            }
+//        }
 		
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true

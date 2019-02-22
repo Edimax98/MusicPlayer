@@ -16,6 +16,8 @@ protocol AccessHandler: class {
 
 class WelcomePagesViewController: UIViewController {
 
+    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var paperOnboardingView: PaperOnboarding!
 	var welcomePagesSkipped: (() -> Void)?
@@ -51,11 +53,16 @@ class WelcomePagesViewController: UIViewController {
         super.viewDidLoad()
         setupPaperOnboardingView()
         view.bringSubview(toFront: skipButton)
+        view.bringSubview(toFront: nextButton)
     }
 
     private func setupPaperOnboardingView() {
+        
         skipButton.setTitle("skip".localized, for: .normal)
+        nextButton.setTitle("NEXT".localized, for: .normal)
+        nextButton.layer.cornerRadius = nextButton.frame.height / 2
         paperOnboardingView.dataSource = self
+        paperOnboardingView.delegate = self
         for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
             let constraint = NSLayoutConstraint(item: paperOnboardingView,
                                                 attribute: attribute,
@@ -67,12 +74,38 @@ class WelcomePagesViewController: UIViewController {
             view.addConstraint(constraint)
         }
     }
-
-    @IBAction func skipButtonPressed(_ sender: Any) {
+    
+    @IBAction func nextButtonPressed(_ sender: Any) {
         
+        if paperOnboardingView.currentIndex + 1 <= items.count - 1 {
+            paperOnboardingView.currentIndex(paperOnboardingView.currentIndex + 1, animated: true)
+        } else {
+            UserDefaults.standard.set(true, forKey: "wereWelcomePagesShown")
+            welcomePagesSkipped?()
+        }
+    }
+    
+    @IBAction func skipButtonPressed(_ sender: Any) {
         UserDefaults.standard.set(true, forKey: "wereWelcomePagesShown")
-		
         welcomePagesSkipped?()
+    }
+}
+
+extension WelcomePagesViewController: PaperOnboardingDelegate {
+ 
+    func onboardingWillTransitonToIndex(_: Int) {
+        nextButtonBottomConstraint.constant = nextButton.frame.height
+        nextButton.alpha = 0
+        view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.8,
+                       delay: 0,
+                       options: .curveEaseOut, animations: {
+                        self.nextButtonBottomConstraint.constant = 87
+                        self.nextButton.alpha = 0
+                        self.nextButton.alpha = 1
+                        self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 

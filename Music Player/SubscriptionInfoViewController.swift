@@ -16,7 +16,6 @@ class SubscriptionInfoViewController: UIViewController {
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var featuresTitleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var trialLabel: UILabel!
     @IBOutlet weak var trialTermsLabel: UILabel!
     @IBOutlet weak var AccesFeatureLabel: UILabel!
     @IBOutlet weak var authorsFeatureLabel: UILabel!
@@ -79,15 +78,16 @@ class SubscriptionInfoViewController: UIViewController {
         restorePurchaseButton.setTitle("restore".localized, for: .normal)
         skipButton.setTitle("skip".localized, for: .normal)
         purchaseButton.setTitle("START".localized, for: .normal)
+        purchaseButton.layer.cornerRadius = purchaseButton.frame.height / 2
         termsButton.setTitle("Terms of Service".localized, for: .normal)
         policyButton.setTitle("Privacy Policy".localized, for: .normal)
         
         if UserDefaults.standard.bool(forKey: "isTrialExpired") == true {
-            self.trialLabel.text = allAccessMessage
+//            self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
             self.priceLabel.text = trialExpiredMessage + price + subscriptionDuration
         } else {
-            self.trialLabel.text = freeTrialMessage
+//            self.trialLabel.text = freeTrialMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
             self.priceLabel.text = trialAvailableMessage + price + subscriptionDuration
         }
@@ -177,10 +177,10 @@ class SubscriptionInfoViewController: UIViewController {
 
         if let _ = SubscriptionService.shared.currentSubscription {
             if !SubscriptionService.shared.isEligibleForTrial {
-                self.trialLabel.text = allAccessMessage
+                //self.trialLabel.text = allAccessMessage
                 self.priceLabel.text = trialExpiredMessage + subscription.formattedPrice + subscriptionDuration
             } else {
-                self.trialLabel.text = allAccessMessage
+                //self.trialLabel.text = allAccessMessage
                 self.priceLabel.text = trialAvailableMessage + subscription.formattedPrice + subscriptionDuration
             }
             status = .available
@@ -215,11 +215,11 @@ class SubscriptionInfoViewController: UIViewController {
         self.subscription = sub
 
         if UserDefaults.standard.bool(forKey: "isTrialExpired") {
-            self.trialLabel.text = allAccessMessage
+            //self.trialLabel.text = allAccessMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
             self.priceLabel.text = trialExpiredMessage + price + subscriptionDuration
         } else {
-            self.trialLabel.text = freeTrialMessage
+            //self.trialLabel.text = freeTrialMessage
             guard let price = SubscriptionService.shared.options?.first?.formattedPrice else { return }
             self.priceLabel.text = trialAvailableMessage + price + subscriptionDuration
         }

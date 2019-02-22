@@ -54,6 +54,10 @@
 		A56BDEE72151012900D75F83 /* PopularSongsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BDEE62151012900D75F83 /* PopularSongsDataSource.swift */; };
 		A56BDEEA2151046E00D75F83 /* InteractorOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BDEE92151046E00D75F83 /* InteractorOutput.swift */; };
 		A56BDEED2151526800D75F83 /* NewReleasesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56BDEEC2151526800D75F83 /* NewReleasesDataSource.swift */; };
+		A570DF94221EE89A00027EE1 /* TestGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A570DF92221EE89A00027EE1 /* TestGenreCell.swift */; };
+		A570DF95221EE89A00027EE1 /* TestGenreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A570DF93221EE89A00027EE1 /* TestGenreCell.xib */; };
+		A570DF98221F027D00027EE1 /* GenreTestHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */; };
+		A570DF9A221F02A100027EE1 /* GenreTestHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */; };
 		A57C7AF521762AFC008DA476 /* Mediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF421762AFC008DA476 /* Mediator.swift */; };
 		A57C7AF821762B85008DA476 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF721762B85008DA476 /* Sender.swift */; };
 		A57C7AFA21762B94008DA476 /* Reciever.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57C7AF921762B94008DA476 /* Reciever.swift */; };
@@ -69,6 +73,7 @@
 		A5B689DD21C3E9C9005E3493 /* WelcomePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B689DC21C3E9C9005E3493 /* WelcomePagesViewController.swift */; };
 		A5BD8E1121467D1400F3F812 /* NewAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */; };
 		A5BD8E1221467D1400F3F812 /* NewAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */; };
+		A5C5CA40221ECBDE003945BF /* GenreTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C5CA3F221ECBDE003945BF /* GenreTestViewController.swift */; };
 		A5C7350B2147BF4000F58D1E /* UPCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */; };
 		A5C7350D2147C57400F58D1E /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7350C2147C57400F58D1E /* SectionHeaderView.swift */; };
 		A5C7350F2147C58B00F58D1E /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5C7350E2147C58B00F58D1E /* SectionHeaderView.xib */; };
@@ -146,6 +151,10 @@
 		A56BDEE62151012900D75F83 /* PopularSongsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSongsDataSource.swift; sourceTree = "<group>"; };
 		A56BDEE92151046E00D75F83 /* InteractorOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractorOutput.swift; sourceTree = "<group>"; };
 		A56BDEEC2151526800D75F83 /* NewReleasesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesDataSource.swift; sourceTree = "<group>"; };
+		A570DF92221EE89A00027EE1 /* TestGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenreCell.swift; sourceTree = "<group>"; };
+		A570DF93221EE89A00027EE1 /* TestGenreCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestGenreCell.xib; sourceTree = "<group>"; };
+		A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTestHeaderView.swift; sourceTree = "<group>"; };
+		A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreTestHeaderView.xib; sourceTree = "<group>"; };
 		A57C7AF421762AFC008DA476 /* Mediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mediator.swift; sourceTree = "<group>"; };
 		A57C7AF721762B85008DA476 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		A57C7AF921762B94008DA476 /* Reciever.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reciever.swift; sourceTree = "<group>"; };
@@ -165,6 +174,7 @@
 		A5B689DC21C3E9C9005E3493 /* WelcomePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePagesViewController.swift; sourceTree = "<group>"; };
 		A5BD8E0F21467D1400F3F812 /* NewAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlbumCell.swift; sourceTree = "<group>"; };
 		A5BD8E1021467D1400F3F812 /* NewAlbumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAlbumCell.xib; sourceTree = "<group>"; };
+		A5C5CA3F221ECBDE003945BF /* GenreTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTestViewController.swift; sourceTree = "<group>"; };
 		A5C7350A2147BF4000F58D1E /* UPCarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCarouselFlowLayout.swift; sourceTree = "<group>"; };
 		A5C7350C2147C57400F58D1E /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		A5C7350E2147C58B00F58D1E /* SectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
@@ -428,6 +438,18 @@
 			name = DataSource;
 			sourceTree = "<group>";
 		};
+		A570DF96221F025700027EE1 /* GenreTest */ = {
+			isa = PBXGroup;
+			children = (
+				A5C5CA3F221ECBDE003945BF /* GenreTestViewController.swift */,
+				A570DF92221EE89A00027EE1 /* TestGenreCell.swift */,
+				A570DF93221EE89A00027EE1 /* TestGenreCell.xib */,
+				A570DF97221F027D00027EE1 /* GenreTestHeaderView.swift */,
+				A570DF99221F02A100027EE1 /* GenreTestHeaderView.xib */,
+			);
+			name = GenreTest;
+			sourceTree = "<group>";
+		};
 		A57C7AF621762B74008DA476 /* Mediator */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,6 +632,7 @@
 				A56BDEDC2150ED2800D75F83 /* FetchingErrorHandler.swift */,
 				A58747E6217F3FDF00A7C2B2 /* SubscriptionInfo */,
 				A5B689DE21C3F0E8005E3493 /* WelcomePages */,
+				A570DF96221F025700027EE1 /* GenreTest */,
 			);
 			path = "Music Player";
 			sourceTree = "<group>";
@@ -667,6 +690,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
@@ -704,11 +730,13 @@
 				A5BD8E1221467D1400F3F812 /* NewAlbumCell.xib in Resources */,
 				A5F825B0216B7A9F007C0CC7 /* Localizable.strings in Resources */,
 				A5C7350F2147C58B00F58D1E /* SectionHeaderView.xib in Resources */,
+				A570DF95221EE89A00027EE1 /* TestGenreCell.xib in Resources */,
 				83843A8A21458BD000C8A0BE /* NewClipsCell.xib in Resources */,
 				D33843861C1F7A7300348BE9 /* Launch Screen.storyboard in Resources */,
 				83843A9421459E3600C8A0BE /* PreferedGenreCell.xib in Resources */,
 				83843A8E21458C1500C8A0BE /* PopularSongsCell.xib in Resources */,
 				832540A72145BB1300727316 /* TodaySongCell.xib in Resources */,
+				A570DF9A221F02A100027EE1 /* GenreTestHeaderView.xib in Resources */,
 				A52FD81C2146A439006C7EA0 /* ClipCell.xib in Resources */,
 				A5131404219EF0040068DB76 /* ThemePlaylistCell.xib in Resources */,
 				A58747F0217F776400A7C2B2 /* SubscriptionInfoViewController.storyboard in Resources */,
@@ -790,8 +818,10 @@
 				A5355FDD21591384005D4101 /* PopupViewController.swift in Sources */,
 				A5B06A66215BD1A2001C05EB /* TodayPlaylistDataSource.swift in Sources */,
 				83843A7C21458AA700C8A0BE /* PreferencesCell.swift in Sources */,
+				A5C5CA40221ECBDE003945BF /* GenreTestViewController.swift in Sources */,
 				A57C7AF821762B85008DA476 /* Sender.swift in Sources */,
 				A5EFB3F521B13719004EE546 /* FacebookEventsEnviroment.swift in Sources */,
+				A570DF98221F027D00027EE1 /* GenreTestHeaderView.swift in Sources */,
 				A50017BB214A976B00E30175 /* SubscriptionNetworkService.swift in Sources */,
 				A5C98F4E217482E90091F5CE /* PlayerViewController.swift in Sources */,
 				83843A8921458BD000C8A0BE /* NewClipsCell.swift in Sources */,
@@ -838,6 +868,7 @@
 				A57C7AFA21762B94008DA476 /* Reciever.swift in Sources */,
 				A5CB1A832153CA330002D7CC /* SongsDataSource.swift in Sources */,
 				A5CB1A872153CB530002D7CC /* TrackCell.swift in Sources */,
+				A570DF94221EE89A00027EE1 /* TestGenreCell.swift in Sources */,
 				A51313FA219EE7B20068DB76 /* ThemePlaylistsViewController.swift in Sources */,
 				A56BDEDB2150ECBD00D75F83 /* SongNetworkService.swift in Sources */,
 				A5131403219EF0040068DB76 /* ThemePlaylistCell.swift in Sources */,

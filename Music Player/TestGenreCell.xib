@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TestGenreCell" customModule="Music_Player" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="213" height="128"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="213" height="128"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genre10" translatesAutoresizingMaskIntoConstraints="NO" id="txB-h5-CzU">
+                        <rect key="frame" x="0.0" y="0.0" width="213" height="128"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-Vk-fYh">
+                        <rect key="frame" x="6" y="53" width="200" height="22"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <size key="shadowOffset" width="2" height="2"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="txB-h5-CzU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="28q-kB-EwL"/>
+                <constraint firstAttribute="trailing" secondItem="qbW-Vk-fYh" secondAttribute="trailing" constant="7" id="IKN-mb-XF2"/>
+                <constraint firstAttribute="bottom" secondItem="txB-h5-CzU" secondAttribute="bottom" id="etA-Bm-Fse"/>
+                <constraint firstItem="qbW-Vk-fYh" firstAttribute="centerY" secondItem="txB-h5-CzU" secondAttribute="centerY" id="icV-tt-qaK"/>
+                <constraint firstAttribute="trailing" secondItem="txB-h5-CzU" secondAttribute="trailing" id="iwn-aX-OPh"/>
+                <constraint firstItem="qbW-Vk-fYh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="jYx-d0-WYx"/>
+                <constraint firstItem="txB-h5-CzU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="oTx-BU-upO"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="213" height="128"/>
+            <connections>
+                <outlet property="backImageView" destination="txB-h5-CzU" id="ukD-NE-2Yo"/>
+                <outlet property="genreLabel" destination="qbW-Vk-fYh" id="AZf-KQ-YL0"/>
+            </connections>
+            <point key="canvasLocation" x="-31.199999999999999" y="61.169415292353825"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="genre10" width="230.39999389648438" height="162.72000122070312"/>
+    </resources>
+</document>
